@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.publicData.PublicdataMapper" >
+	<resultMap id="PublicdataResultMap" type="com.topcheer.model.publicData.Publicdata" >
+       		<result property="publicdataid"    column="publicdataid" jdbcType="VARCHAR" />
+       		<result property="publicdataname"    column="publicdataname" jdbcType="VARCHAR" />
+       		<result property="publicdatasource"    column="publicdatasource" jdbcType="VARCHAR" />
+       		<result property="publicdatatype"    column="publicdatatype" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+       		<result property="publicdatafile"    column="publicdatafile" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="PublicdataColumnList" >
+    		publicdataid,
+    		publicdataname,
+    		publicdatasource,
+    		publicdatatype,
+    		remarks,
+    		publicdatafile
+    </sql>
+    <select id="searchPublicdata" resultMap="PublicdataResultMap" parameterType="HashMap">
+    	select  * from tblpublicdata
+		where 1=1
+    		<if test="publicdataid !=null and publicdataid != '' ">
+		    	and publicdataid like #{publicdataid,jdbcType=VARCHAR}
+			</if>
+    		<if test="publicdataname !=null and publicdataname != '' ">
+		    	and publicdataname like #{publicdataname,jdbcType=VARCHAR}
+			</if>
+    		<if test="publicdatasource !=null and publicdatasource != '' ">
+		    	and publicdatasource like #{publicdatasource,jdbcType=VARCHAR}
+			</if>
+    		<if test="publicdatatype !=null and publicdatatype != '' ">
+		    	and publicdatatype like #{publicdatatype,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+    		<if test="publicdatafile !=null and publicdatafile != '' ">
+		    	and publicdatafile like #{publicdatafile,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="PublicdataResultMap" parameterType="HashMap">
+    	select * from tblpublicdata 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.publicData.Publicdata">
+  	<!--
+  		<selectKey resultType="String" keyProperty="publicdataid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblpublicdata (
+    			publicdataid,
+    			publicdataname,
+    			publicdatasource,
+    			publicdatatype,
+    			remarks,
+    			publicdatafile
+  		)VALUES (
+    		#{publicdataid,jdbcType=VARCHAR},
+    		#{publicdataname,jdbcType=VARCHAR},
+    		#{publicdatasource,jdbcType=VARCHAR},
+    		#{publicdatatype,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR},
+    		#{publicdatafile,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.publicData.Publicdata">
+  		update tblpublicdata set  
+	      		publicdataname = #{publicdataname,jdbcType=VARCHAR}  ,
+	      		publicdatasource = #{publicdatasource,jdbcType=VARCHAR}  ,
+	      		publicdatatype = #{publicdatatype,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  ,
+	      		publicdatafile = #{publicdatafile,jdbcType=VARCHAR}  
+  		where publicdataid = #{publicdataid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblpublicdata where publicdataid = #{publicdataid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getPublicdata" resultMap="PublicdataResultMap" parameterType="String">
+  		select * from tblpublicdata  where publicdataid = #{publicdataid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

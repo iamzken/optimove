@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.RecognitemplatemanagerMapper" >
+	<resultMap id="RecognitemplatemanagerResultMap" type="com.topcheer.model.mobile.Recognitemplatemanager" >
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="templatename"    column="templatename" jdbcType="VARCHAR" />
+       		<result property="remark"    column="remark" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="RecognitemplatemanagerColumnList" >
+    		templatecode,
+    		templatename,
+    		remark,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchRecognitemplatemanager" resultMap="RecognitemplatemanagerResultMap" parameterType="HashMap">
+    	select  * from tblrecognitemplatemanager
+		where 1=1
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatename !=null and templatename != '' ">
+		    	and templatename like #{templatename,jdbcType=VARCHAR}
+			</if>
+    		<if test="remark !=null and remark != '' ">
+		    	and remark like #{remark,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="RecognitemplatemanagerResultMap" parameterType="HashMap">
+    	select * from tblrecognitemplatemanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Recognitemplatemanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="templatecode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblrecognitemplatemanager (
+    			templatecode,
+    			templatename,
+    			remark,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{templatename,jdbcType=VARCHAR},
+    		#{remark,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Recognitemplatemanager">
+  		update tblrecognitemplatemanager set  
+	      		templatename = #{templatename,jdbcType=VARCHAR}  ,
+	      		remark = #{remark,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblrecognitemplatemanager where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getRecognitemplatemanager" resultMap="RecognitemplatemanagerResultMap" parameterType="String">
+  		select * from tblrecognitemplatemanager  where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

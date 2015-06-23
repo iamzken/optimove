@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.noticeMgr.NoticemiddleMapper" >
+	<resultMap id="NoticemiddleResultMap" type="com.topcheer.model.noticeMgr.Noticemiddle" >
+       		<result property="noticecode"    column="noticecode" jdbcType="VARCHAR" />
+       		<result property="noticebranch"    column="noticebranch" jdbcType="VARCHAR" />
+       		<result property="noticedept"    column="noticedept" jdbcType="VARCHAR" />
+       		<result property="noticegroup"    column="noticegroup" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NoticemiddleColumnList" >
+    		noticecode,
+    		noticebranch,
+    		noticedept,
+    		noticegroup
+    </sql>
+    <select id="searchNoticemiddle" resultMap="NoticemiddleResultMap" parameterType="HashMap">
+    	select  * from noticemiddle
+		where 1=1
+    		<if test="noticecode !=null and noticecode != '' ">
+		    	and noticecode like #{noticecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="noticebranch !=null and noticebranch != '' ">
+		    	and noticebranch like #{noticebranch,jdbcType=VARCHAR}
+			</if>
+    		<if test="noticedept !=null and noticedept != '' ">
+		    	and noticedept like #{noticedept,jdbcType=VARCHAR}
+			</if>
+    		<if test="noticegroup !=null and noticegroup != '' ">
+		    	and noticegroup like #{noticegroup,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NoticemiddleResultMap" parameterType="HashMap">
+    	select * from noticemiddle 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.noticeMgr.Noticemiddle">
+  		INSERT INTO noticemiddle (
+    			noticecode,
+    			noticebranch,
+    			noticedept,
+    			noticegroup
+  		)VALUES (
+    		#{noticecode,jdbcType=VARCHAR},
+    		#{noticebranch,jdbcType=VARCHAR},
+    		#{noticedept,jdbcType=VARCHAR},
+    		#{noticegroup,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.noticeMgr.Noticemiddle">
+  		update noticemiddle set  
+	      		noticebranch = #{noticebranch,jdbcType=VARCHAR}  ,
+	      		noticedept = #{noticedept,jdbcType=VARCHAR}  ,
+	      		noticegroup = #{noticegroup,jdbcType=VARCHAR}  
+  		where noticecode = #{noticecode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from noticemiddle where noticecode = #{noticecode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNoticemiddle" resultMap="NoticemiddleResultMap" parameterType="String">
+  		select * from noticemiddle  where noticecode = #{noticecode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

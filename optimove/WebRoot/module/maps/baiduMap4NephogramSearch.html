@@ -1,0 +1,137 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<style type="text/css">
+			body,html,#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+		</style>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/js/nephogram/baidu_map_api_core.js"></script>
+		<!--加载鼠标绘制工具-->
+		<script type="text/javascript" src="<%=request.getContextPath()%>/js/nephogram/baidu_map_api_drawing_manager.js"></script>
+		<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+		<!--加载检索信息窗口-->
+		<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
+		<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
+		<title></title>
+	</head>
+	<body>
+		<div id="allmap"></div>
+	</body>
+</html>
+<script type="text/javascript" charset="GB2312">
+	
+	var uploadImgDir = "<%=request.getContextPath()%>/mobileimages/";
+	var points = [[['LONGITUDE','经度','121.548392'],['LATITUDE','纬度','29.816413']]];
+	var infodiv = "display: block;";
+	var formdiv = "display: none;";
+	var info = "";
+	var checkPoint = [];
+	var vIcon = "marker.png";
+	
+	var map = new BMap.Map("allmap"); 
+	map.centerAndZoom(mappoint(), 12); 
+	map.addControl(new BMap.MapTypeControl());
+	map.setCurrentCity("北京");
+	map.enableScrollWheelZoom(true); 
+	
+	var markers = [];
+	var pointArray = new Array();
+	for(var i=0; i<points.length; i++){
+		var x = "";
+		var y = "";
+		var info = "";
+		for(var j=0;j<points[i].length;j++){
+			var val = points[i][j][2];
+			if(points[i][j][0] == "LONGITUDE"){
+				x = points[i][j][2];
+			}else if(points[i][j][0] == "LATITUDE"){
+				y = points[i][j][2];
+			}else if(points[i][j][0] == "PICTURE"){
+				val = "<img src='"+uploadImgDir+points[i][j][2]+"' width='150' height='50'>";
+			}
+			info += points[i][j][1]+":"+val+"<br>";
+		}
+		var point = new BMap.Point(x,y);
+		if(checkPoint.length > 0){
+			if(x == checkPoint[0] && y == checkPoint[1]){
+				vIcon = "pointMarker.png"
+			} else {
+				vIcon = "marker.png"
+			}
+		}
+		var icon = new BMap.Icon("http://lbsyun.baidu.com/map/resource/geodata/css/images/"+vIcon, new BMap.Size(32, 32), {
+		    anchor: new BMap.Size(10, 30)
+		});
+		var marker = new BMap.Marker(point, {
+		    icon: icon
+		}); 
+		//设置跳动
+		//marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		var sContent = info;
+		map.addOverlay(marker);
+		addClickHandler(sContent, marker);
+		pointArray[i] = point;
+	}
+	map.setViewport(pointArray);
+	var opts = {
+		width : 300,     // 信息窗口宽度
+		enableMessage:true//设置允许信息窗发送短息
+    };
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+	function mappoint(){return new BMap.Point(121.548392,29.816413);}
+	
+	function loadDrawingManager(){
+	
+		var overlaycomplete = function(e){
+		    var strpoint="";
+			for(var i = 0;i < e.overlay.W.length-1;i++){//循环打印所有标志性坐标
+				if(i>0){
+					strpoint += ",";
+				}
+				strpoint += (e.overlay.W[i].lng + " , " + e.overlay.W[i].lat);
+			}
+			$("#resultpoint").val(strpoint);
+	    };
+	    var styleOptions = {
+	    	fillColor: "blue",
+			strokeWeight: 1,
+			fillOpacity: 0.3,
+			strokeOpacity: 0.3
+	    };
+	    //实例化鼠标绘制工具
+	    var drawingManager = new BMapLib.DrawingManager(map, {
+	        isOpen: false, //是否开启绘制模式
+	        enableDrawingTool: true, //是否显示工具栏
+	        drawingToolOptions: {
+	            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+	            offset: new BMap.Size(95, 5), //偏离值
+	            scale: 0.8 //工具栏缩放比例
+	        },
+	        circleOptions: styleOptions, //圆的样式
+	        polygonOptions: styleOptions, //多边形的样式
+	        rectangleOptions: styleOptions //矩形的样式
+	    });
+		 //添加鼠标绘制工具监听事件，用于获取绘制结果
+	    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+	}
+</script>

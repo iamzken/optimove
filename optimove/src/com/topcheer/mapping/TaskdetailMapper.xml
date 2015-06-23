@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.TaskdetailMapper">
+	<resultMap id="TaskdetailResultMap" type="com.topcheer.model.Taskdetail">
+		<result property="taskid" column="taskid" jdbcType="VARCHAR" />
+		<result property="taskname" column="taskname" jdbcType="VARCHAR" />
+		<result property="tasktype" column="tasktype" jdbcType="VARCHAR" />
+		<result property="taskcontent" column="taskcontent" jdbcType="VARCHAR" />
+		<result property="businessid" column="businessid" jdbcType="VARCHAR" />
+		<result property="userid" column="userid" jdbcType="VARCHAR" />
+		<result property="createtasktime" column="createtasktime"
+			jdbcType="VARCHAR" />
+		<result property="finishtasktime" column="finishtasktime"
+			jdbcType="VARCHAR" />
+		<result property="taskstatus" column="taskstatus" jdbcType="VARCHAR" />
+		<result property="operatebranch" column="operatebranch"
+			jdbcType="VARCHAR" />
+		<result property="operateperson" column="operateperson"
+			jdbcType="VARCHAR" />
+		<result property="operatedate" column="operatedate" jdbcType="VARCHAR" />
+		<result property="operatetime" column="operatetime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="TaskdetailColumnList">
+		taskid,
+		taskname,
+		tasktype,
+		taskcontent,
+		businessid,
+		userid,
+		createtasktime,
+		finishtasktime,
+		taskstatus,
+		operatebranch,
+		operateperson,
+		operatedate,
+		operatetime
+    </sql>
+	<select id="searchTaskdetail" resultMap="TaskdetailResultMap"
+		parameterType="HashMap">
+		select * from tbltaskdetail
+		where 1=1
+		<if test="taskid !=null and taskid != '' ">
+			and taskid like #{taskid,jdbcType=VARCHAR}
+			</if>
+		<if test="taskname !=null and taskname != '' ">
+			and taskname like #{taskname,jdbcType=VARCHAR}
+			</if>
+		<if test="tasktype !=null and tasktype != '' ">
+			and tasktype like #{tasktype,jdbcType=VARCHAR}
+			</if>
+		<if test="taskcontent !=null and taskcontent != '' ">
+			and taskcontent like #{taskcontent,jdbcType=VARCHAR}
+			</if>
+		<if test="businessid !=null and businessid != '' ">
+			and businessid like #{businessid,jdbcType=VARCHAR}
+			</if>
+		<if test="userid !=null and userid != '' ">
+			and userid like #{userid,jdbcType=VARCHAR}
+			</if>
+		<if test="createtasktime !=null and createtasktime != '' ">
+			and createtasktime like #{createtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="finishtasktime !=null and finishtasktime != '' ">
+			and finishtasktime like #{finishtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="taskstatus !=null and taskstatus != '' ">
+			and taskstatus like #{taskstatus,jdbcType=VARCHAR}
+			</if>
+		<if test="operatebranch !=null and operatebranch != '' ">
+			and operatebranch like #{operatebranch,jdbcType=VARCHAR}
+			</if>
+		<if test="operateperson !=null and operateperson != '' ">
+			and operateperson like #{operateperson,jdbcType=VARCHAR}
+			</if>
+		<if test="operatedate !=null and operatedate != '' ">
+			and operatedate like #{operatedate,jdbcType=VARCHAR}
+			</if>
+		<if test="operatetime !=null and operatetime != '' ">
+			and operatetime like #{operatetime,jdbcType=VARCHAR}
+			</if>
+	</select>
+
+	<select id="searchAll" resultMap="TaskdetailResultMap"
+		parameterType="HashMap">
+		select * from tbltaskdetail 
+  	</select>
+
+	<insert id="insert" parameterType="com.topcheer.model.Taskdetail">
+		INSERT INTO tbltaskdetail (
+		taskid,
+		taskname,
+		tasktype,
+		taskcontent,
+		businessid,
+		userid,
+		createtasktime,
+		finishtasktime,
+		taskstatus,
+		operatebranch,
+		operateperson,
+		operatedate,
+		operatetime
+		)VALUES (
+		#{taskid,jdbcType=VARCHAR},
+		#{taskname,jdbcType=VARCHAR},
+		#{tasktype,jdbcType=VARCHAR},
+		#{taskcontent,jdbcType=VARCHAR},
+		#{businessid,jdbcType=VARCHAR},
+		#{userid,jdbcType=VARCHAR},
+		#{createtasktime,jdbcType=VARCHAR},
+		#{finishtasktime,jdbcType=VARCHAR},
+		#{taskstatus,jdbcType=VARCHAR},
+		#{operatebranch,jdbcType=VARCHAR},
+		#{operateperson,jdbcType=VARCHAR},
+		#{operatedate,jdbcType=VARCHAR},
+		#{operatetime,jdbcType=VARCHAR}
+		)
+  	</insert>
+
+	<insert id="update" parameterType="com.topcheer.model.Taskdetail">
+		update tbltaskdetail set
+		taskname = #{taskname,jdbcType=VARCHAR} ,
+		tasktype =
+		#{tasktype,jdbcType=VARCHAR} ,
+		taskcontent =
+		#{taskcontent,jdbcType=VARCHAR} ,
+		businessid =
+		#{businessid,jdbcType=VARCHAR} ,
+		userid = #{userid,jdbcType=VARCHAR} ,
+		createtasktime = #{createtasktime,jdbcType=VARCHAR} ,
+		finishtasktime =
+		#{finishtasktime,jdbcType=VARCHAR} ,
+		taskstatus =
+		#{taskstatus,jdbcType=VARCHAR} ,
+		operatebranch =
+		#{operatebranch,jdbcType=VARCHAR} ,
+		operateperson =
+		#{operateperson,jdbcType=VARCHAR} ,
+		operatedate =
+		#{operatedate,jdbcType=VARCHAR} ,
+		operatetime =
+		#{operatetime,jdbcType=VARCHAR}
+		where taskid =
+		#{taskid,jdbcType=VARCHAR}
+  	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from tbltaskdetail
+		where taskid = #{taskid,jdbcType=VARCHAR}
+  	</delete>
+
+	<select id="getTaskdetail" resultMap="TaskdetailResultMap"
+		parameterType="String">
+		select * from tbltaskdetail where taskid =
+		#{taskid,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="searchBudgetSchemeTaskdetail" resultMap="TaskdetailResultMap"
+		parameterType="HashMap">
+		select t.taskid,
+		t.taskname,
+		t.tasktype,
+		t.taskcontent,
+		t.businessid,
+		t.userid,
+		t.createtasktime,
+		t.finishtasktime,
+		t.taskstatus,
+		t.operatebranch,
+		t.operateperson,
+		t.operatedate,
+		t.operatetime
+		from tbltaskdetail t
+		left join tblbudgetscheme tbsg
+		on
+		tbsg.subjectid = t.businessid
+		where t.businessid in (select
+		tbs.subjectid
+		from tblbudgetscheme tbs
+		where tbs.status = '1'
+		or
+		tbs.status = '2')
+		<if test="taskid !=null and taskid != '' ">
+			and taskid like #{taskid,jdbcType=VARCHAR}
+			</if>
+		<if test="taskname !=null and taskname != '' ">
+			and taskname like #{taskname,jdbcType=VARCHAR}
+			</if>
+		<if test="tasktype !=null and tasktype != '' ">
+			and tasktype like #{tasktype,jdbcType=VARCHAR}
+			</if>
+		<if test="taskcontent !=null and taskcontent != '' ">
+			and taskcontent like #{taskcontent,jdbcType=VARCHAR}
+			</if>
+		<if test="businessid !=null and businessid != '' ">
+			and businessid like #{businessid,jdbcType=VARCHAR}
+			</if>
+		<if test="userid !=null and userid != '' ">
+			and userid like #{userid,jdbcType=VARCHAR}
+			</if>
+		<if test="createtasktime !=null and createtasktime != '' ">
+			and createtasktime like #{createtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="finishtasktime !=null and finishtasktime != '' ">
+			and finishtasktime like #{finishtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="taskstatus !=null and taskstatus != '' ">
+			and taskstatus like #{taskstatus,jdbcType=VARCHAR}
+			</if>
+		<if test="operatebranch !=null and operatebranch != '' ">
+			and operatebranch like #{operatebranch,jdbcType=VARCHAR}
+			</if>
+		<if test="operateperson !=null and operateperson != '' ">
+			and operateperson like #{operateperson,jdbcType=VARCHAR}
+			</if>
+		<if test="operatedate !=null and operatedate != '' ">
+			and operatedate like #{operatedate,jdbcType=VARCHAR}
+			</if>
+		<if test="operatetime !=null and operatetime != '' ">
+			and operatetime like #{operatetime,jdbcType=VARCHAR}
+			</if>
+	</select>
+
+
+	<select id="searchBudgetTaskdetail" resultMap="TaskdetailResultMap"
+		parameterType="HashMap">
+		select t.taskid,
+		t.taskname,
+		t.tasktype,
+		t.taskcontent,
+		t.businessid,
+		t.userid,
+		t.createtasktime,
+		t.finishtasktime,
+		t.taskstatus,
+		t.operatebranch,
+		t.operateperson,
+		t.operatedate,
+		t.operatetime
+		from tbltaskdetail t
+		left join tblbudget tb
+		on tb.budgetid = t.businessid
+		where t.businessid in (select tblb.budgetid
+		from tblbudget tblb
+		where tblb.budgetstatus = '1'
+		or tblb.budgetstatus = '2')
+		<if test="taskid !=null and taskid != '' ">
+			and taskid like #{taskid,jdbcType=VARCHAR}
+			</if>
+		<if test="taskname !=null and taskname != '' ">
+			and taskname like #{taskname,jdbcType=VARCHAR}
+			</if>
+		<if test="tasktype !=null and tasktype != '' ">
+			and tasktype like #{tasktype,jdbcType=VARCHAR}
+			</if>
+		<if test="taskcontent !=null and taskcontent != '' ">
+			and taskcontent like #{taskcontent,jdbcType=VARCHAR}
+			</if>
+		<if test="businessid !=null and businessid != '' ">
+			and businessid like #{businessid,jdbcType=VARCHAR}
+			</if>
+		<if test="userid !=null and userid != '' ">
+			and userid like #{userid,jdbcType=VARCHAR}
+			</if>
+		<if test="createtasktime !=null and createtasktime != '' ">
+			and createtasktime like #{createtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="finishtasktime !=null and finishtasktime != '' ">
+			and finishtasktime like #{finishtasktime,jdbcType=VARCHAR}
+			</if>
+		<if test="taskstatus !=null and taskstatus != '' ">
+			and taskstatus like #{taskstatus,jdbcType=VARCHAR}
+			</if>
+		<if test="operatebranch !=null and operatebranch != '' ">
+			and operatebranch like #{operatebranch,jdbcType=VARCHAR}
+			</if>
+		<if test="operateperson !=null and operateperson != '' ">
+			and operateperson like #{operateperson,jdbcType=VARCHAR}
+			</if>
+		<if test="operatedate !=null and operatedate != '' ">
+			and operatedate like #{operatedate,jdbcType=VARCHAR}
+			</if>
+		<if test="operatetime !=null and operatetime != '' ">
+			and operatetime like #{operatetime,jdbcType=VARCHAR}
+			</if>
+	</select>
+</mapper>

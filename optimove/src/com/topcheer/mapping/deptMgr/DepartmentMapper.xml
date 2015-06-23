@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.deptMgr.DepartmentMapper" >
+	<resultMap id="DepartmentResultMap" type="com.topcheer.model.deptMgr.Department" >
+       		<result property="departmentcode"    column="departmentcode" jdbcType="VARCHAR" />
+       		<result property="departmentname"    column="departmentname" jdbcType="VARCHAR" />
+       		<result property="deptdescription"    column="deptdescription" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+       		<result property="operatorbankcode"    column="operatorbankcode" jdbcType="VARCHAR" />
+       		<result property="operatorcode"    column="operatorcode" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="DepartmentColumnList" >
+    		departmentcode,
+    		departmentname,
+    		deptdescription,
+    		remarks,
+    		operatorbankcode,
+    		operatorcode,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchDepartment" resultMap="DepartmentResultMap" parameterType="HashMap">
+    	select  * from tbldepartment
+		where 1=1
+    		<if test="departmentcode !=null and departmentcode != '' ">
+		    	and departmentcode like #{departmentcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="departmentname !=null and departmentname != '' ">
+		    	and departmentname like #{departmentname,jdbcType=VARCHAR}
+			</if>
+    		<if test="deptdescription !=null and deptdescription != '' ">
+		    	and deptdescription like #{deptdescription,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatorbankcode !=null and operatorbankcode != '' ">
+		    	and operatorbankcode like #{operatorbankcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatorcode !=null and operatorcode != '' ">
+		    	and operatorcode like #{operatorcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="DepartmentResultMap" parameterType="HashMap">
+    	select * from tbldepartment 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.deptMgr.Department">
+  		INSERT INTO tbldepartment (
+    			departmentcode,
+    			departmentname,
+    			deptdescription,
+    			remarks,
+    			operatorbankcode,
+    			operatorcode,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{departmentcode,jdbcType=VARCHAR},
+    		#{departmentname,jdbcType=VARCHAR},
+    		#{deptdescription,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR},
+    		#{operatorbankcode,jdbcType=VARCHAR},
+    		#{operatorcode,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.deptMgr.Department">
+  		update tbldepartment set  
+	      		departmentname = #{departmentname,jdbcType=VARCHAR}  ,
+	      		deptdescription = #{deptdescription,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  ,
+	      		operatorbankcode = #{operatorbankcode,jdbcType=VARCHAR}  ,
+	      		operatorcode = #{operatorcode,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where departmentcode = #{departmentcode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbldepartment where departmentcode = #{departmentcode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getDepartment" resultMap="DepartmentResultMap" parameterType="String">
+  		select * from tbldepartment  where departmentcode = #{departmentcode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

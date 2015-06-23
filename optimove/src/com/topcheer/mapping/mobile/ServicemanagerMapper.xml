@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.ServicemanagerMapper" >
+	<resultMap id="ServicemanagerResultMap" type="com.topcheer.model.mobile.Servicemanager" >
+       		<result property="servicecode"    column="servicecode" jdbcType="VARCHAR" />
+       		<result property="servicecnname"    column="servicecnname" jdbcType="VARCHAR" />
+       		<result property="sourcesystem"    column="sourcesystem" jdbcType="VARCHAR" />
+       		<result property="linkurl"    column="linkurl" jdbcType="VARCHAR" />
+       		<result property="remark"    column="remark" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="ServicemanagerColumnList" >
+    		servicecode,
+    		servicecnname,
+    		sourcesystem,
+    		linkurl,
+    		remark,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchServicemanager" resultMap="ServicemanagerResultMap" parameterType="HashMap">
+    	select  * from tblservicemanager
+		where 1=1
+    		<if test="servicecode !=null and servicecode != '' ">
+		    	and servicecode like #{servicecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="servicecnname !=null and servicecnname != '' ">
+		    	and servicecnname like #{servicecnname,jdbcType=VARCHAR}
+			</if>
+    		<if test="sourcesystem !=null and sourcesystem != '' ">
+		    	and sourcesystem like #{sourcesystem,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkurl !=null and linkurl != '' ">
+		    	and linkurl like #{linkurl,jdbcType=VARCHAR}
+			</if>
+    		<if test="remark !=null and remark != '' ">
+		    	and remark like #{remark,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="ServicemanagerResultMap" parameterType="HashMap">
+    	select * from tblservicemanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Servicemanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="servicecode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblservicemanager (
+    			servicecode,
+    			servicecnname,
+    			sourcesystem,
+    			linkurl,
+    			remark,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{servicecode,jdbcType=VARCHAR},
+    		#{servicecnname,jdbcType=VARCHAR},
+    		#{sourcesystem,jdbcType=VARCHAR},
+    		#{linkurl,jdbcType=VARCHAR},
+    		#{remark,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Servicemanager">
+  		update tblservicemanager set  
+	      		servicecnname = #{servicecnname,jdbcType=VARCHAR}  ,
+	      		sourcesystem = #{sourcesystem,jdbcType=VARCHAR}  ,
+	      		linkurl = #{linkurl,jdbcType=VARCHAR}  ,
+	      		remark = #{remark,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where servicecode = #{servicecode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblservicemanager where servicecode = #{servicecode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getServicemanager" resultMap="ServicemanagerResultMap" parameterType="String">
+  		select * from tblservicemanager  where servicecode = #{servicecode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

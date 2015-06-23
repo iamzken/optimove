@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.NewBranchInfoMapper" >
+	<resultMap id="NewBranchInfoResultMap" type="com.topcheer.model.NewBranchInfo" >
+       		<result property="branchCode"    column="BranchCode" jdbcType="VARCHAR" />
+       		<result property="grade"    column="Grade" jdbcType="CHAR" />
+       		<result property="upCode"    column="UpCode" jdbcType="VARCHAR" />
+       		<result property="name"    column="Name" jdbcType="VARCHAR" />
+       		<result property="address"    column="Address" jdbcType="VARCHAR" />
+       		<result property="zipcode"    column="Zipcode" jdbcType="VARCHAR" />
+       		<result property="telephone"    column="Telephone" jdbcType="VARCHAR" />
+       		<result property="fax"    column="Fax" jdbcType="VARCHAR" />
+       		<result property="status"    column="Status" jdbcType="CHAR" />
+       		<result property="account"    column="Account" jdbcType="VARCHAR" />
+       		<result property="linkManName"    column="LinkManName" jdbcType="VARCHAR" />
+       		<result property="linkManDept"    column="LinkManDept" jdbcType="VARCHAR" />
+       		<result property="linkManPos"    column="LinkManPos" jdbcType="VARCHAR" />
+       		<result property="linkManTel"    column="LinkManTel" jdbcType="VARCHAR" />
+       		<result property="linkManFax"    column="LinkManFax" jdbcType="VARCHAR" />
+       		<result property="linkManEmail"    column="LinkManEmail" jdbcType="VARCHAR" />
+       		<result property="createDate"    column="CreateDate" jdbcType="VARCHAR" />
+       		<result property="operatorCode"    column="OperatorCode" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NewBranchInfoColumnList" >
+    		BranchCode,
+    		Grade,
+    		UpCode,
+    		Name,
+    		Address,
+    		Zipcode,
+    		Telephone,
+    		Fax,
+    		Status,
+    		Account,
+    		LinkManName,
+    		LinkManDept,
+    		LinkManPos,
+    		LinkManTel,
+    		LinkManFax,
+    		LinkManEmail,
+    		CreateDate,
+    		OperatorCode
+    </sql>
+    <select id="searchNewBranchInfo" resultMap="NewBranchInfoResultMap" parameterType="HashMap">
+    	select  * from tblnewbranchinfo
+		where 1=1
+    		<if test="branchCode !=null and branchCode != '' ">
+		    	and BranchCode like #{branchCode,jdbcType=VARCHAR}
+			</if>
+    		<if test="grade !=null and grade != '' ">
+		    	and Grade like #{grade,jdbcType=CHAR}
+			</if>
+    		<if test="upCode !=null and upCode != '' ">
+		    	and UpCode like #{upCode,jdbcType=VARCHAR}
+			</if>
+    		<if test="name !=null and name != '' ">
+		    	and Name like #{name,jdbcType=VARCHAR}
+			</if>
+    		<if test="address !=null and address != '' ">
+		    	and Address like #{address,jdbcType=VARCHAR}
+			</if>
+    		<if test="zipcode !=null and zipcode != '' ">
+		    	and Zipcode like #{zipcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="telephone !=null and telephone != '' ">
+		    	and Telephone like #{telephone,jdbcType=VARCHAR}
+			</if>
+    		<if test="fax !=null and fax != '' ">
+		    	and Fax like #{fax,jdbcType=VARCHAR}
+			</if>
+    		<if test="status !=null and status != '' ">
+		    	and Status like #{status,jdbcType=CHAR}
+			</if>
+    		<if test="account !=null and account != '' ">
+		    	and Account like #{account,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManName !=null and linkManName != '' ">
+		    	and LinkManName like #{linkManName,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManDept !=null and linkManDept != '' ">
+		    	and LinkManDept like #{linkManDept,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManPos !=null and linkManPos != '' ">
+		    	and LinkManPos like #{linkManPos,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManTel !=null and linkManTel != '' ">
+		    	and LinkManTel like #{linkManTel,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManFax !=null and linkManFax != '' ">
+		    	and LinkManFax like #{linkManFax,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkManEmail !=null and linkManEmail != '' ">
+		    	and LinkManEmail like #{linkManEmail,jdbcType=VARCHAR}
+			</if>
+    		<if test="createDate !=null and createDate != '' ">
+		    	and CreateDate like #{createDate,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatorCode !=null and operatorCode != '' ">
+		    	and OperatorCode like #{operatorCode,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NewBranchInfoResultMap" parameterType="HashMap">
+    	select * from tblnewbranchinfo 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.NewBranchInfo">
+  		INSERT INTO tblnewbranchinfo (
+    			branchCode,
+    			grade,
+    			upCode,
+    			name,
+    			address,
+    			zipcode,
+    			telephone,
+    			fax,
+    			status,
+    			account,
+    			linkManName,
+    			linkManDept,
+    			linkManPos,
+    			linkManTel,
+    			linkManFax,
+    			linkManEmail,
+    			createDate,
+    			operatorCode
+  		)VALUES (
+    		#{branchCode,jdbcType=VARCHAR},
+    		#{grade,jdbcType=CHAR},
+    		#{upCode,jdbcType=VARCHAR},
+    		#{name,jdbcType=VARCHAR},
+    		#{address,jdbcType=VARCHAR},
+    		#{zipcode,jdbcType=VARCHAR},
+    		#{telephone,jdbcType=VARCHAR},
+    		#{fax,jdbcType=VARCHAR},
+    		#{status,jdbcType=CHAR},
+    		#{account,jdbcType=VARCHAR},
+    		#{linkManName,jdbcType=VARCHAR},
+    		#{linkManDept,jdbcType=VARCHAR},
+    		#{linkManPos,jdbcType=VARCHAR},
+    		#{linkManTel,jdbcType=VARCHAR},
+    		#{linkManFax,jdbcType=VARCHAR},
+    		#{linkManEmail,jdbcType=VARCHAR},
+    		#{createDate,jdbcType=VARCHAR},
+    		#{operatorCode,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.NewBranchInfo">
+  		update tblnewbranchinfo set  
+	      		Grade = #{grade,jdbcType=CHAR}  ,
+	      		UpCode = #{upCode,jdbcType=VARCHAR}  ,
+	      		Name = #{name,jdbcType=VARCHAR}  ,
+	      		Address = #{address,jdbcType=VARCHAR}  ,
+	      		Zipcode = #{zipcode,jdbcType=VARCHAR}  ,
+	      		Telephone = #{telephone,jdbcType=VARCHAR}  ,
+	      		Fax = #{fax,jdbcType=VARCHAR}  ,
+	      		Status = #{status,jdbcType=CHAR}  ,
+	      		Account = #{account,jdbcType=VARCHAR}  ,
+	      		LinkManName = #{linkManName,jdbcType=VARCHAR}  ,
+	      		LinkManDept = #{linkManDept,jdbcType=VARCHAR}  ,
+	      		LinkManPos = #{linkManPos,jdbcType=VARCHAR}  ,
+	      		LinkManTel = #{linkManTel,jdbcType=VARCHAR}  ,
+	      		LinkManFax = #{linkManFax,jdbcType=VARCHAR}  ,
+	      		LinkManEmail = #{linkManEmail,jdbcType=VARCHAR}  ,
+	      		CreateDate = #{createDate,jdbcType=VARCHAR}  ,
+	      		OperatorCode = #{operatorCode,jdbcType=VARCHAR}  
+  		where BranchCode = #{branchCode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblnewbranchinfo where BranchCode = #{branchCode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNewBranchInfo" resultMap="NewBranchInfoResultMap" parameterType="String">
+  		select * from tblnewbranchinfo  where BranchCode = #{branchCode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

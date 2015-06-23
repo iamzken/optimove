@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.basedata.CurrencyMapper" >
+	<resultMap id="CurrencyResultMap" type="com.topcheer.model.basedata.Currency" >
+       		<result property="code"    column="code" jdbcType="VARCHAR" />
+       		<result property="name"    column="name" jdbcType="VARCHAR" />
+       		<result property="brief"    column="brief" jdbcType="VARCHAR" />
+       		<result property="operationOrg"    column="operation_org" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operationDate"    column="operation_date" jdbcType="VARCHAR" />
+       		<result property="operationTime"    column="operation_time" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="CurrencyColumnList" >
+    		code,
+    		name,
+    		brief,
+    		operation_org,
+    		operator,
+    		operation_date,
+    		operation_time
+    </sql>
+    <select id="searchCurrency" resultMap="CurrencyResultMap" parameterType="HashMap">
+    	select  * from ba_currency
+		where 1=1
+    		<if test="code !=null and code != '' ">
+		    	and code like #{code,jdbcType=VARCHAR}
+			</if>
+    		<if test="name !=null and name != '' ">
+		    	and name like #{name,jdbcType=VARCHAR}
+			</if>
+    		<if test="brief !=null and brief != '' ">
+		    	and brief like #{brief,jdbcType=VARCHAR}
+			</if>
+    		<if test="operationOrg !=null and operationOrg != '' ">
+		    	and operation_org like #{operationOrg,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operationDate !=null and operationDate != '' ">
+		    	and operation_date like #{operationDate,jdbcType=VARCHAR}
+			</if>
+    		<if test="operationTime !=null and operationTime != '' ">
+		    	and operation_time like #{operationTime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="CurrencyResultMap" parameterType="HashMap">
+    	select * from ba_currency 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.basedata.Currency">
+  		INSERT INTO ba_currency (
+    			code,
+    			name,
+    			brief,
+    			operation_org,
+    			operator,
+    			operation_date,
+    			operation_time
+  		)VALUES (
+    		#{code,jdbcType=VARCHAR},
+    		#{name,jdbcType=VARCHAR},
+    		#{brief,jdbcType=VARCHAR},
+    		#{operationOrg,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operationDate,jdbcType=VARCHAR},
+    		#{operationTime,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.basedata.Currency">
+  		update ba_currency set  
+	      		name = #{name,jdbcType=VARCHAR}  ,
+	      		brief = #{brief,jdbcType=VARCHAR}  ,
+	      		operation_org = #{operationOrg,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operation_date = #{operationDate,jdbcType=VARCHAR}  ,
+	      		operation_time = #{operationTime,jdbcType=VARCHAR}  
+  		where code = #{code,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from ba_currency where code = #{code,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getCurrency" resultMap="CurrencyResultMap" parameterType="String">
+  		select * from ba_currency  where code = #{code,jdbcType=VARCHAR}
+  	</select>
+</mapper>

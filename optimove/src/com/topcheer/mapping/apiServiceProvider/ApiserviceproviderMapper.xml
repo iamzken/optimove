@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.apiServiceProvider.ApiserviceproviderMapper" >
+	<resultMap id="ApiserviceproviderResultMap" type="com.topcheer.model.apiServiceProvider.Apiserviceprovider" >
+       		<result property="apicode"    column="apicode" jdbcType="VARCHAR" />
+       		<result property="apiname"    column="apiname" jdbcType="VARCHAR" />
+       		<result property="apitype"    column="apitype" jdbcType="VARCHAR" />
+       		<result property="apiversion"    column="apiversion" jdbcType="VARCHAR" />
+       		<result property="operatetime"    column="operatetime" jdbcType="VARCHAR" />
+       		<result property="status"    column="status" jdbcType="VARCHAR" />
+       		<result property="providerid"    column="providerid" jdbcType="VARCHAR" />
+       		<result property="providername"    column="providername" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="ApiserviceproviderColumnList" >
+    		apicode,
+    		apiname,
+    		apitype,
+    		apiversion,
+    		operatetime,
+    		status,
+    		providerid,
+    		providername
+    </sql>
+    <select id="searchApiserviceprovider" resultMap="ApiserviceproviderResultMap" parameterType="HashMap">
+    	select  * from tblapiserviceprovider
+		where 1=1
+    		<if test="apicode !=null and apicode != '' ">
+		    	and apicode like #{apicode,jdbcType=VARCHAR}
+			</if>
+    		<if test="apiname !=null and apiname != '' ">
+		    	and apiname like #{apiname,jdbcType=VARCHAR}
+			</if>
+    		<if test="apitype !=null and apitype != '' ">
+		    	and apitype like #{apitype,jdbcType=VARCHAR}
+			</if>
+    		<if test="apiversion !=null and apiversion != '' ">
+		    	and apiversion like #{apiversion,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatetime !=null and operatetime != '' ">
+		    	and operatetime like #{operatetime,jdbcType=VARCHAR}
+			</if>
+    		<if test="status !=null and status != '' ">
+		    	and status like #{status,jdbcType=VARCHAR}
+			</if>
+    		<if test="providerid !=null and providerid != '' ">
+		    	and providerid like #{providerid,jdbcType=VARCHAR}
+			</if>
+    		<if test="providername !=null and providername != '' ">
+		    	and providername like #{providername,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="ApiserviceproviderResultMap" parameterType="HashMap">
+    	select * from tblapiserviceprovider 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.apiServiceProvider.Apiserviceprovider">
+  	<!--
+  		<selectKey resultType="String" keyProperty="apicode" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblapiserviceprovider (
+    			apicode,
+    			apiname,
+    			apitype,
+    			apiversion,
+    			operatetime,
+    			status,
+    			providerid,
+    			providername
+  		)VALUES (
+    		#{apicode,jdbcType=VARCHAR},
+    		#{apiname,jdbcType=VARCHAR},
+    		#{apitype,jdbcType=VARCHAR},
+    		#{apiversion,jdbcType=VARCHAR},
+    		#{operatetime,jdbcType=VARCHAR},
+    		#{status,jdbcType=VARCHAR},
+    		#{providerid,jdbcType=VARCHAR},
+    		#{providername,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.apiServiceProvider.Apiserviceprovider">
+  		update tblapiserviceprovider set  
+	      		apiname = #{apiname,jdbcType=VARCHAR}  ,
+	      		apitype = #{apitype,jdbcType=VARCHAR}  ,
+	      		apiversion = #{apiversion,jdbcType=VARCHAR}  ,
+	      		operatetime = #{operatetime,jdbcType=VARCHAR}  ,
+	      		status = #{status,jdbcType=VARCHAR}  ,
+	      		providerid = #{providerid,jdbcType=VARCHAR}  ,
+	      		providername = #{providername,jdbcType=VARCHAR}  
+  		where apicode = #{apicode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblapiserviceprovider where apicode = #{apicode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getApiserviceprovider" resultMap="ApiserviceproviderResultMap" parameterType="String">
+  		select * from tblapiserviceprovider  where apicode = #{apicode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

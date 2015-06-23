@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.bankNewsMgr.BanknewsMapper" >
+	<resultMap id="BanknewsResultMap" type="com.topcheer.model.bankNewsMgr.Banknews" >
+       		<result property="newscode"    column="newscode" jdbcType="VARCHAR" />
+       		<result property="newstitle"    column="newstitle" jdbcType="VARCHAR" />
+       		<result property="newsdate"    column="newsdate" jdbcType="VARCHAR" />
+       		<result property="newscontent"    column="newscontent" jdbcType="VARCHAR" />
+       		<result property="newsobject"    column="newsobject" jdbcType="VARCHAR" />
+       		<result property="begindate"    column="begindate" jdbcType="VARCHAR" />
+       		<result property="enddate"    column="enddate" jdbcType="VARCHAR" />
+       		<result property="operatorbankcode"    column="operatorbankcode" jdbcType="VARCHAR" />
+       		<result property="operatorcode"    column="operatorcode" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="BanknewsColumnList" >
+    		newscode,
+    		newstitle,
+    		newsdate,
+    		newscontent,
+    		newsobject,
+    		begindate,
+    		enddate,
+    		operatorbankcode,
+    		operatorcode,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchBanknews" resultMap="BanknewsResultMap" parameterType="HashMap">
+    	select  * from tblbanknews
+		where 1=1
+    		<if test="newscode !=null and newscode != '' ">
+		    	and newscode like #{newscode,jdbcType=VARCHAR}
+			</if>
+    		<if test="newstitle !=null and newstitle != '' ">
+		    	and newstitle like #{newstitle,jdbcType=VARCHAR}
+			</if>
+    		<if test="newsdate !=null and newsdate != '' ">
+		    	and newsdate like #{newsdate,jdbcType=VARCHAR}
+			</if>
+    		<if test="newscontent !=null and newscontent != '' ">
+		    	and newscontent like #{newscontent,jdbcType=VARCHAR}
+			</if>
+    		<if test="newsobject !=null and newsobject != '' ">
+		    	and newsobject like #{newsobject,jdbcType=VARCHAR}
+			</if>
+    		<if test="begindate !=null and begindate != '' ">
+		    	and begindate like #{begindate,jdbcType=VARCHAR}
+			</if>
+    		<if test="enddate !=null and enddate != '' ">
+		    	and enddate like #{enddate,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatorbankcode !=null and operatorbankcode != '' ">
+		    	and operatorbankcode like #{operatorbankcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatorcode !=null and operatorcode != '' ">
+		    	and operatorcode like #{operatorcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="BanknewsResultMap" parameterType="HashMap">
+    	select * from tblbanknews 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.bankNewsMgr.Banknews">
+  		<selectKey resultType="String" keyProperty="newscode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+  		INSERT INTO tblbanknews (
+    			newscode,
+    			newstitle,
+    			newsdate,
+    			newscontent,
+    			newsobject,
+    			begindate,
+    			enddate,
+    			operatorbankcode,
+    			operatorcode,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{newscode,jdbcType=VARCHAR},
+    		#{newstitle,jdbcType=VARCHAR},
+    		#{newsdate,jdbcType=VARCHAR},
+    		#{newscontent,jdbcType=VARCHAR},
+    		#{newsobject,jdbcType=VARCHAR},
+    		#{begindate,jdbcType=VARCHAR},
+    		#{enddate,jdbcType=VARCHAR},
+    		#{operatorbankcode,jdbcType=VARCHAR},
+    		#{operatorcode,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.bankNewsMgr.Banknews">
+  		update tblbanknews set  
+	      		newstitle = #{newstitle,jdbcType=VARCHAR}  ,
+	      		newsdate = #{newsdate,jdbcType=VARCHAR}  ,
+	      		newscontent = #{newscontent,jdbcType=VARCHAR}  ,
+	      		newsobject = #{newsobject,jdbcType=VARCHAR}  ,
+	      		begindate = #{begindate,jdbcType=VARCHAR}  ,
+	      		enddate = #{enddate,jdbcType=VARCHAR}  ,
+	      		operatorbankcode = #{operatorbankcode,jdbcType=VARCHAR}  ,
+	      		operatorcode = #{operatorcode,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where newscode = #{newscode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblbanknews where newscode = #{newscode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getBanknews" resultMap="BanknewsResultMap" parameterType="String">
+  		select * from tblbanknews  where newscode = #{newscode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

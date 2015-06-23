@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.nephogramAtrribute.NephogramatrributeMapper" >
+	<resultMap id="NephogramatrributeResultMap" type="com.topcheer.model.nephogramAtrribute.Nephogramatrribute" >
+       		<result property="nephogramattrid"    column="nephogramattrid" jdbcType="VARCHAR" />
+       		<result property="nephogrammodelid"    column="nephogrammodelid" jdbcType="VARCHAR" />
+       		<result property="attributecode"    column="attributecode" jdbcType="VARCHAR" />
+       		<result property="attributename"    column="attributename" jdbcType="VARCHAR" />
+       		<result property="attrtype"    column="attrtype" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NephogramatrributeColumnList" >
+    		nephogramattrid,
+    		nephogrammodelid,
+    		attributecode,
+    		attributename,
+    		attrtype,
+    		remarks
+    </sql>
+    <select id="searchNephogramatrribute" resultMap="NephogramatrributeResultMap" parameterType="HashMap">
+    	select  * from tblnephogramatrribute
+		where 1=1
+    		<if test="nephogramattrid !=null and nephogramattrid != '' ">
+		    	and nephogramattrid like #{nephogramattrid,jdbcType=VARCHAR}
+			</if>
+    		<if test="nephogrammodelid !=null and nephogrammodelid != '' ">
+		    	and nephogrammodelid like #{nephogrammodelid,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributecode !=null and attributecode != '' ">
+		    	and attributecode like #{attributecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributename !=null and attributename != '' ">
+		    	and attributename like #{attributename,jdbcType=VARCHAR}
+			</if>
+    		<if test="attrtype !=null and attrtype != '' ">
+		    	and attrtype like #{attrtype,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NephogramatrributeResultMap" parameterType="HashMap">
+    	select * from tblnephogramatrribute 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.nephogramAtrribute.Nephogramatrribute">
+  	<!--
+  		<selectKey resultType="String" keyProperty="nephogramattrid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblnephogramatrribute (
+    			nephogramattrid,
+    			nephogrammodelid,
+    			attributecode,
+    			attributename,
+    			attrtype,
+    			remarks
+  		)VALUES (
+    		#{nephogramattrid,jdbcType=VARCHAR},
+    		#{nephogrammodelid,jdbcType=VARCHAR},
+    		#{attributecode,jdbcType=VARCHAR},
+    		#{attributename,jdbcType=VARCHAR},
+    		#{attrtype,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.nephogramAtrribute.Nephogramatrribute">
+  		update tblnephogramatrribute set  
+	      		nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}  ,
+	      		attributecode = #{attributecode,jdbcType=VARCHAR}  ,
+	      		attributename = #{attributename,jdbcType=VARCHAR}  ,
+	      		attrtype = #{attrtype,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  
+  		where nephogramattrid = #{nephogramattrid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblnephogramatrribute where nephogramattrid = #{nephogramattrid,jdbcType=VARCHAR}
+  	</delete>
+  	<delete id="deletebynephogrammodelid" parameterType="String">
+  		delete from tblnephogramatrribute where nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNephogramatrribute" resultMap="NephogramatrributeResultMap" parameterType="String">
+  		select * from tblnephogramatrribute  where nephogramattrid = #{nephogramattrid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

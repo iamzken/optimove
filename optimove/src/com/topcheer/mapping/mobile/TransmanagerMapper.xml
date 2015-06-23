@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.TransmanagerMapper" >
+	<resultMap id="TransmanagerResultMap" type="com.topcheer.model.mobile.Transmanager" >
+       		<result property="transcode"    column="transcode" jdbcType="VARCHAR" />
+       		<result property="transname"    column="transname" jdbcType="VARCHAR" />
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="iscamera"    column="iscamera" jdbcType="VARCHAR" />
+       		<result property="isrecognition"    column="isrecognition" jdbcType="VARCHAR" />
+       		<result property="islocation"    column="islocation" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="TransmanagerColumnList" >
+    		transcode,
+    		transname,
+    		templatecode,
+    		iscamera,
+    		isrecognition,
+    		islocation,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchTransmanager" resultMap="TransmanagerResultMap" parameterType="HashMap">
+    	select  * from tbltransmanager
+		where 1=1
+    		<if test="transcode !=null and transcode != '' ">
+		    	and transcode like #{transcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="transname !=null and transname != '' ">
+		    	and transname like #{transname,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="iscamera !=null and iscamera != '' ">
+		    	and iscamera like #{iscamera,jdbcType=VARCHAR}
+			</if>
+    		<if test="isrecognition !=null and isrecognition != '' ">
+		    	and isrecognition like #{isrecognition,jdbcType=VARCHAR}
+			</if>
+    		<if test="islocation !=null and islocation != '' ">
+		    	and islocation like #{islocation,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="TransmanagerResultMap" parameterType="HashMap">
+    	select * from tbltransmanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Transmanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="transcode" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tbltransmanager (
+    			transcode,
+    			transname,
+    			templatecode,
+    			iscamera,
+    			isrecognition,
+    			islocation,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{transcode,jdbcType=VARCHAR},
+    		#{transname,jdbcType=VARCHAR},
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{iscamera,jdbcType=VARCHAR},
+    		#{isrecognition,jdbcType=VARCHAR},
+    		#{islocation,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Transmanager">
+  		update tbltransmanager set  
+	      		transname = #{transname,jdbcType=VARCHAR}  ,
+	      		templatecode = #{templatecode,jdbcType=VARCHAR}  ,
+	      		iscamera = #{iscamera,jdbcType=VARCHAR}  ,
+	      		isrecognition = #{isrecognition,jdbcType=VARCHAR}  ,
+	      		islocation = #{islocation,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where transcode = #{transcode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbltransmanager where transcode = #{transcode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getTransmanager" resultMap="TransmanagerResultMap" parameterType="String">
+  		select * from tbltransmanager  where transcode = #{transcode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

@@ -1,0 +1,51 @@
+body {
+	background: url("../images/login/login_nolog.jpg") repeat-x center top rgb(255, 255, 255); margin:0 auto; text-align: center; color: rgb(38, 52, 87);position: relative;
+}
+div.loginbg {
+	background: url("../images/login/") no-repeat left; font: 11px/16px "Microsoft YaHei";margin-left:480px; margin-top:90px; width: 698px; height: 470px; text-align: center; color: rgb(255, 255, 255); position: relative; font-size-adjust: none; font-stretch: normal
+}
+div.loginmapbg {
+	background: url("../images/login/maplog.jpg") no-repeat center top rgb(255, 255, 255); margin:0 auto; text-align: center; color: rgb(38, 52, 87);
+}
+div.list {
+	font: 11px/16px "Microsoft YaHei"; left: 366px; top: 167px; width: 340px; height: 140px; color: rgb(38, 52, 87); display: block; position: absolute; font-size-adjust: none; font-stretch: normal;
+}
+div.list ul {
+	width: 340px; overflow: hidden; float: left;
+}
+div.list ul li {
+	width: 340px; height: 30px; overflow: hidden; float: left; display: block;
+}
+div.list ul li p {
+	font: 15px/22px "Microsoft Yahei"; width: 60px; text-align: right; color: rgb(71, 71, 71); overflow: hidden; float: left; font-size-adjust: none; font-stretch: normal;
+}
+div.list ul li q {
+	font: 12px/22px "Microsoft Yahei"; color: rgb(71, 71, 71); padding-left: 60px; float: left; font-size-adjust: none; font-stretch: normal;
+}
+div.list ul li q.tip {
+	font: 12px/22px "Microsoft Yahei"; color: rgb(255, 0, 0); padding-left: 60px; float: left; font-size-adjust: none; font-stretch: normal;
+}
+div.list ul li input.sinp {
+	font: 15px/24px "Microsoft YaHei"; border: 1px solid rgb(191, 204, 222); width: 220px; height: 24px; color: rgb(9, 46, 103); float: left; font-size-adjust: none; font-stretch: normal; background-color: rgb(255, 255, 255);
+}
+div.list ul li span.buts {
+	margin: 0px auto; width: 340px; height: 30px; display: block;
+}
+div.list ul li span.buts input.sbtn {
+	background: url("../images/login/but_bg.png") no-repeat left; font: 15px/26px "Microsoft Yahei"; margin: 0px 10px; border: currentColor; width: 82px; height: 30px; text-align: center; color: rgb(255, 255, 255); cursor: pointer; font-size-adjust: none; font-stretch: normal;
+}
+div.footer {
+	font: 11px/16px "Microsoft YaHei"; left: 0px; top: 514px; width: 698px; height: 40px; text-align: center; color: rgb(181, 181, 181); position: absolute; font-size-adjust: none; font-stretch: normal;
+}
+div.footer p {
+	font: 11px/16px "Microsoft YaHei"; height: 16px; text-align: center; color: rgb(38, 52, 87); font-size-adjust: none; font-stretch: normal;
+}
+div.footer span {
+	font: 14px/16px "Microsoft YaHei"; margin: 0px auto; width: 600px; height: 16px; text-align: center; color: rgb(181, 181, 181); display: block; font-size-adjust: none; font-stretch: normal;
+}
+div.footer span q {
+	font: 11px/16px "Microsoft YaHei"; width: 140px; height: 16px; text-align: right; color: rgb(38, 52, 87); float: right; font-size-adjust: none; font-stretch: normal;
+}
+div.footer span em {
+	font: 11px/16px "Microsoft YaHei"; width: 90px; height: 16px; text-align: left; color: rgb(38, 52, 87); float: left; font-size-adjust: none; font-stretch: normal;
+}

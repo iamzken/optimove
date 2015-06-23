@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.grabData.GrabdataMapper" >
+	<resultMap id="GrabdataResultMap" type="com.topcheer.model.grabData.Grabdata" >
+       		<result property="grabdataid"    column="grabdataid" jdbcType="VARCHAR" />
+       		<result property="grabdataname"    column="grabdataname" jdbcType="VARCHAR" />
+       		<result property="grabdatasource"    column="grabdatasource" jdbcType="VARCHAR" />
+       		<result property="grabdatatype"    column="grabdatatype" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+       		<result property="grabdatafile"    column="grabdatafile" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="GrabdataColumnList" >
+    		grabdataid,
+    		grabdataname,
+    		grabdatasource,
+    		grabdatatype,
+    		remarks,
+    		grabdatafile
+    </sql>
+    <select id="searchGrabdata" resultMap="GrabdataResultMap" parameterType="HashMap">
+    	select  * from tblgrabdata
+		where 1=1
+    		<if test="grabdataid !=null and grabdataid != '' ">
+		    	and grabdataid like #{grabdataid,jdbcType=VARCHAR}
+			</if>
+    		<if test="grabdataname !=null and grabdataname != '' ">
+		    	and grabdataname like #{grabdataname,jdbcType=VARCHAR}
+			</if>
+    		<if test="grabdatasource !=null and grabdatasource != '' ">
+		    	and grabdatasource like #{grabdatasource,jdbcType=VARCHAR}
+			</if>
+    		<if test="grabdatatype !=null and grabdatatype != '' ">
+		    	and grabdatatype like #{grabdatatype,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+    		<if test="grabdatafile !=null and grabdatafile != '' ">
+		    	and grabdatafile like #{grabdatafile,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="GrabdataResultMap" parameterType="HashMap">
+    	select * from tblgrabdata 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.grabData.Grabdata">
+  	<!--
+  		<selectKey resultType="String" keyProperty="grabdataid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblgrabdata (
+    			grabdataid,
+    			grabdataname,
+    			grabdatasource,
+    			grabdatatype,
+    			remarks,
+    			grabdatafile
+  		)VALUES (
+    		#{grabdataid,jdbcType=VARCHAR},
+    		#{grabdataname,jdbcType=VARCHAR},
+    		#{grabdatasource,jdbcType=VARCHAR},
+    		#{grabdatatype,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR},
+    		#{grabdatafile,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.grabData.Grabdata">
+  		update tblgrabdata set  
+	      		grabdataname = #{grabdataname,jdbcType=VARCHAR}  ,
+	      		grabdatasource = #{grabdatasource,jdbcType=VARCHAR}  ,
+	      		grabdatatype = #{grabdatatype,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  ,
+	      		grabdatafile = #{grabdatafile,jdbcType=VARCHAR}  
+  		where grabdataid = #{grabdataid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblgrabdata where grabdataid = #{grabdataid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getGrabdata" resultMap="GrabdataResultMap" parameterType="String">
+  		select * from tblgrabdata  where grabdataid = #{grabdataid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

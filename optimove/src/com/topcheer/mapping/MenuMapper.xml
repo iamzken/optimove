@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.MenuMapper" >
+	<resultMap id="MenuResultMap" type="com.topcheer.model.Menu" >
+	    <result property="menuCode"    column="MENUCODE"  />
+		<result property="menuParent"    column="MENUPARENT"  />
+		<result property="menuName"    column="MENUNAME"  />
+		<result property="menuUrl"    column="MENUURL"  />
+		<result property="icon"    column="ICON"  />
+		<result property="menuModel"    column="MENUMODEL"  />
+		<result property="menuFlag"    column="MENUFLAG"  />
+		<result property="menuRemark"    column="MENUREMARK"  />
+		<result property="cretaedBy"    column="CRETAEDBY"  />
+		<result property="creationDate"    column="CREATIONDATE"  />
+		<result property="lastUpdatedBy"    column="LASTUPDATEDBY"  />
+		<result property="lastUpdateDate"    column="LASTUPDATEDATE"  />
+		<result property="orderIndex"    column="ORDERINDEX"  />
+		<result property="isMenu"    column="ISMENU"  />
+	</resultMap>
+    <sql id="MenuColumnList" >
+        MENUCODE, MENUPARENT, MENUNAME,MENUURL,MENUMODEL,MENUFLAG,CRETAEDBY,CREATIONDATE,LASTUPDATEDBY,LASTUPDATEDATE,ISMENU,ICON,OrderIndex,MenuRemark
+    </sql>
+    <select id="searchMenu" resultMap="MenuResultMap" parameterType="HashMap">
+    	select 
+		    <include refid="MenuColumnList" />
+		from tblmenulist
+		where 1=1 and MenuFlag = '1'
+		<if test="menuName !=null and menuName != ''">
+		    and MENUNAME like '%${menuName}%'
+		</if> 
+		<if test="menuCode != null and menuCode != ''">
+		    and MENUCODE like '%${menuCode}%'
+		</if> 
+		order by menuCode
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="MenuResultMap" parameterType="HashMap">
+    	select 
+		    <include refid="MenuColumnList" />
+		from tblmenulist where MenuFlag = '1' order by menuCode
+  	</select> 
+  	<select id="searchMenuByGrpId" resultMap="MenuResultMap" parameterType="String">
+    	select 
+		    <include refid="MenuColumnList" />
+		from tblmenulist t where t.MenuFlag = '1' and t.MENUCODE in(SELECT g.MenuCode FROM tblgroupright g where g.GrpId = #{grpId}) order by t.menuCode
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.Menu">
+  		INSERT INTO tblmenulist (MENUCODE,MENUPARENT,MENUNAME,MENUURL,MENUMODEL,MENUFLAG,MENUREMARK,CRETAEDBY,CREATIONDATE,LASTUPDATEDBY,LASTUPDATEDATE,ORDERINDEX,ISMENU,ICON)
+  		VALUES (
+		#{menuCode,jdbcType=VARCHAR},
+    		#{menuParent,jdbcType=VARCHAR},
+    		#{menuName,jdbcType=VARCHAR},
+    		#{menuUrl,jdbcType=VARCHAR},
+    		#{menuModel,jdbcType=VARCHAR},
+    		#{menuFlag,jdbcType=VARCHAR},
+    		#{cretaedBy,jdbcType=VARCHAR},
+    		#{creationDate,jdbcType=DATE},
+    		#{lastUpdatedBy,jdbcType=VARCHAR},
+    		#{lastUpdateDate,jdbcType=DATE},
+    		#{orderIndex,jdbcType=INTEGER},
+    		#{isMenu,jdbcType=VARCHAR},
+    		#{menuRemark,jdbcType=VARCHAR},
+    		#{icon,jdbcType=VARCHAR}
+    		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.Menu">
+  		update tblmenulist set  
+	      		menuparent = #{menuParent,jdbcType=VARCHAR}  ,
+	      		menuname = #{menuName,jdbcType=VARCHAR}  ,
+	      		menuurl = #{menuUrl,jdbcType=VARCHAR}  ,
+	      		menumodel = #{menuModel,jdbcType=VARCHAR}  ,
+	      		menuflag = #{menuFlag,jdbcType=VARCHAR}  ,
+	      		cretaedby = #{cretaedBy,jdbcType=VARCHAR}  ,
+	      		creationdate = #{creationDate,jdbcType=VARCHAR}  ,
+	      		lastupdatedby = #{lastUpdatedBy,jdbcType=VARCHAR}  ,
+	      		lastupdatedate = #{lastUpdateDate,jdbcType=VARCHAR}  ,
+	      		orderindex = #{orderIndex,jdbcType=INTEGER}  ,
+	      		ismenu = #{isMenu,jdbcType=VARCHAR}  ,
+	      		menuremark = #{menuRemark,jdbcType=VARCHAR}  ,
+	      		icon = #{icon,jdbcType=VARCHAR}
+  		where menucode = #{menuCode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblmenulist where MENUCODE = #{menuCode}
+  	</delete>
+  	
+  	<select id="searchCount">
+  		select count(1) from tblmenulist
+  	</select>
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.BusinessapplyMapper" >
+	<resultMap id="BusinessapplyResultMap" type="com.topcheer.model.mobile.Businessapply" >
+       		<result property="businessid"    column="businessid" jdbcType="VARCHAR" />
+       		<result property="businesstype"    column="businesstype" jdbcType="VARCHAR" />
+       		<result property="productcode"    column="productcode" jdbcType="VARCHAR" />
+       		<result property="tableid"    column="tableid" jdbcType="VARCHAR" />
+       		<result property="fieldname"    column="fieldname" jdbcType="VARCHAR" />
+       		<result property="fieldcnname"    column="fieldcnname" jdbcType="VARCHAR" />
+       		<result property="fieldvalue"    column="fieldvalue" jdbcType="VARCHAR" />
+       		<result property="transchannel"    column="transchannel" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="BusinessapplyColumnList" >
+    		businessid,
+    		businesstype,
+    		productcode,
+    		tableid,
+    		fieldname,
+    		fieldcnname,
+    		fieldvalue,
+    		transchannel,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchBusinessapply" resultMap="BusinessapplyResultMap" parameterType="HashMap">
+    	select  * from tblbusinessapply
+		where 1=1
+    		<if test="businessid !=null and businessid != '' ">
+		    	and businessid like #{businessid,jdbcType=VARCHAR}
+			</if>
+    		<if test="businesstype !=null and businesstype != '' ">
+		    	and businesstype like #{businesstype,jdbcType=VARCHAR}
+			</if>
+    		<if test="productcode !=null and productcode != '' ">
+		    	and productcode like #{productcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="tableid !=null and tableid != '' ">
+		    	and tableid like #{tableid,jdbcType=VARCHAR}
+			</if>
+    		<if test="fieldname !=null and fieldname != '' ">
+		    	and fieldname like #{fieldname,jdbcType=VARCHAR}
+			</if>
+    		<if test="fieldcnname !=null and fieldcnname != '' ">
+		    	and fieldcnname like #{fieldcnname,jdbcType=VARCHAR}
+			</if>
+    		<if test="fieldvalue !=null and fieldvalue != '' ">
+		    	and fieldvalue like #{fieldvalue,jdbcType=VARCHAR}
+			</if>
+    		<if test="transchannel !=null and transchannel != '' ">
+		    	and transchannel like #{transchannel,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="BusinessapplyResultMap" parameterType="HashMap">
+    	select * from tblbusinessapply 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Businessapply">
+  	<!--
+  		<selectKey resultType="String" keyProperty="businessid" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblbusinessapply (
+    			businessid,
+    			businesstype,
+    			productcode,
+    			tableid,
+    			fieldname,
+    			fieldcnname,
+    			fieldvalue,
+    			transchannel,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{businessid,jdbcType=VARCHAR},
+    		#{businesstype,jdbcType=VARCHAR},
+    		#{productcode,jdbcType=VARCHAR},
+    		#{tableid,jdbcType=VARCHAR},
+    		#{fieldname,jdbcType=VARCHAR},
+    		#{fieldcnname,jdbcType=VARCHAR},
+    		#{fieldvalue,jdbcType=VARCHAR},
+    		#{transchannel,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Businessapply">
+  		update tblbusinessapply set  
+	      		businesstype = #{businesstype,jdbcType=VARCHAR}  ,
+	      		productcode = #{productcode,jdbcType=VARCHAR}  ,
+	      		tableid = #{tableid,jdbcType=VARCHAR}  ,
+	      		fieldname = #{fieldname,jdbcType=VARCHAR}  ,
+	      		fieldcnname = #{fieldcnname,jdbcType=VARCHAR}  ,
+	      		fieldvalue = #{fieldvalue,jdbcType=VARCHAR}  ,
+	      		transchannel = #{transchannel,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where businessid = #{businessid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblbusinessapply where businessid = #{businessid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getBusinessapply" resultMap="BusinessapplyResultMap" parameterType="String">
+  		select * from tblbusinessapply  where businessid = #{businessid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

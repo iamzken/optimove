@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mapModelMag.MapmodelmagMapper" >
+	<resultMap id="MapmodelmagResultMap" type="com.topcheer.model.mapModelMag.Mapmodelmag" >
+       		<result property="mapmodelid"    column="mapmodelid" jdbcType="VARCHAR" />
+       		<result property="mapmodeltype"    column="mapmodeltype" jdbcType="VARCHAR" />
+       		<result property="mapmodelname"    column="mapmodelname" jdbcType="VARCHAR" />
+       		<result property="mapmodeldes"    column="mapmodeldes" jdbcType="VARCHAR" />
+       		<result property="attributedes"    column="attributedes" jdbcType="VARCHAR" />
+       		<result property="datades"    column="datades" jdbcType="VARCHAR" />
+       		<result property="htmlmodel"    column="htmlmodel" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="MapmodelmagColumnList" >
+    		mapmodelid,
+    		mapmodeltype,
+    		mapmodelname,
+    		mapmodeldes,
+    		attributedes,
+    		datades,
+    		htmlmodel
+    </sql>
+    <select id="searchMapmodelmag" resultMap="MapmodelmagResultMap" parameterType="HashMap">
+    	select  * from tblmapmodelmag
+		where 1=1
+    		<if test="mapmodelid !=null and mapmodelid != '' ">
+		    	and mapmodelid like #{mapmodelid,jdbcType=VARCHAR}
+			</if>
+    		<if test="mapmodeltype !=null and mapmodeltype != '' ">
+		    	and mapmodeltype like #{mapmodeltype,jdbcType=VARCHAR}
+			</if>
+    		<if test="mapmodelname !=null and mapmodelname != '' ">
+		    	and mapmodelname like #{mapmodelname,jdbcType=VARCHAR}
+			</if>
+    		<if test="mapmodeldes !=null and mapmodeldes != '' ">
+		    	and mapmodeldes like #{mapmodeldes,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributedes !=null and attributedes != '' ">
+		    	and attributedes like #{attributedes,jdbcType=VARCHAR}
+			</if>
+    		<if test="datades !=null and datades != '' ">
+		    	and datades like #{datades,jdbcType=VARCHAR}
+			</if>
+    		<if test="htmlmodel !=null and htmlmodel != '' ">
+		    	and htmlmodel like #{htmlmodel,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="MapmodelmagResultMap" parameterType="HashMap">
+    	select * from tblmapmodelmag 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mapModelMag.Mapmodelmag">
+  	<!--
+  		<selectKey resultType="String" keyProperty="mapmodelid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblmapmodelmag (
+    			mapmodelid,
+    			mapmodeltype,
+    			mapmodelname,
+    			mapmodeldes,
+    			attributedes,
+    			datades,
+    			htmlmodel
+  		)VALUES (
+    		#{mapmodelid,jdbcType=VARCHAR},
+    		#{mapmodeltype,jdbcType=VARCHAR},
+    		#{mapmodelname,jdbcType=VARCHAR},
+    		#{mapmodeldes,jdbcType=VARCHAR},
+    		#{attributedes,jdbcType=VARCHAR},
+    		#{datades,jdbcType=VARCHAR},
+    		#{htmlmodel,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mapModelMag.Mapmodelmag">
+  		update tblmapmodelmag set  
+	      		mapmodeltype = #{mapmodeltype,jdbcType=VARCHAR}  ,
+	      		mapmodelname = #{mapmodelname,jdbcType=VARCHAR}  ,
+	      		mapmodeldes = #{mapmodeldes,jdbcType=VARCHAR}  ,
+	      		attributedes = #{attributedes,jdbcType=VARCHAR}  ,
+	      		datades = #{datades,jdbcType=VARCHAR}  ,
+	      		htmlmodel = #{htmlmodel,jdbcType=VARCHAR}  
+  		where mapmodelid = #{mapmodelid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblmapmodelmag where mapmodelid = #{mapmodelid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getMapmodelmag" resultMap="MapmodelmagResultMap" parameterType="String">
+  		select * from tblmapmodelmag  where mapmodelid = #{mapmodelid,jdbcType=VARCHAR}
+  	</select>
+  	
+  	<select id="getMapModelJson" resultMap="MapmodelmagResultMap" parameterType="String">
+  		select * from tblmapmodelmag  where mapmodeltype = #{mapmodeltype,jdbcType=VARCHAR} order by mapmodelid
+  	</select>
+</mapper>

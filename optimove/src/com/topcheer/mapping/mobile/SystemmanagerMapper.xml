@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.SystemmanagerMapper" >
+	<resultMap id="SystemmanagerResultMap" type="com.topcheer.model.mobile.Systemmanager" >
+       		<result property="syscode"    column="syscode" jdbcType="VARCHAR" />
+       		<result property="sysname"    column="sysname" jdbcType="VARCHAR" />
+       		<result property="sysdescription"    column="sysdescription" jdbcType="VARCHAR" />
+       		<result property="accesstype"    column="accesstype" jdbcType="VARCHAR" />
+       		<result property="sysip"    column="sysip" jdbcType="VARCHAR" />
+       		<result property="sysport"    column="sysport" jdbcType="VARCHAR" />
+       		<result property="sysuser"    column="sysuser" jdbcType="VARCHAR" />
+       		<result property="syspwd"    column="syspwd" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="SystemmanagerColumnList" >
+    		syscode,
+    		sysname,
+    		sysdescription,
+    		accesstype,
+    		sysip,
+    		sysport,
+    		sysuser,
+    		syspwd,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchSystemmanager" resultMap="SystemmanagerResultMap" parameterType="HashMap">
+    	select  * from tblsystemmanager
+		where 1=1
+    		<if test="syscode !=null and syscode != '' ">
+		    	and syscode like #{syscode,jdbcType=VARCHAR}
+			</if>
+    		<if test="sysname !=null and sysname != '' ">
+		    	and sysname like #{sysname,jdbcType=VARCHAR}
+			</if>
+    		<if test="sysdescription !=null and sysdescription != '' ">
+		    	and sysdescription like #{sysdescription,jdbcType=VARCHAR}
+			</if>
+    		<if test="accesstype !=null and accesstype != '' ">
+		    	and accesstype like #{accesstype,jdbcType=VARCHAR}
+			</if>
+    		<if test="sysip !=null and sysip != '' ">
+		    	and sysip like #{sysip,jdbcType=VARCHAR}
+			</if>
+    		<if test="sysport !=null and sysport != '' ">
+		    	and sysport like #{sysport,jdbcType=VARCHAR}
+			</if>
+    		<if test="sysuser !=null and sysuser != '' ">
+		    	and sysuser like #{sysuser,jdbcType=VARCHAR}
+			</if>
+    		<if test="syspwd !=null and syspwd != '' ">
+		    	and syspwd like #{syspwd,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="SystemmanagerResultMap" parameterType="HashMap">
+    	select * from tblsystemmanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Systemmanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="syscode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblsystemmanager (
+    			syscode,
+    			sysname,
+    			sysdescription,
+    			accesstype,
+    			sysip,
+    			sysport,
+    			sysuser,
+    			syspwd,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{syscode,jdbcType=VARCHAR},
+    		#{sysname,jdbcType=VARCHAR},
+    		#{sysdescription,jdbcType=VARCHAR},
+    		#{accesstype,jdbcType=VARCHAR},
+    		#{sysip,jdbcType=VARCHAR},
+    		#{sysport,jdbcType=VARCHAR},
+    		#{sysuser,jdbcType=VARCHAR},
+    		#{syspwd,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Systemmanager">
+  		update tblsystemmanager set  
+	      		sysname = #{sysname,jdbcType=VARCHAR}  ,
+	      		sysdescription = #{sysdescription,jdbcType=VARCHAR}  ,
+	      		accesstype = #{accesstype,jdbcType=VARCHAR}  ,
+	      		sysip = #{sysip,jdbcType=VARCHAR}  ,
+	      		sysport = #{sysport,jdbcType=VARCHAR}  ,
+	      		sysuser = #{sysuser,jdbcType=VARCHAR}  ,
+	      		syspwd = #{syspwd,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where syscode = #{syscode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblsystemmanager where syscode = #{syscode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getSystemmanager" resultMap="SystemmanagerResultMap" parameterType="String">
+  		select * from tblsystemmanager  where syscode = #{syscode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

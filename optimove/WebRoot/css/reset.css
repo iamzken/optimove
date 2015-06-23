@@ -1,0 +1,327 @@
+html {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+body {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+div {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+span {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+applet {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+object {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+iframe {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h1 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h2 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h3 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h4 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h5 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+h6 {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+p {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+blockquote {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+pre {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+a {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+abbr {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+acronym {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+address {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+big {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+cite {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+code {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+del {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+dfn {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+em {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+img {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+ins {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+kbd {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+q {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+s {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+samp {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+small {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+strike {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+strong {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+sub {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+sup {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+tt {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+var {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+b {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+u {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+i {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+center {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+dl {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+dt {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+dd {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+ol {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+ul {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+li {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+fieldset {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+form {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+label {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+legend {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+table {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+caption {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+tbody {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+tfoot {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+thead {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+tr {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+th {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+td {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+article {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+aside {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+canvas {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+details {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+embed {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+figure {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+figcaption {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+footer {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+header {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+hgroup {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+menu {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+nav {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+output {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+ruby {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+section {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+summary {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+time {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+mark {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+audio {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+video {
+	margin: 0px; padding: 0px; border: 0px currentColor; line-height: inherit; font-family: inherit; font-size: inherit; font-style: normal; font-variant: inherit; font-weight: inherit; font-size-adjust: inherit; font-stretch: inherit;
+}
+article {
+	display: block;
+}
+aside {
+	display: block;
+}
+details {
+	display: block;
+}
+figcaption {
+	display: block;
+}
+figure {
+	display: block;
+}
+footer {
+	display: block;
+}
+header {
+	display: block;
+}
+hgroup {
+	display: block;
+}
+menu {
+	display: block;
+}
+nav {
+	display: block;
+}
+section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol {
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+li {
+	list-style: none;
+}
+blockquote {
+	quotes: none;
+}
+q {
+	quotes: none;
+}
+blockquote::before {
+	content: none;
+}
+blockquote::after {
+	content: none;
+}
+q::before {
+	content: none;
+}
+q::after {
+	content: none;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a {
+	
+}
+a:active {
+	
+}
+:focus {
+	outline: 0px;
+}
+.clear {
+	height: 0px; line-height: 0px; overflow: hidden; clear: both; font-size: 0px;
+}

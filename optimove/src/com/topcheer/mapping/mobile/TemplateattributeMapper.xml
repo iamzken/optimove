@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.TemplateattributeMapper" >
+	<resultMap id="TemplateattributeResultMap" type="com.topcheer.model.mobile.Templateattribute" >
+       		<result property="id"    column="id" jdbcType="VARCHAR" />
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="areacode"    column="areacode" jdbcType="VARCHAR" />
+       		<result property="attributecode"    column="attributecode" jdbcType="VARCHAR" />
+       		<result property="attributename"    column="attributename" jdbcType="VARCHAR" />
+       		<result property="attributewidth"    column="attributewidth" jdbcType="INTEGER" />
+       		<result property="attributeorder"    column="attributeorder" jdbcType="INTEGER" />
+       		<result property="attributetype"    column="attributetype" jdbcType="VARCHAR" />
+       		<result property="typevalue"    column="typevalue" jdbcType="VARCHAR" />
+       		<result property="datatype"    column="datatype" jdbcType="VARCHAR" />
+       		<result property="ispk"    column="ispk" jdbcType="VARCHAR" />
+       		<result property="isempty"    column="isempty" jdbcType="VARCHAR" />
+       		<result property="reserve1"    column="reserve1" jdbcType="VARCHAR" />
+       		<result property="reserve2"    column="reserve2" jdbcType="VARCHAR" />
+       		<result property="reserve3"    column="reserve3" jdbcType="VARCHAR" />
+       		<result property="reserve4"    column="reserve4" jdbcType="VARCHAR" />
+       		<result property="reserve5"    column="reserve5" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="TemplateattributeColumnList" >
+    		id,
+    		templatecode,
+    		areacode,
+    		attributecode,
+    		attributename,
+    		attributewidth,
+    		attributeorder,
+    		attributetype,
+    		typevalue,
+    		datatype,
+    		ispk,
+    		isempty,
+    		reserve1,
+    		reserve2,
+    		reserve3,
+    		reserve4,
+    		reserve5,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchTemplateattribute" resultMap="TemplateattributeResultMap" parameterType="HashMap">
+    	select  * from tbltemplateattribute
+		where 1=1
+    		<if test="id !=null and id != '' ">
+		    	and id like #{id,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="areacode !=null and areacode != '' ">
+		    	and areacode like #{areacode,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributecode !=null and attributecode != '' ">
+		    	and attributecode like #{attributecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributename !=null and attributename != '' ">
+		    	and attributename like #{attributename,jdbcType=VARCHAR}
+			</if>
+    		<if test="attributewidth !=null and attributewidth != '' ">
+		    	and attributewidth like #{attributewidth,jdbcType=INTEGER}
+			</if>
+    		<if test="attributeorder !=null and attributeorder != '' ">
+		    	and attributeorder like #{attributeorder,jdbcType=INTEGER}
+			</if>
+    		<if test="attributetype !=null and attributetype != '' ">
+		    	and attributetype like #{attributetype,jdbcType=VARCHAR}
+			</if>
+    		<if test="typevalue !=null and typevalue != '' ">
+		    	and typevalue like #{typevalue,jdbcType=VARCHAR}
+			</if>
+    		<if test="datatype !=null and datatype != '' ">
+		    	and datatype like #{datatype,jdbcType=VARCHAR}
+			</if>
+    		<if test="ispk !=null and ispk != '' ">
+		    	and ispk like #{ispk,jdbcType=VARCHAR}
+			</if>
+    		<if test="isempty !=null and isempty != '' ">
+		    	and isempty like #{isempty,jdbcType=VARCHAR}
+			</if>
+    		<if test="reserve1 !=null and reserve1 != '' ">
+		    	and reserve1 like #{reserve1,jdbcType=VARCHAR}
+			</if>
+    		<if test="reserve2 !=null and reserve2 != '' ">
+		    	and reserve2 like #{reserve2,jdbcType=VARCHAR}
+			</if>
+    		<if test="reserve3 !=null and reserve3 != '' ">
+		    	and reserve3 like #{reserve3,jdbcType=VARCHAR}
+			</if>
+    		<if test="reserve4 !=null and reserve4 != '' ">
+		    	and reserve4 like #{reserve4,jdbcType=VARCHAR}
+			</if>
+    		<if test="reserve5 !=null and reserve5 != '' ">
+		    	and reserve5 like #{reserve5,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="TemplateattributeResultMap" parameterType="HashMap">
+    	select * from tbltemplateattribute 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Templateattribute">
+  	
+  		<selectKey resultType="String" keyProperty="id" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	
+  		INSERT INTO tbltemplateattribute (
+    			id,
+    			templatecode,
+    			areacode,
+    			attributecode,
+    			attributename,
+    			attributewidth,
+    			attributeorder,
+    			attributetype,
+    			typevalue,
+    			datatype,
+    			ispk,
+    			isempty,
+    			reserve1,
+    			reserve2,
+    			reserve3,
+    			reserve4,
+    			reserve5,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{id,jdbcType=VARCHAR},
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{areacode,jdbcType=VARCHAR},
+    		#{attributecode,jdbcType=VARCHAR},
+    		#{attributename,jdbcType=VARCHAR},
+    		#{attributewidth,jdbcType=INTEGER},
+    		#{attributeorder,jdbcType=INTEGER},
+    		#{attributetype,jdbcType=VARCHAR},
+    		#{typevalue,jdbcType=VARCHAR},
+    		#{datatype,jdbcType=VARCHAR},
+    		#{ispk,jdbcType=VARCHAR},
+    		#{isempty,jdbcType=VARCHAR},
+    		#{reserve1,jdbcType=VARCHAR},
+    		#{reserve2,jdbcType=VARCHAR},
+    		#{reserve3,jdbcType=VARCHAR},
+    		#{reserve4,jdbcType=VARCHAR},
+    		#{reserve5,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Templateattribute">
+  		update tbltemplateattribute set  
+	      		templatecode = #{templatecode,jdbcType=VARCHAR}  ,
+	      		areacode = #{areacode,jdbcType=VARCHAR}  ,
+	      		attributecode = #{attributecode,jdbcType=VARCHAR}  ,
+	      		attributename = #{attributename,jdbcType=VARCHAR}  ,
+	      		attributewidth = #{attributewidth,jdbcType=INTEGER}  ,
+	      		attributeorder = #{attributeorder,jdbcType=INTEGER}  ,
+	      		attributetype = #{attributetype,jdbcType=VARCHAR}  ,
+	      		typevalue = #{typevalue,jdbcType=VARCHAR}  ,
+	      		datatype = #{datatype,jdbcType=VARCHAR}  ,
+	      		ispk = #{ispk,jdbcType=VARCHAR}  ,
+	      		isempty = #{isempty,jdbcType=VARCHAR}  ,
+	      		reserve1 = #{reserve1,jdbcType=VARCHAR}  ,
+	      		reserve2 = #{reserve2,jdbcType=VARCHAR}  ,
+	      		reserve3 = #{reserve3,jdbcType=VARCHAR}  ,
+	      		reserve4 = #{reserve4,jdbcType=VARCHAR}  ,
+	      		reserve5 = #{reserve5,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where id = #{id,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbltemplateattribute where id = #{id,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getTemplateattribute" resultMap="TemplateattributeResultMap" parameterType="String">
+  		select * from tbltemplateattribute  where id = #{id,jdbcType=VARCHAR}
+  	</select>
+</mapper>

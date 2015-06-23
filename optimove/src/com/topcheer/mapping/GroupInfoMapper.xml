@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.GroupInfoMapper" >
+	<resultMap id="GroupInfoResultMap" type="com.topcheer.model.GroupInfo" >
+       		<result property="grpId"    column="GrpId" jdbcType="VARCHAR" />
+       		<result property="grpCname"    column="GrpCname" jdbcType="VARCHAR" />
+       		<result property="grpEname"    column="GrpEname" jdbcType="VARCHAR" />
+       		<result property="grpLevel"    column="GrpLevel" jdbcType="CHAR" />
+       		<result property="cretaedBy"    column="CretaedBy" jdbcType="INTEGER" />
+       		<result property="creationDate"    column="CreationDate" jdbcType="TIMESTAMP" />
+       		<result property="lastUpdatedBy"    column="LastUpdatedBy" jdbcType="INTEGER" />
+       		<result property="lastUpdateDate"    column="LastUpdateDate" jdbcType="TIMESTAMP" />
+       		<result property="grpRemark"    column="GrpRemark" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="GroupInfoColumnList" >
+    		GrpId,
+    		GrpCname,
+    		GrpEname,
+    		GrpLevel,
+    		CretaedBy,
+    		CreationDate,
+    		LastUpdatedBy,
+    		LastUpdateDate,
+    		GrpRemark
+    </sql>
+    <select id="searchGroupInfo" resultMap="GroupInfoResultMap" parameterType="HashMap">
+    	select  * from tblgroupinfo
+		where 1=1
+    		<if test="grpId !=null and grpId != '' ">
+		    	and GrpId like #{grpId,jdbcType=VARCHAR}
+			</if>
+    		<if test="grpCname !=null and grpCname != '' ">
+		    	and GrpCname like #{grpCname,jdbcType=VARCHAR}
+			</if>
+    		<if test="grpEname !=null and grpEname != '' ">
+		    	and GrpEname like #{grpEname,jdbcType=VARCHAR}
+			</if>
+    		<if test="grpLevel !=null and grpLevel != '' ">
+		    	and GrpLevel like #{grpLevel,jdbcType=CHAR}
+			</if>
+    		<if test="cretaedBy !=null and cretaedBy != '' ">
+		    	and CretaedBy like #{cretaedBy,jdbcType=INTEGER}
+			</if>
+    		<if test="creationDate !=null and creationDate != '' ">
+		    	and CreationDate like #{creationDate,jdbcType=TIMESTAMP}
+			</if>
+    		<if test="lastUpdatedBy !=null and lastUpdatedBy != '' ">
+		    	and LastUpdatedBy like #{lastUpdatedBy,jdbcType=INTEGER}
+			</if>
+    		<if test="lastUpdateDate !=null and lastUpdateDate != '' ">
+		    	and LastUpdateDate like #{lastUpdateDate,jdbcType=TIMESTAMP}
+			</if>
+    		<if test="grpRemark !=null and grpRemark != '' ">
+		    	and GrpRemark like #{grpRemark,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="GroupInfoResultMap" parameterType="HashMap">
+    	select * from tblgroupinfo 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.GroupInfo">
+  		INSERT INTO tblgroupinfo (
+    			grpId,
+    			grpCname,
+    			grpEname,
+    			grpLevel,
+    			cretaedBy,
+    			creationDate,
+    			lastUpdatedBy,
+    			lastUpdateDate,
+    			grpRemark
+  		)VALUES (
+    		#{grpId,jdbcType=VARCHAR},
+    		#{grpCname,jdbcType=VARCHAR},
+    		#{grpEname,jdbcType=VARCHAR},
+    		#{grpLevel,jdbcType=CHAR},
+    		#{cretaedBy,jdbcType=INTEGER},
+    		#{creationDate,jdbcType=TIMESTAMP},
+    		#{lastUpdatedBy,jdbcType=INTEGER},
+    		#{lastUpdateDate,jdbcType=TIMESTAMP},
+    		#{grpRemark,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.GroupInfo">
+  		update tblgroupinfo set  
+	      		GrpCname = #{grpCname,jdbcType=VARCHAR}  ,
+	      		GrpEname = #{grpEname,jdbcType=VARCHAR}  ,
+	      		GrpLevel = #{grpLevel,jdbcType=CHAR}  ,
+	      		CretaedBy = #{cretaedBy,jdbcType=INTEGER}  ,
+	      		CreationDate = #{creationDate,jdbcType=TIMESTAMP}  ,
+	      		LastUpdatedBy = #{lastUpdatedBy,jdbcType=INTEGER}  ,
+	      		LastUpdateDate = #{lastUpdateDate,jdbcType=TIMESTAMP}  ,
+	      		GrpRemark = #{grpRemark,jdbcType=VARCHAR}  
+  		where GrpId = #{grpId,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblgroupinfo where GrpId = #{grpId,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getGroupInfo" resultMap="GroupInfoResultMap" parameterType="String">
+  		select * from tblgroupinfo  where GrpId = #{grpId,jdbcType=VARCHAR}
+  	</select>
+</mapper>

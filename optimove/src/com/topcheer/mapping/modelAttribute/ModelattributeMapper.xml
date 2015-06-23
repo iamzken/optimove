@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.modelAttribute.ModelattributeMapper" >
+	<resultMap id="ModelattributeResultMap" type="com.topcheer.model.modelAttribute.Modelattribute" >
+       		<result property="id"    column="id" jdbcType="VARCHAR" />
+       		<result property="tablename"    column="tablename" jdbcType="VARCHAR" />
+       		<result property="modelattribute"    column="modelattribute" jdbcType="VARCHAR" />
+       		<result property="modelattributename"    column="modelattributename" jdbcType="VARCHAR" />
+       		<result property="modelattributetype"    column="modelattributetype" jdbcType="VARCHAR" />
+       		<result property="modelattributeflag"    column="modelattributeflag" jdbcType="VARCHAR" />
+       		<result property="canSearch"    column="can_search" jdbcType="CHAR" />
+       		<result property="canDisplay"    column="can_display" jdbcType="CHAR" />
+	</resultMap>
+    <sql id="ModelattributeColumnList" >
+    		id,
+    		tablename,
+    		modelattribute,
+    		modelattributename,
+    		modelattributetype,
+    		modelattributeflag
+    </sql>
+    <select id="searchModelattribute" resultMap="ModelattributeResultMap" parameterType="HashMap">
+    	select  * from tblmodelattribute
+		where modelattributeflag='0' or (1=1
+    		<if test="id !=null and id != '' ">
+		    	and id like #{id,jdbcType=VARCHAR}
+			</if>
+    		<if test="tablename !=null and tablename != '' ">
+		    	and tablename = #{tablename,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelattribute !=null and modelattribute != '' ">
+		    	and modelattribute like #{modelattribute,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelattributename !=null and modelattributename != '' ">
+		    	and modelattributename like #{modelattributename,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelattributetype !=null and modelattributetype != '' ">
+		    	and modelattributetype like #{modelattributetype,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelattributeflag !=null and modelattributeflag != '' ">
+		    	and modelattributeflag like #{modelattributeflag,jdbcType=VARCHAR}
+			</if>
+			)
+  	</select> 
+  	
+    <select id="searchModelattribute4Search" resultMap="ModelattributeResultMap" parameterType="HashMap">
+    	select  * from tblmodelattribute
+		where (modelattributeflag='0' or upper(tablename) = upper(#{tablename,jdbcType=VARCHAR})) and  can_search = '1'
+  	</select> 
+  	
+    <select id="searchModelattribute4Display" resultMap="ModelattributeResultMap" parameterType="HashMap">
+    	select  * from tblmodelattribute
+		where (modelattributeflag='0' or upper(tablename) = upper(#{tablename,jdbcType=VARCHAR})) and  can_display = '1'
+  	</select> 
+  	
+  	<select id="searchMapInfo" resultType="HashMap" parameterType="HashMap">
+    	SELECT *
+	    FROM ${tablename}
+	    WHERE SDO_GEOM.SDO_DISTANCE(location,MDSYS.SDO_GEOMETRY(2001,8307,MDSYS.SDO_POINT_TYPE(${longitude},${latitude},0),NULL,NULL),1) ${condition}
+  	</select> 
+  	
+  	<select id="searchDataByCondition" resultType="HashMap" parameterType="HashMap">
+    	SELECT *
+	    FROM ${tableName}
+	    WHERE ${condition}
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="ModelattributeResultMap" parameterType="HashMap">
+    	select * from tblmodelattribute 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.modelAttribute.Modelattribute">
+  	<!--
+  		<selectKey resultType="String" keyProperty="id" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblmodelattribute (
+    			id,
+    			tablename,
+    			modelattribute,
+    			modelattributename,
+    			modelattributetype,
+    			modelattributeflag
+  		)VALUES (
+    		#{id,jdbcType=VARCHAR},
+    		#{tablename,jdbcType=VARCHAR},
+    		#{modelattribute,jdbcType=VARCHAR},
+    		#{modelattributename,jdbcType=VARCHAR},
+    		#{modelattributetype,jdbcType=VARCHAR},
+    		#{modelattributeflag,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<update id="update" parameterType="com.topcheer.model.modelAttribute.Modelattribute">
+  		update tblmodelattribute set  
+	      		tablename = #{tablename,jdbcType=VARCHAR}  ,
+	      		modelattribute = #{modelattribute,jdbcType=VARCHAR}  ,
+	      		modelattributename = #{modelattributename,jdbcType=VARCHAR}  ,
+	      		modelattributetype = #{modelattributetype,jdbcType=VARCHAR}  ,
+	      		modelattributeflag = #{modelattributeflag,jdbcType=VARCHAR}  
+  		where id = #{id,jdbcType=VARCHAR}
+  	</update>
+  	
+  	<update id="updateCanDisplayAndCanSearchState" parameterType="com.topcheer.model.modelAttribute.Modelattribute">
+  		update tblmodelattribute set  
+	      		can_search = #{canSearch,jdbcType=VARCHAR}  ,
+	      		can_display = #{canDisplay,jdbcType=VARCHAR}  
+  		where id = #{id,jdbcType=VARCHAR}
+  	</update>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblmodelattribute where id = #{id,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getModelattribute" resultMap="ModelattributeResultMap" parameterType="String">
+  		select * from tblmodelattribute  where id = #{id,jdbcType=VARCHAR}
+  	</select>
+  	
+  	<delete id="deleteByTablename" parameterType="String">
+  		delete from tblmodelattribute where tablename = #{tablename,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<update id="alterTable" parameterType="HashMap" statementType="STATEMENT">
+  		${alterSql}
+  	</update>
+</mapper>

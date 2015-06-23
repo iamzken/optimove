@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.TemplateareaMapper" >
+	<resultMap id="TemplateareaResultMap" type="com.topcheer.model.mobile.Templatearea" >
+       		<result property="id"    column="id" jdbcType="VARCHAR" />
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="areacode"    column="areacode" jdbcType="VARCHAR" />
+       		<result property="areaname"    column="areaname" jdbcType="VARCHAR" />
+       		<result property="areaorder"    column="areaorder" jdbcType="INTEGER" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="TemplateareaColumnList" >
+    		id,
+    		templatecode,
+    		areacode,
+    		areaname,
+    		areaorder,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchTemplatearea" resultMap="TemplateareaResultMap" parameterType="HashMap">
+    	select  * from tbltemplatearea
+		where 1=1
+    		<if test="id !=null and id != '' ">
+		    	and id like #{id,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="areacode !=null and areacode != '' ">
+		    	and areacode like #{areacode,jdbcType=VARCHAR}
+			</if>
+    		<if test="areaname !=null and areaname != '' ">
+		    	and areaname like #{areaname,jdbcType=VARCHAR}
+			</if>
+    		<if test="areaorder !=null and areaorder != '' ">
+		    	and areaorder like #{areaorder,jdbcType=INTEGER}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="TemplateareaResultMap" parameterType="HashMap">
+    	select * from tbltemplatearea 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Templatearea">
+  	
+  		<selectKey resultType="String" keyProperty="id" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	
+  		INSERT INTO tbltemplatearea (
+    			id,
+    			templatecode,
+    			areacode,
+    			areaname,
+    			areaorder,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{id,jdbcType=VARCHAR},
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{areacode,jdbcType=VARCHAR},
+    		#{areaname,jdbcType=VARCHAR},
+    		#{areaorder,jdbcType=INTEGER},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Templatearea">
+  		update tbltemplatearea set  
+	      		templatecode = #{templatecode,jdbcType=VARCHAR}  ,
+	      		areacode = #{areacode,jdbcType=VARCHAR}  ,
+	      		areaname = #{areaname,jdbcType=VARCHAR}  ,
+	      		areaorder = #{areaorder,jdbcType=INTEGER}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where id = #{id,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbltemplatearea where id = #{id,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getTemplatearea" resultMap="TemplateareaResultMap" parameterType="String">
+  		select * from tbltemplatearea  where id = #{id,jdbcType=VARCHAR}
+  	</select>
+</mapper>

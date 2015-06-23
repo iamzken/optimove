@@ -1,0 +1,7 @@
+.clientInput { 
+	border-color: red; 
+}
+textarea{
+	width: 400px;
+	height: 120px;
+}

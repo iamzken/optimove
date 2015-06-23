@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<style type="text/css">
+body,html,#allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	font-family: "微软雅黑";
+}
+</style>
+		<script type="text/javascript"
+			src="http://api.map.baidu.com/api?v=2.0&ak=AldpuCo6zS8f7BQnfImd6bx9">
+</script><title>Insert title here</title>
+	</head>
+	<body>
+		<div id="allmap"></div>
+	</body>
+</html>
+<script type="text/javascript" charset="utf-8">
+// 百度地图API功能
+var map = new BMap.Map("allmap"); // 创建Map实例
+map.centerAndZoom(new BMap.Point(116.404, 39.915), 13); // 初始化地图,设置中心点坐标和地图级别
+map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
+map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
+map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+var point = new BMap.Point(116.417854, 39.921988);
+var marker = new BMap.Marker(point); // 创建标注
+marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+var sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>身份证</h4>"
+		+ "<button>上一页</button>"
+		+ "<img id='imgDemo' src='http://c.hiphotos.baidu.com/exp/whcrop=92,69/sign=052f04790846f21fc961081199545659/6159252dd42a2834e67e7c8959b5c9ea14cebf5c.jpg' width='139' height='104' title='身份证'/>"
+		+ "<button>下一页</button>" + "</div>";
+map.addOverlay(marker);
+var infoWindow = new BMap.InfoWindow(sContent); // 创建信息窗口对象 
+marker.addEventListener("click", function() {
+	map.openInfoWindow(infoWindow, point); //开启信息窗口
+		document.getElementById('imgDemo').onload = function() {
+			infoWindow.redraw(); //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+		}
+	});
+</script>

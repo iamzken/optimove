@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.UserLoginMgrMapper" >
+	<resultMap id="UserLoginMgrResultMap" type="com.topcheer.model.UserLoginMgr" >
+       		<result property="loginId"    column="LoginId" jdbcType="CHAR" />
+       		<result property="userBankCode"    column="UserBankCode" jdbcType="VARCHAR" />
+       		<result property="loginInDate"    column="LoginInDate" jdbcType="VARCHAR" />
+       		<result property="loginOutDate"    column="LoginOutDate" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="UserLoginMgrColumnList" >
+    		LoginId,
+    		UserBankCode,
+    		LoginInDate,
+    		LoginOutDate
+    </sql>
+    <select id="searchUserLoginMgr" resultMap="UserLoginMgrResultMap" parameterType="HashMap">
+    	select  * from tbluserloginmgr
+		where 1=1
+    		<if test="loginId !=null and loginId != '' ">
+		    	and LoginId like #{loginId,jdbcType=CHAR}
+			</if>
+    		<if test="userBankCode !=null and userBankCode != '' ">
+		    	and UserBankCode like #{userBankCode,jdbcType=VARCHAR}
+			</if>
+    		<if test="loginInDate !=null and loginInDate != '' ">
+		    	and LoginInDate like #{loginInDate,jdbcType=VARCHAR}
+			</if>
+    		<if test="loginOutDate !=null and loginOutDate != '' ">
+		    	and LoginOutDate like #{loginOutDate,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="UserLoginMgrResultMap" parameterType="HashMap">
+    	select * from tbluserloginmgr 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.UserLoginMgr">
+  		INSERT INTO tbluserloginmgr (
+    			loginId,
+    			userBankCode,
+    			loginInDate,
+    			loginOutDate
+  		)VALUES (
+    		#{loginId,jdbcType=CHAR},
+    		#{userBankCode,jdbcType=VARCHAR},
+    		#{loginInDate,jdbcType=VARCHAR},
+    		#{loginOutDate,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.UserLoginMgr">
+  		update tbluserloginmgr set  
+	      		UserBankCode = #{userBankCode,jdbcType=VARCHAR}  ,
+	      		LoginInDate = #{loginInDate,jdbcType=VARCHAR}  ,
+	      		LoginOutDate = #{loginOutDate,jdbcType=VARCHAR}  
+  		where LoginId = #{loginId,jdbcType=CHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbluserloginmgr where LoginId = #{loginId,jdbcType=CHAR}
+  	</delete>
+  	
+  	<select id="getUserLoginMgr" resultMap="UserLoginMgrResultMap" parameterType="String">
+  		select * from tbluserloginmgr  where LoginId = #{loginId,jdbcType=CHAR}
+  	</select>
+</mapper>

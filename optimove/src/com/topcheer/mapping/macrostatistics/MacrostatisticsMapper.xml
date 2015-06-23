@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.macrostatistics.MacrostatisticsMapper" >
+	<resultMap id="MacrostatisticsResultMap" type="com.topcheer.model.macrostatistics.Macrostatistics" >
+       		<result property="macrostatisticsid"    column="macrostatisticsid" jdbcType="VARCHAR" />
+       		<result property="macrostatisticsname"    column="macrostatisticsname" jdbcType="VARCHAR" />
+       		<result property="macrodatasource"    column="macrodatasource" jdbcType="VARCHAR" />
+       		<result property="datatype"    column="datatype" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+       		<result property="macrodatafile"    column="macrodatafile" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="MacrostatisticsColumnList" >
+    		macrostatisticsid,
+    		macrostatisticsname,
+    		macrodatasource,
+    		datatype,
+    		remarks,
+    		macrodatafile
+    </sql>
+    <select id="searchMacrostatistics" resultMap="MacrostatisticsResultMap" parameterType="HashMap">
+    	select  * from tblmacrostatistics
+		where 1=1
+    		<if test="macrostatisticsid !=null and macrostatisticsid != '' ">
+		    	and macrostatisticsid like #{macrostatisticsid,jdbcType=VARCHAR}
+			</if>
+    		<if test="macrostatisticsname !=null and macrostatisticsname != '' ">
+		    	and macrostatisticsname like #{macrostatisticsname,jdbcType=VARCHAR}
+			</if>
+    		<if test="macrodatasource !=null and macrodatasource != '' ">
+		    	and macrodatasource like #{macrodatasource,jdbcType=VARCHAR}
+			</if>
+    		<if test="datatype !=null and datatype != '' ">
+		    	and datatype like #{datatype,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+    		<if test="macrodatafile !=null and macrodatafile != '' ">
+		    	and macrodatafile like #{macrodatafile,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="MacrostatisticsResultMap" parameterType="HashMap">
+    	select * from tblmacrostatistics 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.macrostatistics.Macrostatistics">
+  	<!--
+  		<selectKey resultType="String" keyProperty="macrostatisticsid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblmacrostatistics (
+    			macrostatisticsid,
+    			macrostatisticsname,
+    			macrodatasource,
+    			datatype,
+    			remarks,
+    			macrodatafile
+  		)VALUES (
+    		#{macrostatisticsid,jdbcType=VARCHAR},
+    		#{macrostatisticsname,jdbcType=VARCHAR},
+    		#{macrodatasource,jdbcType=VARCHAR},
+    		#{datatype,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR},
+    		#{macrodatafile,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.macrostatistics.Macrostatistics">
+  		update tblmacrostatistics set  
+	      		macrostatisticsname = #{macrostatisticsname,jdbcType=VARCHAR}  ,
+	      		macrodatasource = #{macrodatasource,jdbcType=VARCHAR}  ,
+	      		datatype = #{datatype,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  ,
+	      		macrodatafile = #{macrodatafile,jdbcType=VARCHAR}  
+  		where macrostatisticsid = #{macrostatisticsid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblmacrostatistics where macrostatisticsid = #{macrostatisticsid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getMacrostatistics" resultMap="MacrostatisticsResultMap" parameterType="String">
+  		select * from tblmacrostatistics  where macrostatisticsid = #{macrostatisticsid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

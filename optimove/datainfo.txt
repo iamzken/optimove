@@ -1,0 +1,6 @@
+drop user optimove cascade;
+create user optimove identified by "optimove";
+grant dba to optimove;
+  
+exp optimove/optimove file=optimove.dmp direct=y log=optimove_exp.log
+imp optimove/optimove ignore=y fromuser=optimove touser=optimove file=optimove.dmp analyze=n log=optimove_imp.log 

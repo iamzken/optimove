@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.noticeMgr.NoticeMapper">
+	<resultMap id="NoticeResultMap" type="com.topcheer.model.noticeMgr.Notice">
+		<result property="noticecode" column="noticecode" jdbcType="VARCHAR" />
+		<result property="noticetitle" column="noticetitle" jdbcType="VARCHAR" />
+		<result property="noticecontent" column="noticecontent"
+			jdbcType="VARCHAR" />
+		<result property="noticestatus" column="noticestatus" jdbcType="VARCHAR" />
+		<result property="importantlevel" column="importantlevel"
+			jdbcType="VARCHAR" />
+		<result property="createrid" column="createrid" jdbcType="VARCHAR" />
+		<result property="creatername" column="creatername" jdbcType="VARCHAR" />
+		<result property="startdate" column="startdate" jdbcType="VARCHAR" />
+		<result property="enddate" column="enddate" jdbcType="VARCHAR" />
+		<result property="noticebranch" column="noticebranch" jdbcType="VARCHAR" />
+		<result property="noticedept" column="noticedept" jdbcType="VARCHAR" />
+		<result property="noticegroup" column="noticegroup" jdbcType="VARCHAR" />
+		<result property="operatorname" column="operatorname" jdbcType="VARCHAR" />
+		<result property="operatetime" column="operatetime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="NoticeColumnList">
+		noticecode,
+		noticetitle,
+		noticecontent,
+		noticestatus,
+		importantlevel,
+		createrid,
+		creatername,
+		startdate,
+		enddate,
+		noticebranch,
+		noticedept,
+		noticegroup,
+		operatorname,
+		operatetime
+    </sql>
+	<select id="searchNotice" resultMap="NoticeResultMap"
+		parameterType="HashMap">
+		select *
+		from tblnotice t
+		where t.noticecode in (select nt.noticecode
+		from noticemiddle nt
+		where 1 = 2
+		<if test="noticebranch !=null and noticebranch != '' ">
+			or nt.noticebranch = #{noticebranch,jdbcType=VARCHAR}
+			</if>
+		<if test="noticedept !=null and noticedept != '' ">
+			or nt.noticedept = #{noticedept,jdbcType=VARCHAR}
+			</if>
+		<if test="noticegroup !=null and noticegroup != '' ">
+			or nt.noticegroup = #{noticegroup,jdbcType=VARCHAR}
+			</if>
+		)
+		<if test="noticecode !=null and noticecode != '' ">
+			and noticecode like #{noticecode,jdbcType=VARCHAR}
+			</if>
+		<if test="noticetitle !=null and noticetitle != '' ">
+			and noticetitle like #{noticetitle,jdbcType=VARCHAR}
+			</if>
+		<if test="noticecontent !=null and noticecontent != '' ">
+			and noticecontent like #{noticecontent,jdbcType=VARCHAR}
+			</if>
+		<if test="noticestatus !=null and noticestatus != '' ">
+			and noticestatus like #{noticestatus,jdbcType=VARCHAR}
+			</if>
+		<if test="importantlevel !=null and importantlevel != '' ">
+			and importantlevel like #{importantlevel,jdbcType=VARCHAR}
+			</if>
+		<if test="createrid !=null and createrid != '' ">
+			and createrid like #{createrid,jdbcType=VARCHAR}
+			</if>
+		<if test="creatername !=null and creatername != '' ">
+			and creatername like #{creatername,jdbcType=VARCHAR}
+			</if>
+		<if test="startdate !=null and startdate != '' ">
+			and startdate like #{startdate,jdbcType=VARCHAR}
+			</if>
+		<if test="enddate !=null and enddate != '' ">
+			and enddate like #{enddate,jdbcType=VARCHAR}
+			</if>
+		<if test="operatorname !=null and operatorname != '' ">
+			and operatorname like #{operatorname,jdbcType=VARCHAR}
+			</if>
+		<if test="operatetime !=null and operatetime != '' ">
+			and operatetime like #{operatetime,jdbcType=VARCHAR}
+			</if>
+	</select>
+	<select id="searchAll" resultMap="NoticeResultMap"
+		parameterType="HashMap">
+		select * from tblnotice 
+  	</select>
+
+	<insert id="insert" parameterType="com.topcheer.model.noticeMgr.Notice">
+		INSERT INTO tblnotice (
+		noticecode,
+		noticetitle,
+		noticecontent,
+		noticestatus,
+		importantlevel,
+		createrid,
+		creatername,
+		startdate,
+		enddate,
+		noticebranch,
+		noticedept,
+		noticegroup,
+		operatorname,
+		operatetime
+		)VALUES (
+		#{noticecode,jdbcType=VARCHAR},
+		#{noticetitle,jdbcType=VARCHAR},
+		#{noticecontent,jdbcType=VARCHAR},
+		#{noticestatus,jdbcType=VARCHAR},
+		#{importantlevel,jdbcType=VARCHAR},
+		#{createrid,jdbcType=VARCHAR},
+		#{creatername,jdbcType=VARCHAR},
+		#{startdate,jdbcType=VARCHAR},
+		#{enddate,jdbcType=VARCHAR},
+		#{noticebranch,jdbcType=VARCHAR},
+		#{noticedept,jdbcType=VARCHAR},
+		#{noticegroup,jdbcType=VARCHAR},
+		#{operatorname,jdbcType=VARCHAR},
+		#{operatetime,jdbcType=VARCHAR}
+		)
+  	</insert>
+
+	<insert id="update" parameterType="com.topcheer.model.noticeMgr.Notice">
+		update tblnotice set
+		noticetitle = #{noticetitle,jdbcType=VARCHAR} ,
+		noticecontent =
+		#{noticecontent,jdbcType=VARCHAR} ,
+		noticestatus =
+		#{noticestatus,jdbcType=VARCHAR} ,
+		importantlevel =
+		#{importantlevel,jdbcType=VARCHAR} ,
+		createrid =
+		#{createrid,jdbcType=VARCHAR} ,
+		creatername =
+		#{creatername,jdbcType=VARCHAR} ,
+		startdate =
+		#{startdate,jdbcType=VARCHAR} ,
+		enddate = #{enddate,jdbcType=VARCHAR} ,
+		noticebranch = #{noticebranch,jdbcType=VARCHAR} ,
+		noticedept =
+		#{noticedept,jdbcType=VARCHAR} ,
+		noticegroup =
+		#{noticegroup,jdbcType=VARCHAR} ,
+		operatorname =
+		#{operatorname,jdbcType=VARCHAR} ,
+		operatetime =
+		#{operatetime,jdbcType=VARCHAR}
+		where noticecode =
+		#{noticecode,jdbcType=VARCHAR}
+  	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from tblnotice where
+		noticecode = #{noticecode,jdbcType=VARCHAR}
+  	</delete>
+
+	<select id="getNotice" resultMap="NoticeResultMap"
+		parameterType="String">
+		select * from tblnotice where noticecode =
+		#{noticecode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.TranstemplatemanagerMapper" >
+	<resultMap id="TranstemplatemanagerResultMap" type="com.topcheer.model.mobile.Transtemplatemanager" >
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="templatename"    column="templatename" jdbcType="VARCHAR" />
+       		<result property="templateobject"    column="templateobject" jdbcType="VARCHAR" />
+       		<result property="linkurl"    column="linkurl" jdbcType="VARCHAR" />
+       		<result property="usechannel"    column="usechannel" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="TranstemplatemanagerColumnList" >
+    		templatecode,
+    		templatename,
+    		templateobject,
+    		linkurl,
+    		usechannel,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchTranstemplatemanager" resultMap="TranstemplatemanagerResultMap" parameterType="HashMap">
+    	select  * from tbltranstemplatemanager
+		where 1=1
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatename !=null and templatename != '' ">
+		    	and templatename like #{templatename,jdbcType=VARCHAR}
+			</if>
+    		<if test="templateobject !=null and templateobject != '' ">
+		    	and templateobject like #{templateobject,jdbcType=VARCHAR}
+			</if>
+    		<if test="linkurl !=null and linkurl != '' ">
+		    	and linkurl like #{linkurl,jdbcType=VARCHAR}
+			</if>
+    		<if test="usechannel !=null and usechannel != '' ">
+		    	and usechannel like #{usechannel,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="TranstemplatemanagerResultMap" parameterType="HashMap">
+    	select * from tbltranstemplatemanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Transtemplatemanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="templatecode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tbltranstemplatemanager (
+    			templatecode,
+    			templatename,
+    			templateobject,
+    			linkurl,
+    			usechannel,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{templatename,jdbcType=VARCHAR},
+    		#{templateobject,jdbcType=VARCHAR},
+    		#{linkurl,jdbcType=VARCHAR},
+    		#{usechannel,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Transtemplatemanager">
+  		update tbltranstemplatemanager set  
+	      		templatename = #{templatename,jdbcType=VARCHAR}  ,
+	      		templateobject = #{templateobject,jdbcType=VARCHAR}  ,
+	      		linkurl = #{linkurl,jdbcType=VARCHAR}  ,
+	      		usechannel = #{usechannel,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbltranstemplatemanager where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getTranstemplatemanager" resultMap="TranstemplatemanagerResultMap" parameterType="String">
+  		select * from tbltranstemplatemanager  where templatecode = #{templatecode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

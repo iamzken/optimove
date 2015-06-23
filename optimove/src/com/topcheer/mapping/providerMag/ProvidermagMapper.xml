@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.providerMag.ProvidermagMapper" >
+	<resultMap id="ProvidermagResultMap" type="com.topcheer.model.providerMag.Providermag" >
+       		<result property="providerid"    column="providerid" jdbcType="VARCHAR" />
+       		<result property="providername"    column="providername" jdbcType="VARCHAR" />
+       		<result property="descriptioncontent"    column="descriptioncontent" jdbcType="VARCHAR" />
+       		<result property="mobile"    column="mobile" jdbcType="VARCHAR" />
+       		<result property="email"    column="email" jdbcType="VARCHAR" />
+       		<result property="officialwebsite"    column="officialwebsite" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="ProvidermagColumnList" >
+    		providerid,
+    		providername,
+    		descriptioncontent,
+    		mobile,
+    		email,
+    		officialwebsite
+    </sql>
+    <select id="searchProvidermag" resultMap="ProvidermagResultMap" parameterType="HashMap">
+    	select  * from tblprovidermag
+		where 1=1
+    		<if test="providerid !=null and providerid != '' ">
+		    	and providerid like #{providerid,jdbcType=VARCHAR}
+			</if>
+    		<if test="providername !=null and providername != '' ">
+		    	and providername like #{providername,jdbcType=VARCHAR}
+			</if>
+    		<if test="descriptioncontent !=null and descriptioncontent != '' ">
+		    	and descriptioncontent like #{descriptioncontent,jdbcType=VARCHAR}
+			</if>
+    		<if test="mobile !=null and mobile != '' ">
+		    	and mobile like #{mobile,jdbcType=VARCHAR}
+			</if>
+    		<if test="email !=null and email != '' ">
+		    	and email like #{email,jdbcType=VARCHAR}
+			</if>
+    		<if test="officialwebsite !=null and officialwebsite != '' ">
+		    	and officialwebsite like #{officialwebsite,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="ProvidermagResultMap" parameterType="HashMap">
+    	select * from tblprovidermag 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.providerMag.Providermag">
+  	<!--
+  		<selectKey resultType="String" keyProperty="providerid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblprovidermag (
+    			providerid,
+    			providername,
+    			descriptioncontent,
+    			mobile,
+    			email,
+    			officialwebsite
+  		)VALUES (
+    		#{providerid,jdbcType=VARCHAR},
+    		#{providername,jdbcType=VARCHAR},
+    		#{descriptioncontent,jdbcType=VARCHAR},
+    		#{mobile,jdbcType=VARCHAR},
+    		#{email,jdbcType=VARCHAR},
+    		#{officialwebsite,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.providerMag.Providermag">
+  		update tblprovidermag set  
+	      		providername = #{providername,jdbcType=VARCHAR}  ,
+	      		descriptioncontent = #{descriptioncontent,jdbcType=VARCHAR}  ,
+	      		mobile = #{mobile,jdbcType=VARCHAR}  ,
+	      		email = #{email,jdbcType=VARCHAR}  ,
+	      		officialwebsite = #{officialwebsite,jdbcType=VARCHAR}  
+  		where providerid = #{providerid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblprovidermag where providerid = #{providerid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getProvidermag" resultMap="ProvidermagResultMap" parameterType="String">
+  		select * from tblprovidermag  where providerid = #{providerid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

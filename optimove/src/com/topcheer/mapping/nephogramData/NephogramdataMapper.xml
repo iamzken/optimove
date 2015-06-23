@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.nephogramData.NephogramdataMapper" >
+	<resultMap id="NephogramdataResultMap" type="com.topcheer.model.nephogramData.Nephogramdata" >
+       		<result property="nephogramdataid"    column="nephogramdataid" jdbcType="VARCHAR" />
+       		<result property="nephogrammodelid"    column="nephogrammodelid" jdbcType="VARCHAR" />
+       		<result property="nephogramattrid"    column="nephogramattrid" jdbcType="VARCHAR" />
+       		<result property="attrvalue"    column="attrvalue" jdbcType="VARCHAR" />
+       		<result property="dataremarks"    column="dataremarks" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NephogramdataColumnList" >
+    		nephogramdataid,
+    		nephogrammodelid,
+    		nephogramattrid,
+    		attrvalue,
+    		dataremarks
+    </sql>
+    <select id="searchNephogramdata" resultMap="NephogramdataResultMap" parameterType="HashMap">
+    	select  * from tblnephogramdata
+		where 1=1
+    		<if test="nephogramdataid !=null and nephogramdataid != '' ">
+		    	and nephogramdataid like #{nephogramdataid,jdbcType=VARCHAR}
+			</if>
+    		<if test="nephogrammodelid !=null and nephogrammodelid != '' ">
+		    	and nephogrammodelid like #{nephogrammodelid,jdbcType=VARCHAR}
+			</if>
+    		<if test="nephogramattrid !=null and nephogramattrid != '' ">
+		    	and nephogramattrid like #{nephogramattrid,jdbcType=VARCHAR}
+			</if>
+    		<if test="attrvalue !=null and attrvalue != '' ">
+		    	and attrvalue like #{attrvalue,jdbcType=VARCHAR}
+			</if>
+    		<if test="dataremarks !=null and dataremarks != '' ">
+		    	and dataremarks like #{dataremarks,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NephogramdataResultMap" parameterType="HashMap">
+    	select * from tblnephogramdata 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.nephogramData.Nephogramdata">
+  	<!--
+  		<selectKey resultType="String" keyProperty="nephogramdataid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblnephogramdata (
+    			nephogramdataid,
+    			nephogrammodelid,
+    			nephogramattrid,
+    			attrvalue,
+    			dataremarks
+  		)VALUES (
+    		#{nephogramdataid,jdbcType=VARCHAR},
+    		#{nephogrammodelid,jdbcType=VARCHAR},
+    		#{nephogramattrid,jdbcType=VARCHAR},
+    		#{attrvalue,jdbcType=VARCHAR},
+    		#{dataremarks,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.nephogramData.Nephogramdata">
+  		update tblnephogramdata set  
+	      		nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}  ,
+	      		nephogramattrid = #{nephogramattrid,jdbcType=VARCHAR}  ,
+	      		attrvalue = #{attrvalue,jdbcType=VARCHAR}  ,
+	      		dataremarks = #{dataremarks,jdbcType=VARCHAR}  
+  		where nephogramdataid = #{nephogramdataid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblnephogramdata where nephogramdataid = #{nephogramdataid,jdbcType=VARCHAR}
+  	</delete>
+  	<delete id="deletebymodelId" parameterType="String">
+  		delete from tblnephogramdata where nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNephogramdata" resultMap="NephogramdataResultMap" parameterType="String">
+  		select * from tblnephogramdata  where nephogramdataid = #{nephogramdataid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

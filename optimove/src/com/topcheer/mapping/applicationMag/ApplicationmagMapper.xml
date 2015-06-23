@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.applicationMag.ApplicationmagMapper" >
+	<resultMap id="ApplicationmagResultMap" type="com.topcheer.model.applicationMag.Applicationmag" >
+       		<result property="applicationid"    column="applicationid" jdbcType="VARCHAR" />
+       		<result property="applicationname"    column="applicationname" jdbcType="VARCHAR" />
+       		<result property="applicationdes"    column="applicationdes" jdbcType="VARCHAR" />
+       		<result property="status"    column="status" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="ApplicationmagColumnList" >
+    		applicationid,
+    		applicationname,
+    		applicationdes,
+    		status
+    </sql>
+    <select id="searchApplicationmag" resultMap="ApplicationmagResultMap" parameterType="HashMap">
+    	select  * from tblapplicationmag
+		where 1=1
+    		<if test="applicationid !=null and applicationid != '' ">
+		    	and applicationid like #{applicationid,jdbcType=VARCHAR}
+			</if>
+    		<if test="applicationname !=null and applicationname != '' ">
+		    	and applicationname like #{applicationname,jdbcType=VARCHAR}
+			</if>
+    		<if test="applicationdes !=null and applicationdes != '' ">
+		    	and applicationdes like #{applicationdes,jdbcType=VARCHAR}
+			</if>
+    		<if test="status !=null and status != '' ">
+		    	and status like #{status,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="ApplicationmagResultMap" parameterType="HashMap">
+    	select * from tblapplicationmag 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.applicationMag.Applicationmag">
+  	<!--
+  		<selectKey resultType="String" keyProperty="applicationid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblapplicationmag (
+    			applicationid,
+    			applicationname,
+    			applicationdes,
+    			status
+  		)VALUES (
+    		#{applicationid,jdbcType=VARCHAR},
+    		#{applicationname,jdbcType=VARCHAR},
+    		#{applicationdes,jdbcType=VARCHAR},
+    		#{status,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.applicationMag.Applicationmag">
+  		update tblapplicationmag set  
+	      		applicationname = #{applicationname,jdbcType=VARCHAR}  ,
+	      		applicationdes = #{applicationdes,jdbcType=VARCHAR}  ,
+	      		status = #{status,jdbcType=VARCHAR}  
+  		where applicationid = #{applicationid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblapplicationmag where applicationid = #{applicationid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getApplicationmag" resultMap="ApplicationmagResultMap" parameterType="String">
+  		select * from tblapplicationmag  where applicationid = #{applicationid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

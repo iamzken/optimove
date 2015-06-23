@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.AppmanagerMapper" >
+	<resultMap id="AppmanagerResultMap" type="com.topcheer.model.mobile.Appmanager" >
+       		<result property="appcode"    column="appcode" jdbcType="VARCHAR" />
+       		<result property="appname"    column="appname" jdbcType="VARCHAR" />
+       		<result property="appdescription"    column="appdescription" jdbcType="VARCHAR" />
+       		<result property="verno"    column="verno" jdbcType="VARCHAR" />
+       		<result property="vertype"    column="vertype" jdbcType="VARCHAR" />
+       		<result property="releaseoperate"    column="releaseoperate" jdbcType="VARCHAR" />
+       		<result property="releasedate"    column="releasedate" jdbcType="VARCHAR" />
+       		<result property="updatedescription"    column="updatedescription" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="AppmanagerColumnList" >
+    		appcode,
+    		appname,
+    		appdescription,
+    		verno,
+    		vertype,
+    		releaseoperate,
+    		releasedate,
+    		updatedescription,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchAppmanager" resultMap="AppmanagerResultMap" parameterType="HashMap">
+    	select  * from tblappmanager
+		where 1=1
+    		<if test="appcode !=null and appcode != '' ">
+		    	and appcode like #{appcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="appname !=null and appname != '' ">
+		    	and appname like #{appname,jdbcType=VARCHAR}
+			</if>
+    		<if test="appdescription !=null and appdescription != '' ">
+		    	and appdescription like #{appdescription,jdbcType=VARCHAR}
+			</if>
+    		<if test="verno !=null and verno != '' ">
+		    	and verno like #{verno,jdbcType=VARCHAR}
+			</if>
+    		<if test="vertype !=null and vertype != '' ">
+		    	and vertype like #{vertype,jdbcType=VARCHAR}
+			</if>
+    		<if test="releaseoperate !=null and releaseoperate != '' ">
+		    	and releaseoperate like #{releaseoperate,jdbcType=VARCHAR}
+			</if>
+    		<if test="releasedate !=null and releasedate != '' ">
+		    	and releasedate like #{releasedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedescription !=null and updatedescription != '' ">
+		    	and updatedescription like #{updatedescription,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="AppmanagerResultMap" parameterType="HashMap">
+    	select * from tblappmanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Appmanager"> 
+  		INSERT INTO tblappmanager (
+    			appcode,
+    			appname,
+    			appdescription,
+    			verno,
+    			vertype,
+    			releaseoperate,
+    			releasedate,
+    			updatedescription,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{appcode,jdbcType=VARCHAR},
+    		#{appname,jdbcType=VARCHAR},
+    		#{appdescription,jdbcType=VARCHAR},
+    		#{verno,jdbcType=VARCHAR},
+    		#{vertype,jdbcType=VARCHAR},
+    		#{releaseoperate,jdbcType=VARCHAR},
+    		#{releasedate,jdbcType=VARCHAR},
+    		#{updatedescription,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Appmanager">
+  		update tblappmanager set  
+	      		appname = #{appname,jdbcType=VARCHAR}  ,
+	      		appdescription = #{appdescription,jdbcType=VARCHAR}  ,
+	      		verno = #{verno,jdbcType=VARCHAR}  ,
+	      		vertype = #{vertype,jdbcType=VARCHAR}  ,
+	      		releaseoperate = #{releaseoperate,jdbcType=VARCHAR}  ,
+	      		releasedate = #{releasedate,jdbcType=VARCHAR}  ,
+	      		updatedescription = #{updatedescription,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where appcode = #{appcode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblappmanager where appcode = #{appcode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getAppmanager" resultMap="AppmanagerResultMap" parameterType="String">
+  		select * from tblappmanager  where appcode = #{appcode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

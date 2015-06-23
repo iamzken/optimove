@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="optimove"
+  id="myeclipse.1420529060279"
+  context-root="/optimove"
+  j2ee-spec="5.0"
+  archive="optimove.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

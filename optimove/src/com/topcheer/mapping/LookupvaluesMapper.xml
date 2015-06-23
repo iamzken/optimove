@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.LookupvaluesMapper" >
+	<resultMap id="LookupvaluesResultMap" type="com.topcheer.model.Lookupvalues" >
+       		<result property="lookupType"    column="LookupType" jdbcType="VARCHAR" />
+       		<result property="lookupCode"    column="LookupCode" jdbcType="VARCHAR" />
+       		<result property="meaning"    column="Meaning" jdbcType="VARCHAR" />
+       		<result property="remark"    column="Remark" jdbcType="VARCHAR" />
+       		<result property="enabledFlag"    column="EnabledFlag" jdbcType="VARCHAR" />
+       		<result property="selectFlag"    column="SelectFlag" jdbcType="VARCHAR" />
+       		<result property="createdBy"    column="CreatedBy" jdbcType="VARCHAR" />
+       		<result property="creationDate"    column="CreationDate" jdbcType="VARCHAR" />
+       		<result property="lastUpdateBy"    column="LastUpdateBy" jdbcType="VARCHAR" />
+       		<result property="lastUpdateDate"    column="lastUpdateDate" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="LookupvaluesColumnList" >
+    		LookupType,
+    		LookupCode,
+    		Meaning,
+    		Remark,
+    		EnabledFlag,
+    		SelectFlag,
+    		CreatedBy,
+    		CreationDate,
+    		LastUpdateBy,
+    		lastUpdateDate
+    </sql>
+    <select id="searchLookvalues" resultMap="LookupvaluesResultMap" parameterType="HashMap">
+    	select  * from tbllookupvalues
+		where 1=1
+    		<if test="lookupType !=null and lookupType != '' ">
+		    	and LookupType like #{lookupType,jdbcType=VARCHAR}
+			</if>
+    		<if test="lookupCode !=null and lookupCode != '' ">
+		    	and LookupCode like #{lookupCode,jdbcType=VARCHAR}
+			</if>
+    		<if test="meaning !=null and meaning != '' ">
+		    	and Meaning like #{meaning,jdbcType=VARCHAR}
+			</if>
+    		<if test="remark !=null and remark != '' ">
+		    	and Remark like #{remark,jdbcType=VARCHAR}
+			</if>
+    		<if test="enabledFlag !=null and enabledFlag != '' ">
+		    	and EnabledFlag like #{enabledFlag,jdbcType=VARCHAR}
+			</if>
+    		<if test="selectFlag !=null and selectFlag != '' ">
+		    	and SelectFlag like #{selectFlag,jdbcType=VARCHAR}
+			</if>
+    		<if test="createdBy !=null and createdBy != '' ">
+		    	and CreatedBy like #{createdBy,jdbcType=VARCHAR}
+			</if>
+    		<if test="creationDate !=null and creationDate != '' ">
+		    	and CreationDate like #{creationDate,jdbcType=VARCHAR}
+			</if>
+    		<if test="lastUpdateBy !=null and lastUpdateBy != '' ">
+		    	and LastUpdateBy like #{lastUpdateBy,jdbcType=VARCHAR}
+			</if>
+    		<if test="lastUpdateDate !=null and lastUpdateDate != '' ">
+		    	and lastUpdateDate like #{lastUpdateDate,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="getLookvaluesBylookup" resultMap="LookupvaluesResultMap" parameterType="HashMap">
+		select * from tbllookupvalues where LookupType=#{lookupType}
+	</select>
+  	
+  	<select id="searchAll" resultMap="LookupvaluesResultMap" parameterType="HashMap">
+    	select * from tbllookupvalues 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.Lookupvalues">
+  		INSERT INTO tbllookupvalues (
+    			lookupType,
+    			lookupCode,
+    			meaning,
+    			remark,
+    			enabledFlag,
+    			selectFlag,
+    			createdBy,
+    			creationDate,
+    			lastUpdateBy,
+    			lastUpdateDate
+  		)VALUES (
+    		#{lookupType,jdbcType=VARCHAR},
+    		#{lookupCode,jdbcType=VARCHAR},
+    		#{meaning,jdbcType=VARCHAR},
+    		#{remark,jdbcType=VARCHAR},
+    		#{enabledFlag,jdbcType=VARCHAR},
+    		#{selectFlag,jdbcType=VARCHAR},
+    		#{createdBy,jdbcType=VARCHAR},
+    		#{creationDate,jdbcType=VARCHAR},
+    		#{lastUpdateBy,jdbcType=VARCHAR},
+    		#{lastUpdateDate,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.Lookupvalues">
+  		update tbllookupvalues set  
+	      		LookupCode = #{lookupCode,jdbcType=VARCHAR}  ,
+	      		Meaning = #{meaning,jdbcType=VARCHAR}  ,
+	      		Remark = #{remark,jdbcType=VARCHAR}  ,
+	      		EnabledFlag = #{enabledFlag,jdbcType=VARCHAR}  ,
+	      		SelectFlag = #{selectFlag,jdbcType=VARCHAR}  ,
+	      		CreatedBy = #{createdBy,jdbcType=VARCHAR}  ,
+	      		CreationDate = #{creationDate,jdbcType=VARCHAR}  ,
+	      		LastUpdateBy = #{lastUpdateBy,jdbcType=VARCHAR}  ,
+	      		lastUpdateDate = #{lastUpdateDate,jdbcType=VARCHAR}  
+  		where LookupCode = #{lookupCode,jdbcType=VARCHAR} and lookupType = #{lookupType,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="com.topcheer.model.Lookupvalues">
+  		delete from tbllookupvalues where LookupCode = #{lookupCode,jdbcType=VARCHAR} and lookupType = #{lookupType,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getLookvalues" resultMap="LookupvaluesResultMap" parameterType="String">
+  		select * from tbllookupvalues  where LookupType = #{lookupType,jdbcType=VARCHAR}
+  	</select>
+</mapper>

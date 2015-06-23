@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.StyProMapper">
+	<resultMap id="StyProResultMap" type="com.topcheer.model.StyPro">
+		<result property="id" column="id" jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="type" column="type" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="descs" column="descs" jdbcType="VARCHAR" />
+		<result property="json_str" column="json_str" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="StyProDetailResultMap" type="com.topcheer.model.StyProDetail">
+		<result property="prodId" column="prodId" jdbcType="VARCHAR" />
+		<result property="nodeNo" column="nodeNo" jdbcType="VARCHAR" />
+		<result property="nodeType" column="nodeType" jdbcType="VARCHAR" />
+		<result property="nodeOperation" column="nodeOperation" jdbcType="VARCHAR" />
+		<result property="groupId" column="groupId" jdbcType="VARCHAR" />
+		<result property="branchId" column="branchId" jdbcType="VARCHAR" />
+		<result property="deptId" column="deptId" jdbcType="VARCHAR" />
+		<result property="userId" column="userId" jdbcType="VARCHAR" />
+		<result property="proId" column="proId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="StyProColumnList">
+		id,
+		name,
+		type,
+		status,
+		code,
+		descs,
+		json_str
+	</sql>
+
+	<sql id="StyProDetailColumnList">
+		prodId,
+		nodeNo,
+		nodeType,
+		nodeOperation,
+		groupId,
+		branchId,
+		deptId,
+		userId,
+		proId,
+		nodeFrom,
+		nodeTo,
+		code
+	</sql>
+	
+	<select id="searchStyProDetail" resultMap="StyProDetailResultMap"
+		parameterType="com.topcheer.model.StyPro">
+		select * from sty_pro_detail where proId = #{id,jdbcType=VARCHAR}  
+	</select>
+	
+	<select id="searchDetailByNode" resultMap="StyProDetailResultMap"
+		>
+		select * from sty_pro_detail where proId = #{proId,jdbcType=VARCHAR} and nodeType = #{nodeType,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getCurrentNode" resultMap="StyProDetailResultMap"
+		parameterType="com.topcheer.model.StyProDetail">
+		select * from sty_pro_detail where prodId = #{prodId,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="getNexeNode" resultMap="StyProDetailResultMap"
+		>
+		select * from sty_pro_detail where proId = #{proId,jdbcType=VARCHAR} and code = (select nodeTo from sty_pro_detail where proId = #{proId,jdbcType=VARCHAR} and prodId = #{prodId,jdbcType=VARCHAR})
+	</select>
+	
+	
+	<select id="getStyPro" resultMap="StyProResultMap" parameterType="String">
+  		select * from sty_pro where id = #{id,jdbcType=VARCHAR}
+  	</select>
+  	
+	<insert id="publish" parameterType="com.topcheer.model.StyPro">
+		update sty_pro set
+		status = '1'
+		where id = #{id,jdbcType=VARCHAR}
+	</insert>
+
+	<select id="searchStyPro" resultMap="StyProResultMap"
+		parameterType="HashMap">
+		select * from sty_pro
+	</select>
+
+	<insert id="insert" parameterType="com.topcheer.model.StyPro">
+		INSERT INTO sty_pro (
+		<include refid="StyProColumnList" />
+		)VALUES (
+		#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR},
+		#{json_str,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertStyProDetail" parameterType="com.topcheer.model.StyProDetail">
+		INSERT INTO sty_pro_detail (
+		<include refid="StyProDetailColumnList" />
+		)VALUES (
+		#{prodId,jdbcType=VARCHAR}, #{nodeNo,jdbcType=VARCHAR},
+		#{nodeType,jdbcType=VARCHAR}, #{nodeOperation,jdbcType=VARCHAR},
+		#{groupId,jdbcType=VARCHAR}, #{branchId,jdbcType=VARCHAR},
+		#{deptId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{proId,jdbcType=VARCHAR}, #{nodeFrom,jdbcType=VARCHAR},
+		#{nodeTo,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="update" parameterType="com.topcheer.model.StyPro">
+		update sty_pro set
+	      		name = #{name,jdbcType=VARCHAR},
+	      		type = #{type,jdbcType=VARCHAR},
+	      		status = #{status,jdbcType=VARCHAR},
+	      		code = #{code,jdbcType=VARCHAR},
+	      		descs = #{descs,jdbcType=VARCHAR},
+	      		json_str = #{json_str,jdbcType=VARCHAR}
+  		where id = #{id,jdbcType=VARCHAR}
+	</insert>
+
+	<insert id="updateStyProDetail" parameterType="com.topcheer.model.StyProDetail">
+		update sty_pro_detail set
+	      		nodeNo = #{nodeNo,jdbcType=VARCHAR},
+	      		nodeType = #{nodeType,jdbcType=VARCHAR},
+	      		nodeOperation = #{nodeOperation,jdbcType=VARCHAR},
+	      		nodeFrom = #{nodeFrom,jdbcType=VARCHAR},
+	      		nodeTo = #{nodeTo,jdbcType=VARCHAR},
+	      		code = #{code,jdbcType=VARCHAR}
+  		where prodId = #{prodId,jdbcType=VARCHAR}
+	</insert>
+</mapper>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<script src="http://w3school.com.cn//jquery/jquery-1.11.1.min.js">
+</script>
+		<script>
+  var ws = new WebSocket("ws://echo.websocket.org");  
+
+  //一旦连接上会触发    
+  ws.onopen = function(){ws.send("Test!"); };  
+
+  //接收的时候需要传入个参数 evt evt.data能获取接收值 
+ 
+   ws.onmessage = function(evt){console.log(evt.data);};  
+
+     //ws.close()会触发ws.onclose函数
+      
+    ws.onclose = function(evt){console.log("WebSocketClosed!");};  
+      
+    ws.onerror = function(evt){console.log("WebSocketError!");};  
+
+
+    $(document).ready(function(){
+  $("p").click(function(){
+ ws.send("Test111!"); 
+  });
+});
+</script>
+
+	</head>
+	<body>
+		<p>
+			如果您点击我，发送
+		</p>
+	</body>
+</html>

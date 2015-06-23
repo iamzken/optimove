@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.FlowdetailmanagerMapper" >
+	<resultMap id="FlowdetailmanagerResultMap" type="com.topcheer.model.mobile.Flowdetailmanager" >
+       		<result property="flowcode"    column="flowcode" jdbcType="VARCHAR" />
+       		<result property="servicecode"    column="servicecode" jdbcType="VARCHAR" />
+       		<result property="floworder"    column="floworder" jdbcType="INTEGER" />
+       		<result property="processflag"    column="processflag" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="FlowdetailmanagerColumnList" >
+    		flowcode,
+    		servicecode,
+    		floworder,
+    		processflag,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchFlowdetailmanager" resultMap="FlowdetailmanagerResultMap" parameterType="HashMap">
+    	select  * from tblflowdetailmanager
+		where 1=1
+    		<if test="flowcode !=null and flowcode != '' ">
+		    	and flowcode like #{flowcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="servicecode !=null and servicecode != '' ">
+		    	and servicecode like #{servicecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="floworder !=null and floworder != '' ">
+		    	and floworder like #{floworder,jdbcType=INTEGER}
+			</if>
+    		<if test="processflag !=null and processflag != '' ">
+		    	and processflag like #{processflag,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="FlowdetailmanagerResultMap" parameterType="HashMap">
+    	select * from tblflowdetailmanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Flowdetailmanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="flowcode" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblflowdetailmanager (
+    			flowcode,
+    			servicecode,
+    			floworder,
+    			processflag,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{flowcode,jdbcType=VARCHAR},
+    		#{servicecode,jdbcType=VARCHAR},
+    		#{floworder,jdbcType=INTEGER},
+    		#{processflag,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Flowdetailmanager">
+  		update tblflowdetailmanager set  
+	      		servicecode = #{servicecode,jdbcType=VARCHAR}  ,
+	      		floworder = #{floworder,jdbcType=INTEGER}  ,
+	      		processflag = #{processflag,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where flowcode = #{flowcode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblflowdetailmanager where flowcode = #{flowcode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getFlowdetailmanager" resultMap="FlowdetailmanagerResultMap" parameterType="String">
+  		select * from tblflowdetailmanager  where flowcode = #{flowcode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

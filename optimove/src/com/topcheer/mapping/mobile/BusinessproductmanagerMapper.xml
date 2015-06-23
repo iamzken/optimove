@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.BusinessproductmanagerMapper" >
+	<resultMap id="BusinessproductmanagerResultMap" type="com.topcheer.model.mobile.Businessproductmanager" >
+       		<result property="logourl"    column="logourl" jdbcType="VARCHAR" />
+       		<result property="remark"    column="remark" jdbcType="VARCHAR" />
+       		<result property="productcode"    column="productcode" jdbcType="VARCHAR" />
+       		<result property="productname"    column="productname" jdbcType="VARCHAR" />
+       		<result property="typecode"    column="typecode" jdbcType="VARCHAR" />
+       		<result property="templatecode"    column="templatecode" jdbcType="VARCHAR" />
+       		<result property="flowcode"    column="flowcode" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="BusinessproductmanagerColumnList" >
+    		logourl,
+    		remark,
+    		productcode,
+    		productname,
+    		typecode,
+    		templatecode,
+    		flowcode,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchBusinessproductmanager" resultMap="BusinessproductmanagerResultMap" parameterType="HashMap">
+    	select  * from tblbusinessproductmanager
+		where 1=1
+    		<if test="logourl !=null and logourl != '' ">
+		    	and logourl like #{logourl,jdbcType=VARCHAR}
+			</if>
+    		<if test="remark !=null and remark != '' ">
+		    	and remark like #{remark,jdbcType=VARCHAR}
+			</if>
+    		<if test="productcode !=null and productcode != '' ">
+		    	and productcode like #{productcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="productname !=null and productname != '' ">
+		    	and productname like #{productname,jdbcType=VARCHAR}
+			</if>
+    		<if test="typecode !=null and typecode != '' ">
+		    	and typecode like #{typecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="templatecode !=null and templatecode != '' ">
+		    	and templatecode like #{templatecode,jdbcType=VARCHAR}
+			</if>
+    		<if test="flowcode !=null and flowcode != '' ">
+		    	and flowcode like #{flowcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="BusinessproductmanagerResultMap" parameterType="HashMap">
+    	select * from tblbusinessproductmanager 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Businessproductmanager">
+  	<!--
+  		<selectKey resultType="String" keyProperty="logourl" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblbusinessproductmanager (
+    			logourl,
+    			remark,
+    			productcode,
+    			productname,
+    			typecode,
+    			templatecode,
+    			flowcode,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{logourl,jdbcType=VARCHAR},
+    		#{remark,jdbcType=VARCHAR},
+    		#{productcode,jdbcType=VARCHAR},
+    		#{productname,jdbcType=VARCHAR},
+    		#{typecode,jdbcType=VARCHAR},
+    		#{templatecode,jdbcType=VARCHAR},
+    		#{flowcode,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Businessproductmanager">
+  		update tblbusinessproductmanager set  
+	      		remark = #{remark,jdbcType=VARCHAR}  ,
+	      		logourl = #{logourl,jdbcType=VARCHAR},
+	      		productcode = #{productcode,jdbcType=VARCHAR}  ,
+	      		productname = #{productname,jdbcType=VARCHAR}  ,
+	      		typecode = #{typecode,jdbcType=VARCHAR}  ,
+	      		templatecode = #{templatecode,jdbcType=VARCHAR}  ,
+	      		flowcode = #{flowcode,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where productcode = #{productcode,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblbusinessproductmanager where productcode = #{productcode,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getBusinessproductmanager" resultMap="BusinessproductmanagerResultMap" parameterType="String">
+  		select * from tblbusinessproductmanager  where productcode = #{productcode,jdbcType=VARCHAR}
+  	</select>
+</mapper>

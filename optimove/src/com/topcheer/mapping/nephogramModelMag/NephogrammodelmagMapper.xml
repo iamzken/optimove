@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.nephogramModelMag.NephogrammodelmagMapper" >
+	<resultMap id="NephogrammodelmagResultMap" type="com.topcheer.model.nephogramModelMag.Nephogrammodelmag" >
+       		<result property="nephogrammodelid"    column="nephogrammodelid" jdbcType="VARCHAR" />
+       		<result property="nephogrammodelname"    column="nephogrammodelname" jdbcType="VARCHAR" />
+       		<result property="tablemodelname"    column="tablemodelname" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NephogrammodelmagColumnList" >
+    		nephogrammodelid,
+    		nephogrammodelname,
+    		tablemodelname
+    </sql>
+    <select id="searchNephogrammodelmag" resultMap="NephogrammodelmagResultMap" parameterType="HashMap">
+    	select  * from tblnephogrammodelmag
+		where 1=1
+    		<if test="nephogrammodelid !=null and nephogrammodelid != '' ">
+		    	and nephogrammodelid like #{nephogrammodelid,jdbcType=VARCHAR}
+			</if>
+    		<if test="nephogrammodelname !=null and nephogrammodelname != '' ">
+		    	and nephogrammodelname like #{nephogrammodelname,jdbcType=VARCHAR}
+			</if>
+    		<if test="tablemodelname !=null and tablemodelname != '' ">
+		    	and tablemodelname like #{tablemodelname,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NephogrammodelmagResultMap" parameterType="HashMap">
+    	select * from tblnephogrammodelmag 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.nephogramModelMag.Nephogrammodelmag">
+  	<!--
+  		<selectKey resultType="String" keyProperty="nephogrammodelid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblnephogrammodelmag (
+    			nephogrammodelid,
+    			nephogrammodelname,
+    			tablemodelname
+  		)VALUES (
+    		#{nephogrammodelid,jdbcType=VARCHAR},
+    		#{nephogrammodelname,jdbcType=VARCHAR},
+    		#{tablemodelname,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.nephogramModelMag.Nephogrammodelmag">
+  		update tblnephogrammodelmag set  
+	      		nephogrammodelname = #{nephogrammodelname,jdbcType=VARCHAR}  ,
+	      		tablemodelname = #{tablemodelname,jdbcType=VARCHAR}  
+  		where nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblnephogrammodelmag where nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNephogrammodelmag" resultMap="NephogrammodelmagResultMap" parameterType="String">
+  		select * from tblnephogrammodelmag  where nephogrammodelid = #{nephogrammodelid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

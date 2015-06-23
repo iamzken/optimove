@@ -1,0 +1,388 @@
+package com.topcheer.interceptor;
+
+/**
+ * 分页用拦截器
+ */
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.JXPathNotFoundException;
+import org.apache.ibatis.binding.MapperMethod.MapperParamMap;
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.parameter.DefaultParameterHandler;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.MappedStatement.Builder;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.mapping.SqlSource;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.defaults.DefaultSqlSession.StrictMap;
+
+import com.topcheer.utils.Page;
+import com.topcheer.utils.StringUtil;
+
+@Intercepts( { @Signature(type = Executor.class, method = "query", args = {
+		MappedStatement.class, Object.class, RowBounds.class,
+		ResultHandler.class }) })
+public class PageInterceptor implements Interceptor {
+
+	private String db_type = "mysql";
+	private String where_sql;//条件部分的sql
+
+	public Object intercept(Invocation invocation) throws Throwable {
+		// 当前环境 MappedStatement，BoundSql，及sql取得
+		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+		Object parameter = invocation.getArgs()[1];
+		BoundSql boundSql = mappedStatement.getBoundSql(parameter);
+		String originalSql = boundSql.getSql().trim();
+		Page page = null;
+		Object parameterObject = boundSql.getParameterObject();
+		if (parameterObject instanceof StrictMap
+				|| parameterObject instanceof MapperParamMap) {
+		} else {
+			// Page对象获取
+			page = searchPageWithXpath(boundSql.getParameterObject(), ".",
+					"page", "*/page");
+		}
+		// if(parameterObject instanceof Map){
+		// // page = searchPageWithXpath(parameterObject,".","page","*/page");
+		// page = searchPage((Map)parameterObject);
+		// }
+
+		if (page != null) {
+			//获取表名
+			 String table_name = null;
+			//获取主键名
+			String table_keyName = null;
+			if("mysql".equals(this.getDb_type())){
+				  String countSql = getCountSql(originalSql);
+			      Connection connection=mappedStatement.getConfiguration().getEnvironment().getDataSource().getConnection()  ;          
+			      PreparedStatement countStmt = connection.prepareStatement(countSql);  
+			      BoundSql countBS = copyFromBoundSql(mappedStatement, boundSql, countSql);
+			      DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject, countBS);
+			      parameterHandler.setParameters(countStmt);
+			      ResultSet rs = countStmt.executeQuery();
+			      int totpage=0;
+			      if (rs.next()) {  
+			        totpage = rs.getInt(1);  
+			      }
+			      rs.close();  
+			      countStmt.close();  
+			      connection.close();
+			      page.setTotalRecord(totpage);
+			}else  if ("sqlserver".equals(this.getDb_type())) {
+				//获取表名
+				table_name = this.getTable_name(originalSql);
+				//获取主键名
+			table_keyName = this.getTable_keyName(originalSql, mappedStatement);
+				//获取where部分的条件语句（不支持复杂的条件语句）
+				this.setWhere_sql(originalSql);
+				// 计算总记录数
+				int totpage = this.getTotalPage(originalSql,boundSql, mappedStatement,parameterObject);
+				page.setTotalRecord(totpage);
+			}
+
+			
+			//重新组装分页查询sql语句
+			if ("mysql".equals(this.getDb_type())) {// 对原始Sql追加limit
+				int offset = (page.getPageNo() - 1) * page.getPageSize();
+				StringBuffer sb = new StringBuffer();
+				sb.append(originalSql).append(" limit ").append(offset).append(",").append(page.getPageSize());
+				BoundSql newBoundSql = copyFromBoundSql(mappedStatement,boundSql, sb.toString());
+				MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
+				invocation.getArgs()[0] = newMs;
+			} else if ("sqlserver".equals(this.getDb_type())) {// 对原始Sql追加top
+				int offset = (page.getPageNo() - 1) * page.getPageSize();
+				
+				String str = originalSql;
+				String[] strs = originalSql.split("order ");
+				String key = table_keyName;
+				if(strs.length==2){
+					str = strs[0];
+					key = strs[1].trim().replace("by","");
+				}
+				String tmpsql = "select * from ( "+
+				       "select *,ROW_NUMBER() OVER (ORDER BY "+key+") as index_rank from ("+str+") as tt "+
+				")  as t where t.index_rank between "+((page.getPageNo()-1)*page.getPageSize()+1)+" and "+page.getPageNo()*page.getPageSize();
+
+				BoundSql newBoundSql = copyFromBoundSql2(mappedStatement,boundSql,tmpsql);
+				MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
+				invocation.getArgs()[0] = newMs;
+			}
+		}
+		Object obj = invocation.proceed();
+		if (obj instanceof Collection && page != null)
+			page.setDataCollection((Collection) obj);
+		return obj;
+
+	}
+
+	/**
+	 * 取总记录数
+	 * 
+	 * @param originalSql
+	 * @param mappedStatement
+	 * @return
+	 * @throws SQLException
+	 */
+	private int getTotalPage(String originalSql,BoundSql boundSql, MappedStatement mappedStatement,Object parameterObject)
+			throws SQLException {
+		String countSql = getCountSql(originalSql);
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		int totpage = 0;
+		try {
+			connection = mappedStatement.getConfiguration().getEnvironment()
+					.getDataSource().getConnection();
+			stmt = connection.prepareStatement(countSql); 
+			
+			BoundSql countBS = copyFromBoundSql(mappedStatement, boundSql, countSql);
+			DefaultParameterHandler parameterHandler = new DefaultParameterHandler(
+					mappedStatement, parameterObject, countBS);
+			parameterHandler.setParameters(stmt);
+			
+			rs = stmt.executeQuery();
+			
+			// 取总记录数
+			if (rs.next()) {
+				totpage = rs.getInt(1);
+			}
+
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (connection != null)
+				connection.close();
+		}
+		return totpage;
+	}
+	
+	/**
+	 * 根据给定的xpath查询Page对象
+	 */
+	private Page searchPage(Map map) {
+		Object result = map.get("page");
+		if (result != null && result instanceof Page) {
+			return (Page) result;
+		}
+		return null;
+	}
+
+	/**
+	 * 根据给定的xpath查询Page对象
+	 */
+	private Page searchPageWithXpath(Object o, String... xpaths) {
+		JXPathContext context = JXPathContext.newContext(o);
+		Object result;
+		for (String xpath : xpaths) {
+			try {
+				result = context.selectSingleNode(xpath);
+			} catch (JXPathNotFoundException e) {
+				continue;
+			}
+			if (result instanceof Page) {
+				return (Page) result;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 复制MappedStatement对象
+	 */
+	private MappedStatement copyFromMappedStatement(MappedStatement ms,
+			SqlSource newSqlSource) {
+		Builder builder = new Builder(ms.getConfiguration(), ms.getId(),
+				newSqlSource, ms.getSqlCommandType());
+
+		builder.resource(ms.getResource());
+		builder.fetchSize(ms.getFetchSize());
+		builder.statementType(ms.getStatementType());
+		builder.keyGenerator(ms.getKeyGenerator());
+		// builder.keyProperty(ms.getKeyProperty());
+		builder.timeout(ms.getTimeout());
+		builder.parameterMap(ms.getParameterMap());
+		builder.resultMaps(ms.getResultMaps());
+		builder.resultSetType(ms.getResultSetType());
+		builder.cache(ms.getCache());
+		builder.flushCacheRequired(ms.isFlushCacheRequired());
+		builder.useCache(ms.isUseCache());
+
+		return builder.build();
+	}
+
+	/**
+	 * 复制BoundSql对象
+	 */
+	private BoundSql copyFromBoundSql(MappedStatement ms, BoundSql boundSql,
+			String sql) {
+		BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), sql,
+				boundSql.getParameterMappings(), boundSql.getParameterObject());
+		for (ParameterMapping mapping : boundSql.getParameterMappings()) {
+			String prop = mapping.getProperty();
+			if (boundSql.hasAdditionalParameter(prop)) {
+				newBoundSql.setAdditionalParameter(prop, boundSql
+						.getAdditionalParameter(prop));
+			}
+		}
+		return newBoundSql;
+	}
+
+	/**
+	 * 复制BoundSql对象
+	 */
+	private BoundSql copyFromBoundSql2(MappedStatement ms, BoundSql boundSql,
+			String sql) {
+		List<ParameterMapping> paraMappings = boundSql.getParameterMappings();
+		int size = paraMappings.size();
+//		for(int i=0;i<size;i++){
+//			paraMappings.add(paraMappings.get(i));
+//		}
+		BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), sql,paraMappings, boundSql.getParameterObject());
+		ParameterMapping mapping = null;
+		for (int i=0;i<paraMappings.size();i++) {
+			mapping = (ParameterMapping)paraMappings.get(i);
+			String prop = mapping.getProperty();
+			if (boundSql.hasAdditionalParameter(prop)) {
+				newBoundSql.setAdditionalParameter(prop, boundSql.getAdditionalParameter(prop));
+			}
+		}
+		
+//		BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), sql,
+//				boundSql.getParameterMappings(), boundSql.getParameterObject());
+//		for (ParameterMapping mapping : boundSql.getParameterMappings()) {
+//			String prop = mapping.getProperty();
+//			if (boundSql.hasAdditionalParameter(prop)) {
+//				newBoundSql.setAdditionalParameter(prop, boundSql.getAdditionalParameter(prop));
+//			}
+//		}
+		return newBoundSql;
+	}
+	/**
+	 * 根据原Sql语句获取对应的查询总记录数的Sql语句
+	 */
+	private String getCountSql(String sql) {
+		String result = "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
+		if ("sqlserver".equals(this.getDb_type())&&sql.contains("order ")){
+			result = sql.split("order ")[0];
+			result= "SELECT COUNT(*) FROM ("+ result +") aliasForPage";
+		}
+		return result;
+	}
+
+	public class BoundSqlSqlSource implements SqlSource {
+		BoundSql boundSql;
+
+		public BoundSqlSqlSource(BoundSql boundSql) {
+			this.boundSql = boundSql;
+		}
+
+		public BoundSql getBoundSql(Object parameterObject) {
+			return boundSql;
+		}
+	}
+
+	public Object plugin(Object arg0) {
+		return Plugin.wrap(arg0, this);
+	}
+
+	public void setProperties(Properties arg0) {
+	}
+
+
+	public String getTable_keyName(String originalSql, MappedStatement mappedStatement) {
+		Connection connection = null;
+		Statement stmt = null;
+		String table_keyName =null;
+		try {
+			connection = mappedStatement.getConfiguration().getEnvironment()
+					.getDataSource().getConnection();
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("select top 0 * from "+this.getTable_name(originalSql));
+			ResultSetMetaData rsmd = rs.getMetaData();
+			table_keyName = rsmd.getColumnName(1);
+//			DatabaseMetaData metaData = connection.getMetaData();
+//			ResultSet rs = metaData.getColumns(connection.getCatalog(), "dbo", this.getTable_name(), null);
+//			if(rs.next())
+//			{
+//				table_keyName = rs.getString("COLUMN_NAME");//列名 ,取第一列作为主键
+//			}
+			rs.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}	
+		finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (connection != null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			return table_keyName;
+		}
+	}
+
+
+	public String getTable_name(String originalSql) {
+		String table_name=null;
+		if(originalSql !=null){
+			originalSql = originalSql.toLowerCase();
+			int bindex = originalSql.indexOf("from",1);
+			int eindex = originalSql.indexOf("where",1);
+			if(eindex>bindex){
+				table_name = originalSql.substring(bindex+4,eindex).trim();
+			}else{
+				table_name = originalSql.substring(bindex+4).trim();
+			}
+		}
+		return table_name;
+	}
+	
+	public void setWhere_sql(String originalSql) {
+		if(originalSql !=null){
+			originalSql = originalSql.toLowerCase();
+			int bindex = originalSql.indexOf("where",1);
+			if(bindex > 0){
+				this.where_sql = originalSql.substring(bindex);
+			}else{
+				this.where_sql = " ";
+			}
+		}
+	}
+
+	public String getDb_type() {
+		return db_type;
+	}
+
+	public String getWhere_sql() {
+		return where_sql;
+	}
+
+}

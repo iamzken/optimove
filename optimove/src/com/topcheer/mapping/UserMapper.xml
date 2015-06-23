@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.UserMapper">
+	<resultMap id="UserResultMap" type="com.topcheer.model.User">
+		<result property="workId" column="WORKID" />
+		<result property="userLoginName" column="USERLOGINNAME" />
+		<result property="userBankCode" column="USERBANKCODE" />
+		<result property="userDept" column="USERDEPT" />
+		<result property="userName" column="USERNAME" />
+		<result property="userPwd" column="USERPWD" />
+		<result property="userLevel" column="USERLEVEL" />
+		<result property="userRemark" column="USERREMARK" />
+		<result property="userStatus" column="USERSTATUS" />
+		<result property="operatorCode" column="OPERATORCODE" />
+		<result property="telephone" column="TELEPHONE" />
+		<result property="cretaedBy" column="CRETAEDBY" />
+		<result property="creationDate" column="CREATIONDATE" />
+		<result property="lastUpdatedBy" column="LASTUPDATEDBY" />
+		<result property="lastUpdateDate" column="LASTUPDATEDATE" />
+		<result property="groupId" column="grpId" />
+	</resultMap>
+	<resultMap id="GroupInfoResultMap" type="com.topcheer.model.GroupInfo">
+		<result property="grpId" column="GrpId" jdbcType="VARCHAR" />
+		<result property="grpCname" column="GrpCname" jdbcType="VARCHAR" />
+		<result property="grpEname" column="GrpEname" jdbcType="VARCHAR" />
+		<result property="grpLevel" column="GrpLevel" jdbcType="CHAR" />
+		<result property="cretaedBy" column="CretaedBy" jdbcType="INTEGER" />
+		<result property="creationDate" column="CreationDate" jdbcType="TIMESTAMP" />
+		<result property="lastUpdatedBy" column="LastUpdatedBy"
+			jdbcType="INTEGER" />
+		<result property="lastUpdateDate" column="LastUpdateDate"
+			jdbcType="TIMESTAMP" />
+		<result property="grpRemark" column="GrpRemark" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="NewBranchInfoResultMap" type="com.topcheer.model.NewBranchInfo">
+		<result property="branchCode" column="BranchCode" jdbcType="VARCHAR" />
+		<result property="grade" column="Grade" jdbcType="CHAR" />
+		<result property="upCode" column="UpCode" jdbcType="VARCHAR" />
+		<result property="name" column="Name" jdbcType="VARCHAR" />
+		<result property="address" column="Address" jdbcType="VARCHAR" />
+		<result property="zipcode" column="Zipcode" jdbcType="VARCHAR" />
+		<result property="telephone" column="Telephone" jdbcType="VARCHAR" />
+		<result property="fax" column="Fax" jdbcType="VARCHAR" />
+		<result property="status" column="Status" jdbcType="CHAR" />
+		<result property="account" column="Account" jdbcType="VARCHAR" />
+		<result property="linkManName" column="LinkManName" jdbcType="VARCHAR" />
+		<result property="linkManDept" column="LinkManDept" jdbcType="VARCHAR" />
+		<result property="linkManPos" column="LinkManPos" jdbcType="VARCHAR" />
+		<result property="linkManTel" column="LinkManTel" jdbcType="VARCHAR" />
+		<result property="linkManFax" column="LinkManFax" jdbcType="VARCHAR" />
+		<result property="linkManEmail" column="LinkManEmail" jdbcType="VARCHAR" />
+		<result property="createDate" column="CreateDate" jdbcType="VARCHAR" />
+		<result property="operatorCode" column="OperatorCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="UserColumnList">
+		WORKID, USERLOGINNAME,
+		USERBANKCODE,USERDEPT,USERNAME,USERPWD,USERLEVEL,USERREMARK,USERSTATUS,OPERATORCODE,TELEPHONE,CRETAEDBY,
+		CREATIONDATE,LASTUPDATEDBY,LASTUPDATEDATE
+	</sql>
+	<sql id="NewBranchInfoColumnList">
+		BranchCode,
+		Grade,
+		UpCode,
+		Name,
+		Address,
+		Zipcode,
+		Telephone,
+		Fax,
+		Status,
+		Account,
+		LinkManName,
+		LinkManDept,
+		LinkManPos,
+		LinkManTel,
+		LinkManFax,
+		LinkManEmail,
+		CreateDate,
+		OperatorCode
+	</sql>
+	<select id="searchUser" resultMap="UserResultMap" parameterType="HashMap">
+		select
+		t.*,g.grpId
+		from tbluserinfo t left join tblusergroup g on
+		t.workId=g.workId
+		where 1=1
+		<if test="workId !=null and workId != ''">
+			and t.WORKID like '${workId}%'
+		</if>
+		<if test="userName != null and userName != ''">
+			and t.USERNAME like '%${userName}%'
+		</if>
+	</select>
+
+	<select id="searchAll" resultMap="UserResultMap" parameterType="HashMap">
+		select
+		<include refid="UserColumnList" />
+		from tbluserinfo
+	</select>
+
+	<insert id="insert" parameterType="com.topcheer.model.User">
+		INSERT INTO tbluserinfo (
+		lastupdatedby,
+		lastupdatedate,
+		workid,
+		userloginname,
+		userbankcode,
+		userdept,
+		username,
+		userpwd,
+		userlevel,
+		userremark,
+		userstatus,
+		operatorcode,
+		telephone,
+		cretaedby,
+		creationdate
+		)VALUES (
+		#{lastUpdatedBy,jdbcType=INTEGER},
+		#{lastUpdateDate,jdbcType=VARCHAR},
+		#{workId,jdbcType=VARCHAR},
+		#{userLoginName,jdbcType=VARCHAR},
+		#{userBankCode,jdbcType=VARCHAR},
+		#{userDept,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{userPwd,jdbcType=VARCHAR},
+		#{userLevel,jdbcType=VARCHAR},
+		#{userRemark,jdbcType=VARCHAR},
+		#{userStatus,jdbcType=VARCHAR},
+		#{operatorCode,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR},
+		#{cretaedBy,jdbcType=INTEGER},
+		#{creationDate,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="update" parameterType="com.topcheer.model.User">
+		update tbluserinfo set
+		lastupdatedby = #{lastUpdatedBy,jdbcType=INTEGER},
+		lastupdatedate =
+		#{lastUpdateDate,jdbcType=VARCHAR} ,
+		userloginname =
+		#{userLoginName,jdbcType=VARCHAR} ,
+		userbankcode =
+		#{userBankCode,jdbcType=VARCHAR} ,
+		userdept =
+		#{userDept,jdbcType=VARCHAR} ,
+		username = #{userName,jdbcType=VARCHAR}
+		,
+		userpwd = #{userPwd,jdbcType=VARCHAR} ,
+		userlevel =
+		#{userLevel,jdbcType=VARCHAR} ,
+		userremark =
+		#{userRemark,jdbcType=VARCHAR} ,
+		userstatus =
+		#{userStatus,jdbcType=VARCHAR} ,
+		operatorcode =
+		#{operatorCode,jdbcType=VARCHAR} ,
+		telephone =
+		#{telephone,jdbcType=VARCHAR} ,
+		cretaedby =
+		#{cretaedBy,jdbcType=INTEGER} ,
+		creationdate =
+		#{creationDate,jdbcType=VARCHAR}
+		where workid =
+		#{workId,jdbcType=VARCHAR}
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from tbluserinfo where
+		WORKID = #{workId}
+	</delete>
+
+	<select id="getUser" resultMap="UserResultMap" parameterType="String">
+		select * from tbluserinfo where WORKID = #{workId}
+	</select>
+	<!-- mysql -->
+	<select id="getBranchInfo" resultMap="NewBranchInfoResultMap"
+		parameterType="String">
+		select
+		<include refid="NewBranchInfoColumnList" />
+		from tblnewbranchinfo where (BranchCode = #{userBankCode}
+		or UpCode =
+		#{userBankCode} ) and rownum=1 order by Grade
+	</select>
+	<!-- sql server <select id="getBranchInfo" resultMap="NewBranchInfoResultMap" 
+		parameterType="String"> select top 1 <include refid="NewBranchInfoColumnList" 
+		/> from tblnewbranchinfo where BranchCode = #{userBankCode} or UpCode = #{userBankCode} 
+		order by Grade </select> -->
+	<!-- oracle <select id="getBranchInfo" resultMap="NewBranchInfoResultMap" 
+		parameterType="String"> select <include refid="NewBranchInfoColumnList" /> 
+		from tblnewbranchinfo where rownum=1 and BranchCode = #{userBankCode} or 
+		UpCode = #{userBankCode} order by Grade </select> -->
+	<!--limit 0,1 -->
+	<!-- top 1 -->
+
+	<select id="getLeftUserInfo" resultMap="UserResultMap"
+		parameterType="HashMap">
+		select u.*,g.grpId as groupId from tbluserinfo u left join
+		tblusergroup g on u.workId=g.workId
+		where 1=1
+		<if test="workId !=null and workId != ''">
+			and u.WORKID = #{workId}
+		</if>
+		<if test="userBankCode != null and userBankCode != ''">
+			and u.USERBANKCODE = #{userBankCode}
+		</if>
+		<if test="userDept != null and userDept != ''">
+			and u.USERDEPT = #{userDept}
+		</if>
+		<if test="groupId != null and groupId != ''">
+			and g.grpId = #{groupId}
+		</if>
+	</select>
+
+	<select id="getLeftGroupInfo" resultMap="GroupInfoResultMap"
+		parameterType="HashMap">
+		select * from tblgroupinfo k where k.GrpId in (select g.grpId from
+		tbluserinfo u left join tblusergroup g on u.workId=g.workId
+		where 1=1
+		<if test="workId !=null and workId != ''">
+			and u.WORKID = #{workId}
+		</if>
+		<if test="userBankCode != null and userBankCode != ''">
+			and u.USERBANKCODE = #{userBankCode}
+		</if>
+		<if test="userDept != null and userDept != ''">
+			and u.USERDEPT = #{userDept}
+		</if>
+		<if test="groupId != null and groupId != ''">
+			and g.grpId = #{groupId}
+		</if>
+		)
+	</select>
+</mapper>

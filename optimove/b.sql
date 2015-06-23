@@ -1,0 +1,57 @@
+SELECT
+  *
+FROM (
+  SELECT
+    A.id id,A.location.sdo_point.x,A.location.sdo_point.y,SDO_GEOM.SDO_DISTANCE(A.location,MDSYS.SDO_GEOMETRY(2001,8307,MDSYS.SDO_POINT_TYPE(113.2359818,23.16937253,0),NULL,NULL),1) dist
+  FROM
+    OPTIMOVEDEMO A
+  WHERE
+    SDO_WITHIN_DISTANCE(A.LOCATION,MDSYS.SDO_GEOMETRY(2001,8307,MDSYS.SDO_POINT_TYPE(113.2359818,23.16937253,0),NULL,NULL),'distance=15000') = 'TRUE'
+
+  
+  ) B
+  
+  select * from OPTIMOVEDEMO
+  
+  INSERT INTO optiMoveDemo
+ VALUES(
+  'ef8393ef6273a72b2f70',
+  '山东老家',
+  '广州市越秀区合群一马路43号',
+  '020-87778983',
+  MDSYS.SDO_GEOMETRY(
+   2001,
+   8307,
+   MDSYS.SDO_POINT_TYPE(113.2932474, 23.11883515, 0),
+   NULL,
+   NULL
+  )
+ );
+ 
+  select * from TBLMAPMODELINFO
+  select * from TB_201501302038070614
+  
+  select * from tb_201501231430030237 where salary <= 5
+  
+  insert into TBLMAPMODELINFO values('1','8080','demo','demo','optiMoveDemo',null,null)
+  
+  
+  INSERT INTO TB_201501302042420317
+ VALUES(
+  'ef8393ef6273a72b2f70',
+  '广州市越秀区合群一马路43号',
+  'pic.jpg',
+  null,
+  null,
+  MDSYS.SDO_GEOMETRY(
+   2001,
+   8307,
+   MDSYS.SDO_POINT_TYPE(113.2932474, 23.11883515, 0),
+   NULL,
+   NULL
+  )
+ );
+  
+  
+  SELECT     B.id id, B.name name, B.dist dist   FROM (     SELECT       A.id id, A.name name, SDO_GEOM.SDO_DISTANCE(A.location,MDSYS.SDO_GEOMETRY(2001,8307,MDSYS.SDO_POINT_TYPE(113.2359818,23.16937253,0),NULL,NULL),1) dist     FROM       tb_201501231430030237 A     WHERE       SDO_WITHIN_DISTANCE(A.LOCATION,MDSYS.SDO_GEOMETRY(2001,8307,MDSYS.SDO_POINT_TYPE(113.2359818,23.16937253,0),NULL,NULL),'distance=10000') = 'TRUE'        ORDER BY A.name     ) B
+  

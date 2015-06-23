@@ -1,0 +1,113 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<style type="text/css">
+			body,html,#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AldpuCo6zS8f7BQnfImd6bx9"></script>
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<div id="allmap"></div>
+	</body>
+</html>
+<script type="text/javascript" charset="GB2312">
+	var action = "<%=request.getContextPath()%>/modelattributes/searchMapInfo.do";
+	function searchMapInfo(i){
+				$("#searchForm"+i).bind("click",function(){
+				$.ajax({
+					url : action+"?"+$("#searchForm"+i).serialize(),
+					data : {
+						tableName : $("#tableName").val()
+					},
+					dataType : "json",
+					success : function(data) {
+						$.each(data, function(key, value) {
+							if(key == 'dataList'){
+								if(data["dataList"].length == 0){
+									$("#msg").css("display","block");
+								}else{
+									var vPoints = "var points = [";
+									$.each(value, function(idx, obj){
+										 vPoints += "[" + obj.LONGITUDE + "," + obj.LATITUDE +"],";
+									});
+									vPoints = vPoints.substring(0, vPoints.length-1);
+									vPoints += "];";
+									changeInfo(vPoints);
+								}
+							}
+						})
+					}
+			});
+		});
+		
+		show(true,i);
+	}
+	
+	var points = [[121.548392,29.816413]];
+	var infodiv = "display: none;";
+	var formdiv = "display: block;";
+	
+	var map = new BMap.Map("allmap"); 
+	map.centerAndZoom(mappoint(), 8); 
+	map.addControl(new BMap.MapTypeControl());
+	map.setCurrentCity("北京");
+	map.enableScrollWheelZoom(true); 
+	//var point = mappoint();
+	
+	var markers = [];
+	var pointArray = new Array();
+	for(var i=0; i<points.length; i++){
+		var point = new BMap.Point(points[i][0],points[i][1]);
+		var marker = new BMap.Marker(point); 
+		//marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+		var sContent = "<h4><div style=\""+infodiv+" height:60px\">经度："+points[i][0]+"<br>纬度："+points[i][1]+"</div><div style=\""+formdiv+" height:60px\"><h5 style=\"display:none;color:red;\" id=\"msg\">未找到数据</h5>"
+					   +"<form id=\"searchForm"+i+"\" action=\"\" method=\"post\">"
+					   +"名称<input type=\"text\" name=\"name\" value=\"\"><input type=\"button\" value=\"搜索\" onclick='searchMapInfo("+i+")'><br>"
+					   +"距离<select id=\"distance"+i+"\" name=\"distanceCondition\">"
+					   +"<option value=\"<= 5000\">五公里以内</option>"
+					   +"<option value=\"<= 10000\">十公里以内</option>"
+					   +"<option value=\"<= 20000\">二十公里以内</option>"
+					   +"<option value=\"<= 50000\">五十公里以内</option>"
+					   +"<option value=\"<= 100000\">一百公里以内</option>"
+					   +"<option value=\"> 100000\">一百公里以外</option></select>"
+					   +"<input type=\"hidden\" name=\"longitude\" value=\""+points[i][0]+"\">"
+					   +"<input type=\"hidden\" name=\"latitude\" value=\""+points[i][1]+"\">"
+					   +"</form></div></h4>";
+		map.addOverlay(marker);
+		addClickHandler(sContent, marker);
+		pointArray[i] = point;
+		//markers.push(marker);
+	}
+	map.setViewport(pointArray);
+	//var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+	var opts = {
+		width : 300,     // 信息窗口宽度
+		height: 100,     // 信息窗口高度
+		//title : "信息窗口" , // 信息窗口标题
+		enableMessage:true//设置允许信息窗发送短息
+    };
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+	function mappoint(){return new BMap.Point(121.548392,29.816413);}
+</script>

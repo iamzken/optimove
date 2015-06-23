@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mapModelInfo.MapmodelinfoMapper" >
+	<resultMap id="MapmodelinfoResultMap" type="com.topcheer.model.mapModelInfo.Mapmodelinfo" >
+       		<result property="modelid"    column="modelid" jdbcType="VARCHAR" />
+       		<result property="modelcode"    column="modelcode" jdbcType="VARCHAR" />
+       		<result property="modelname"    column="modelname" jdbcType="VARCHAR" />
+       		<result property="modeltype"    column="modeltype" jdbcType="VARCHAR" />
+       		<result property="modeldatatable"    column="modeldatatable" jdbcType="VARCHAR" />
+       		<result property="modelcreatetime"    column="modelcreatetime" jdbcType="VARCHAR" />
+       		<result property="modelupdatetime"    column="modelupdatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="MapmodelinfoColumnList" >
+    		modelid,
+    		modelcode,
+    		modelname,
+    		modeltype,
+    		modeldatatable,
+    		modelcreatetime,
+    		modelupdatetime
+    </sql>
+    <select id="searchMapmodelinfo" resultMap="MapmodelinfoResultMap" parameterType="HashMap">
+    	select  * from tblmapmodelinfo
+		where 1=1
+    		<if test="modelid !=null and modelid != '' ">
+		    	and modelid like #{modelid,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelcode !=null and modelcode != '' ">
+		    	and modelcode like #{modelcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelname !=null and modelname != '' ">
+		    	and modelname like #{modelname,jdbcType=VARCHAR}
+			</if>
+    		<if test="modeltype !=null and modeltype != '' ">
+		    	and modeltype like #{modeltype,jdbcType=VARCHAR}
+			</if>
+    		<if test="modeldatatable !=null and modeldatatable != '' ">
+		    	and modeldatatable like #{modeldatatable,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelcreatetime !=null and modelcreatetime != '' ">
+		    	and modelcreatetime like #{modelcreatetime,jdbcType=VARCHAR}
+			</if>
+    		<if test="modelupdatetime !=null and modelupdatetime != '' ">
+		    	and modelupdatetime like #{modelupdatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="MapmodelinfoResultMap" parameterType="HashMap">
+    	select * from tblmapmodelinfo 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mapModelInfo.Mapmodelinfo">
+  	<!--
+  		<selectKey resultType="String" keyProperty="modelid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblmapmodelinfo (
+    			modelid,
+    			modelcode,
+    			modelname,
+    			modeltype,
+    			modeldatatable,
+    			modelcreatetime,
+    			modelupdatetime
+  		)VALUES (
+    		#{modelid,jdbcType=VARCHAR},
+    		#{modelcode,jdbcType=VARCHAR},
+    		#{modelname,jdbcType=VARCHAR},
+    		#{modeltype,jdbcType=VARCHAR},
+    		#{modeldatatable,jdbcType=VARCHAR},
+    		#{modelcreatetime,jdbcType=VARCHAR},
+    		#{modelupdatetime,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mapModelInfo.Mapmodelinfo">
+  		update tblmapmodelinfo set  
+	      		modelcode = #{modelcode,jdbcType=VARCHAR}  ,
+	      		modelname = #{modelname,jdbcType=VARCHAR}  ,
+	      		modeltype = #{modeltype,jdbcType=VARCHAR}  ,
+	      		modeldatatable = #{modeldatatable,jdbcType=VARCHAR}  ,
+	      		modelcreatetime = #{modelcreatetime,jdbcType=VARCHAR}  ,
+	      		modelupdatetime = #{modelupdatetime,jdbcType=VARCHAR}  
+  		where modelid = #{modelid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblmapmodelinfo where modelid = #{modelid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getMapmodelinfo" resultMap="MapmodelinfoResultMap" parameterType="String">
+  		select * from tblmapmodelinfo  where modelid = #{modelid,jdbcType=VARCHAR}
+  	</select>
+  	
+  	<select id="getTableDataList" resultType="HashMap" parameterType="HashMap">
+  		select * from ${tablename} ${condition}
+  	</select>
+  	
+  	
+  	<update id="createTable" parameterType="com.topcheer.model.mapModelInfo.Mapmodelinfo" statementType="STATEMENT">
+		create table ${modeldatatable}
+		(
+		  id         varchar2(64) not null,
+		  address    varchar2(1024),
+		  picture    varchar2(512),
+		  createtime varchar2(128),
+		  updatetime varchar2(128),
+		  location   mdsys.sdo_geometry
+		)logging
+  	</update>
+  	
+  	<update id="alterTable" parameterType="HashMap" statementType="STATEMENT">
+  		${alterSql}
+  	</update>
+  	
+  	<update id="dropTable" parameterType="HashMap" statementType="STATEMENT">
+  		${dropSql}
+  	</update>
+  	
+  	<update id="insertData" parameterType="HashMap" statementType="STATEMENT">
+  		${insertSql}
+  	</update>
+  	
+</mapper>

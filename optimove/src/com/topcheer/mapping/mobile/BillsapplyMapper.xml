@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.mobile.BillsapplyMapper" >
+	<resultMap id="BillsapplyResultMap" type="com.topcheer.model.mobile.Billsapply" >
+       		<result property="custno"    column="custno" jdbcType="VARCHAR" />
+       		<result property="businessid"    column="businessid" jdbcType="VARCHAR" />
+       		<result property="businesstype"    column="businesstype" jdbcType="VARCHAR" />
+       		<result property="productcode"    column="productcode" jdbcType="VARCHAR" />
+       		<result property="tableid"    column="tableid" jdbcType="VARCHAR" />
+       		<result property="transchannel"    column="transchannel" jdbcType="VARCHAR" />
+       		<result property="fkrqc"    column="fkrqc" jdbcType="VARCHAR" />
+       		<result property="fkrzh"    column="fkrzh" jdbcType="VARCHAR" />
+       		<result property="fkryh"    column="fkryh" jdbcType="VARCHAR" />
+       		<result property="skrqc"    column="skrqc" jdbcType="VARCHAR" />
+       		<result property="skrzh"    column="skrzh" jdbcType="VARCHAR" />
+       		<result property="skryh"    column="skryh" jdbcType="VARCHAR" />
+       		<result property="cpje"    column="cpje" jdbcType="NUMERIC" />
+       		<result property="dqr"    column="dqr" jdbcType="VARCHAR" />
+       		<result property="jyhthm"    column="jyhthm" jdbcType="VARCHAR" />
+       		<result property="fkrkhhhh"    column="fkrkhhhh" jdbcType="VARCHAR" />
+       		<result property="fkrkhhdz"    column="fkrkhhdz" jdbcType="VARCHAR" />
+       		<result property="operator"    column="operator" jdbcType="VARCHAR" />
+       		<result property="operatororg"    column="operatororg" jdbcType="VARCHAR" />
+       		<result property="updatedate"    column="updatedate" jdbcType="VARCHAR" />
+       		<result property="updatetime"    column="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="BillsapplyColumnList" >
+    		custno,
+    		businessid,
+    		businesstype,
+    		productcode,
+    		tableid,
+    		transchannel,
+    		fkrqc,
+    		fkrzh,
+    		fkryh,
+    		skrqc,
+    		skrzh,
+    		skryh,
+    		cpje,
+    		dqr,
+    		jyhthm,
+    		fkrkhhhh,
+    		fkrkhhdz,
+    		operator,
+    		operatororg,
+    		updatedate,
+    		updatetime
+    </sql>
+    <select id="searchBillsapply" resultMap="BillsapplyResultMap" parameterType="HashMap">
+    	select  * from tblbillsapply
+		where 1=1
+    		<if test="custno !=null and custno != '' ">
+		    	and custno like #{custno,jdbcType=VARCHAR}
+			</if>
+    		<if test="businessid !=null and businessid != '' ">
+		    	and businessid like #{businessid,jdbcType=VARCHAR}
+			</if>
+    		<if test="businesstype !=null and businesstype != '' ">
+		    	and businesstype like #{businesstype,jdbcType=VARCHAR}
+			</if>
+    		<if test="productcode !=null and productcode != '' ">
+		    	and productcode like #{productcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="tableid !=null and tableid != '' ">
+		    	and tableid like #{tableid,jdbcType=VARCHAR}
+			</if>
+    		<if test="transchannel !=null and transchannel != '' ">
+		    	and transchannel like #{transchannel,jdbcType=VARCHAR}
+			</if>
+    		<if test="fkrqc !=null and fkrqc != '' ">
+		    	and fkrqc like #{fkrqc,jdbcType=VARCHAR}
+			</if>
+    		<if test="fkrzh !=null and fkrzh != '' ">
+		    	and fkrzh like #{fkrzh,jdbcType=VARCHAR}
+			</if>
+    		<if test="fkryh !=null and fkryh != '' ">
+		    	and fkryh like #{fkryh,jdbcType=VARCHAR}
+			</if>
+    		<if test="skrqc !=null and skrqc != '' ">
+		    	and skrqc like #{skrqc,jdbcType=VARCHAR}
+			</if>
+    		<if test="skrzh !=null and skrzh != '' ">
+		    	and skrzh like #{skrzh,jdbcType=VARCHAR}
+			</if>
+    		<if test="skryh !=null and skryh != '' ">
+		    	and skryh like #{skryh,jdbcType=VARCHAR}
+			</if>
+    		<if test="cpje !=null and cpje != '' ">
+		    	and cpje like #{cpje,jdbcType=NUMERIC}
+			</if>
+    		<if test="dqr !=null and dqr != '' ">
+		    	and dqr like #{dqr,jdbcType=VARCHAR}
+			</if>
+    		<if test="jyhthm !=null and jyhthm != '' ">
+		    	and jyhthm like #{jyhthm,jdbcType=VARCHAR}
+			</if>
+    		<if test="fkrkhhhh !=null and fkrkhhhh != '' ">
+		    	and fkrkhhhh like #{fkrkhhhh,jdbcType=VARCHAR}
+			</if>
+    		<if test="fkrkhhdz !=null and fkrkhhdz != '' ">
+		    	and fkrkhhdz like #{fkrkhhdz,jdbcType=VARCHAR}
+			</if>
+    		<if test="operator !=null and operator != '' ">
+		    	and operator like #{operator,jdbcType=VARCHAR}
+			</if>
+    		<if test="operatororg !=null and operatororg != '' ">
+		    	and operatororg like #{operatororg,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatedate !=null and updatedate != '' ">
+		    	and updatedate like #{updatedate,jdbcType=VARCHAR}
+			</if>
+    		<if test="updatetime !=null and updatetime != '' ">
+		    	and updatetime like #{updatetime,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="BillsapplyResultMap" parameterType="HashMap">
+    	select * from tblbillsapply 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.mobile.Billsapply">
+  	<!--
+  		<selectKey resultType="String" keyProperty="custno" order="BEFORE">  
+  	 		select JNYS_SEQUENCES.NEXTVAL from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblbillsapply (
+    			custno,
+    			businessid,
+    			businesstype,
+    			productcode,
+    			tableid,
+    			transchannel,
+    			fkrqc,
+    			fkrzh,
+    			fkryh,
+    			skrqc,
+    			skrzh,
+    			skryh,
+    			cpje,
+    			dqr,
+    			jyhthm,
+    			fkrkhhhh,
+    			fkrkhhdz,
+    			operator,
+    			operatororg,
+    			updatedate,
+    			updatetime
+  		)VALUES (
+    		#{custno,jdbcType=VARCHAR},
+    		#{businessid,jdbcType=VARCHAR},
+    		#{businesstype,jdbcType=VARCHAR},
+    		#{productcode,jdbcType=VARCHAR},
+    		#{tableid,jdbcType=VARCHAR},
+    		#{transchannel,jdbcType=VARCHAR},
+    		#{fkrqc,jdbcType=VARCHAR},
+    		#{fkrzh,jdbcType=VARCHAR},
+    		#{fkryh,jdbcType=VARCHAR},
+    		#{skrqc,jdbcType=VARCHAR},
+    		#{skrzh,jdbcType=VARCHAR},
+    		#{skryh,jdbcType=VARCHAR},
+    		#{cpje,jdbcType=NUMERIC},
+    		#{dqr,jdbcType=VARCHAR},
+    		#{jyhthm,jdbcType=VARCHAR},
+    		#{fkrkhhhh,jdbcType=VARCHAR},
+    		#{fkrkhhdz,jdbcType=VARCHAR},
+    		#{operator,jdbcType=VARCHAR},
+    		#{operatororg,jdbcType=VARCHAR},
+    		to_char(sysdate,'yyyyMMdd'),
+    		to_char(sysdate,'HH24miss')
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.mobile.Billsapply">
+  		update tblbillsapply set  
+	      		businessid = #{businessid,jdbcType=VARCHAR}  ,
+	      		businesstype = #{businesstype,jdbcType=VARCHAR}  ,
+	      		productcode = #{productcode,jdbcType=VARCHAR}  ,
+	      		tableid = #{tableid,jdbcType=VARCHAR}  ,
+	      		transchannel = #{transchannel,jdbcType=VARCHAR}  ,
+	      		fkrqc = #{fkrqc,jdbcType=VARCHAR}  ,
+	      		fkrzh = #{fkrzh,jdbcType=VARCHAR}  ,
+	      		fkryh = #{fkryh,jdbcType=VARCHAR}  ,
+	      		skrqc = #{skrqc,jdbcType=VARCHAR}  ,
+	      		skrzh = #{skrzh,jdbcType=VARCHAR}  ,
+	      		skryh = #{skryh,jdbcType=VARCHAR}  ,
+	      		cpje = #{cpje,jdbcType=NUMERIC}  ,
+	      		dqr = #{dqr,jdbcType=VARCHAR}  ,
+	      		jyhthm = #{jyhthm,jdbcType=VARCHAR}  ,
+	      		fkrkhhhh = #{fkrkhhhh,jdbcType=VARCHAR}  ,
+	      		fkrkhhdz = #{fkrkhhdz,jdbcType=VARCHAR}  ,
+	      		operator = #{operator,jdbcType=VARCHAR}  ,
+	      		operatororg = #{operatororg,jdbcType=VARCHAR}  ,
+	      		updatedate = to_char(sysdate,'yyyyMMdd')  ,
+	      		updatetime = to_char(sysdate,'HH24miss')  
+  		where custno = #{custno,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblbillsapply where custno = #{custno,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getBillsapply" resultMap="BillsapplyResultMap" parameterType="String">
+  		select * from tblbillsapply  where custno = #{custno,jdbcType=VARCHAR}
+  	</select>
+</mapper>

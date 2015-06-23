@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.LookuptypeMapper" >
+	<resultMap id="LookuptypeResultMap" type="com.topcheer.model.Lookuptype" >
+       		<result property="lookupType"    column="LookupType" jdbcType="VARCHAR" />
+       		<result property="customizationLevel"    column="CustomizationLevel" jdbcType="VARCHAR" />
+       		<result property="description"    column="Description" jdbcType="VARCHAR" />
+       		<result property="createdBy"    column="CreatedBy" jdbcType="VARCHAR" />
+       		<result property="creationDate"    column="CreationDate" jdbcType="VARCHAR" />
+       		<result property="lastUpdateBy"    column="LastUpdateBy" jdbcType="VARCHAR" />
+       		<result property="lastUpdateDate"    column="lastUpdateDate" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="LookuptypeColumnList" >
+    		LookupType,
+    		CustomizationLevel,
+    		Description,
+    		CreatedBy,
+    		CreationDate,
+    		LastUpdateBy,
+    		lastUpdateDate
+    </sql>
+    <select id="searchLookuptype" resultMap="LookuptypeResultMap" parameterType="HashMap">
+    	select  * from tbllookuptype
+		where 1=1
+    		<if test="lookupType !=null and lookupType != '' ">
+		    	and LookupType like #{lookupType,jdbcType=VARCHAR}
+			</if>
+    		<if test="customizationLevel !=null and customizationLevel != '' ">
+		    	and CustomizationLevel like #{customizationLevel,jdbcType=VARCHAR}
+			</if>
+    		<if test="description !=null and description != '' ">
+		    	and Description like #{description,jdbcType=VARCHAR}
+			</if>
+    		<if test="createdBy !=null and createdBy != '' ">
+		    	and CreatedBy like #{createdBy,jdbcType=VARCHAR}
+			</if>
+    		<if test="creationDate !=null and creationDate != '' ">
+		    	and CreationDate like #{creationDate,jdbcType=VARCHAR}
+			</if>
+    		<if test="lastUpdateBy !=null and lastUpdateBy != '' ">
+		    	and LastUpdateBy like #{lastUpdateBy,jdbcType=VARCHAR}
+			</if>
+    		<if test="lastUpdateDate !=null and lastUpdateDate != '' ">
+		    	and lastUpdateDate like #{lastUpdateDate,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="LookuptypeResultMap" parameterType="HashMap">
+    	select * from tbllookuptype 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.Lookuptype">
+  		INSERT INTO tbllookuptype (
+    			lookupType,
+    			customizationLevel,
+    			description,
+    			createdBy,
+    			creationDate,
+    			lastUpdateBy,
+    			lastUpdateDate
+  		)VALUES (
+    		#{lookupType,jdbcType=VARCHAR},
+    		#{customizationLevel,jdbcType=VARCHAR},
+    		#{description,jdbcType=VARCHAR},
+    		#{createdBy,jdbcType=VARCHAR},
+    		#{creationDate,jdbcType=VARCHAR},
+    		#{lastUpdateBy,jdbcType=VARCHAR},
+    		#{lastUpdateDate,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.Lookuptype">
+  		update tbllookuptype set  
+	      		CustomizationLevel = #{customizationLevel,jdbcType=VARCHAR}  ,
+	      		Description = #{description,jdbcType=VARCHAR}  ,
+	      		CreatedBy = #{createdBy,jdbcType=VARCHAR}  ,
+	      		CreationDate = #{creationDate,jdbcType=VARCHAR}  ,
+	      		LastUpdateBy = #{lastUpdateBy,jdbcType=VARCHAR}  ,
+	      		lastUpdateDate = #{lastUpdateDate,jdbcType=VARCHAR}  
+  		where LookupType = #{lookupType,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbllookuptype where LookupType = #{lookupType,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getLookuptype" resultMap="LookuptypeResultMap" parameterType="String">
+  		select * from tbllookuptype  where LookupType = #{lookupType,jdbcType=VARCHAR}
+  	</select>
+</mapper>

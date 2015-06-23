@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.networkUnicom.NetworkunicomMapper" >
+	<resultMap id="NetworkunicomResultMap" type="com.topcheer.model.networkUnicom.Networkunicom" >
+       		<result property="networkunicomid"    column="networkunicomid" jdbcType="VARCHAR" />
+       		<result property="ipaddress"    column="ipaddress" jdbcType="VARCHAR" />
+       		<result property="port"    column="port" jdbcType="VARCHAR" />
+       		<result property="status"    column="status" jdbcType="VARCHAR" />
+       		<result property="applicationcode"    column="applicationcode" jdbcType="VARCHAR" />
+       		<result property="applicationname"    column="applicationname" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="NetworkunicomColumnList" >
+    		networkunicomid,
+    		ipaddress,
+    		port,
+    		status,
+    		applicationcode,
+    		applicationname
+    </sql>
+    <select id="searchNetworkunicom" resultMap="NetworkunicomResultMap" parameterType="HashMap">
+    	select  * from tblnetworkunicom
+		where 1=1
+    		<if test="networkunicomid !=null and networkunicomid != '' ">
+		    	and networkunicomid like #{networkunicomid,jdbcType=VARCHAR}
+			</if>
+    		<if test="ipaddress !=null and ipaddress != '' ">
+		    	and ipaddress like #{ipaddress,jdbcType=VARCHAR}
+			</if>
+    		<if test="port !=null and port != '' ">
+		    	and port like #{port,jdbcType=VARCHAR}
+			</if>
+    		<if test="status !=null and status != '' ">
+		    	and status like #{status,jdbcType=VARCHAR}
+			</if>
+    		<if test="applicationcode !=null and applicationcode != '' ">
+		    	and applicationcode like #{applicationcode,jdbcType=VARCHAR}
+			</if>
+    		<if test="applicationname !=null and applicationname != '' ">
+		    	and applicationname like #{applicationname,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="NetworkunicomResultMap" parameterType="HashMap">
+    	select * from tblnetworkunicom 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.networkUnicom.Networkunicom">
+  	<!--
+  		<selectKey resultType="String" keyProperty="networkunicomid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblnetworkunicom (
+    			networkunicomid,
+    			ipaddress,
+    			port,
+    			status,
+    			applicationcode,
+    			applicationname
+  		)VALUES (
+    		#{networkunicomid,jdbcType=VARCHAR},
+    		#{ipaddress,jdbcType=VARCHAR},
+    		#{port,jdbcType=VARCHAR},
+    		#{status,jdbcType=VARCHAR},
+    		#{applicationcode,jdbcType=VARCHAR},
+    		#{applicationname,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.networkUnicom.Networkunicom">
+  		update tblnetworkunicom set  
+	      		ipaddress = #{ipaddress,jdbcType=VARCHAR}  ,
+	      		port = #{port,jdbcType=VARCHAR}  ,
+	      		status = #{status,jdbcType=VARCHAR}  ,
+	      		applicationcode = #{applicationcode,jdbcType=VARCHAR}  ,
+	      		applicationname = #{applicationname,jdbcType=VARCHAR}  
+  		where networkunicomid = #{networkunicomid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblnetworkunicom where networkunicomid = #{networkunicomid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getNetworkunicom" resultMap="NetworkunicomResultMap" parameterType="String">
+  		select * from tblnetworkunicom  where networkunicomid = #{networkunicomid,jdbcType=VARCHAR}
+  	</select>
+</mapper>

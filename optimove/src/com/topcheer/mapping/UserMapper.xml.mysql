@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.UserMapper" >
+	<resultMap id="UserResultMap" type="com.topcheer.model.User" >
+	   	<result property="workId"    column="WORKID"  />
+		<result property="userLoginName"    column="USERLOGINNAME"  />
+		<result property="userBankCode"    column="USERBANKCODE"  />
+		<result property="userDept"    column="USERDEPT"  />
+		<result property="userName"    column="USERNAME"  />
+		<result property="userPwd"    column="USERPWD"  />
+		<result property="userLevel"    column="USERLEVEL"  />
+		<result property="userRemark"    column="USERREMARK"  />
+		<result property="userStatus"    column="USERSTATUS"  />
+		<result property="operatorCode"    column="OPERATORCODE"  />
+		<result property="telephone"    column="TELEPHONE"  />
+		<result property="cretaedBy"    column="CRETAEDBY"  />
+		<result property="creationDate"    column="CREATIONDATE"  />
+		<result property="lastUpdatedBy"    column="LASTUPDATEDBY"  />
+		<result property="lastUpdateDate"    column="LASTUPDATEDATE"  />
+		<result property="groupId"    column="grpId"  />
+	</resultMap>
+	<resultMap id="NewBranchInfoResultMap" type="com.topcheer.model.NewBranchInfo" >
+       		<result property="branchCode"    column="BranchCode" jdbcType="VARCHAR" />
+       		<result property="grade"    column="Grade" jdbcType="CHAR" />
+       		<result property="upCode"    column="UpCode" jdbcType="VARCHAR" />
+       		<result property="name"    column="Name" jdbcType="VARCHAR" />
+       		<result property="address"    column="Address" jdbcType="VARCHAR" />
+       		<result property="zipcode"    column="Zipcode" jdbcType="VARCHAR" />
+       		<result property="telephone"    column="Telephone" jdbcType="VARCHAR" />
+       		<result property="fax"    column="Fax" jdbcType="VARCHAR" />
+       		<result property="status"    column="Status" jdbcType="CHAR" />
+       		<result property="account"    column="Account" jdbcType="VARCHAR" />
+       		<result property="linkManName"    column="LinkManName" jdbcType="VARCHAR" />
+       		<result property="linkManDept"    column="LinkManDept" jdbcType="VARCHAR" />
+       		<result property="linkManPos"    column="LinkManPos" jdbcType="VARCHAR" />
+       		<result property="linkManTel"    column="LinkManTel" jdbcType="VARCHAR" />
+       		<result property="linkManFax"    column="LinkManFax" jdbcType="VARCHAR" />
+       		<result property="linkManEmail"    column="LinkManEmail" jdbcType="VARCHAR" />
+       		<result property="createDate"    column="CreateDate" jdbcType="VARCHAR" />
+       		<result property="operatorCode"    column="OperatorCode" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="UserColumnList" >
+        WORKID, USERLOGINNAME, USERBANKCODE,USERDEPT,USERNAME,USERPWD,USERLEVEL,USERREMARK,USERSTATUS,OPERATORCODE,TELEPHONE,CRETAEDBY,
+        CREATIONDATE,LASTUPDATEDBY,LASTUPDATEDATE
+    </sql>
+     <sql id="NewBranchInfoColumnList" >
+    		BranchCode,
+    		Grade,
+    		UpCode,
+    		Name,
+    		Address,
+    		Zipcode,
+    		Telephone,
+    		Fax,
+    		Status,
+    		Account,
+    		LinkManName,
+    		LinkManDept,
+    		LinkManPos,
+    		LinkManTel,
+    		LinkManFax,
+    		LinkManEmail,
+    		CreateDate,
+    		OperatorCode
+    </sql>
+    <select id="searchUser" resultMap="UserResultMap" parameterType="HashMap">
+    	select 
+		    t.*,g.grpId
+		from tbluserinfo t left join  tblusergroup g on  t.workId=g.workId 
+		where 1=1 
+		<if test="workId !=null and workId != ''">
+		    and t.WORKID like '${workId}%'
+		</if> 
+		<if test="userName != null and userName != ''">
+		    and t.USERNAME like '%${userName}%'
+		</if> 
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="UserResultMap" parameterType="HashMap">
+    	select 
+		    <include refid="UserColumnList" />
+		from tbluserinfo 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.User">
+  		INSERT INTO tbluserinfo (
+  		<include refid="UserColumnList" />
+  		)VALUES (
+  		#{workId}, #{userLoginName}, #{userBankCode},#{userDept},#{userName},#{userPwd},#{userLevel},#{userRemark},#{userStatus},#{operatorCode},#{telephone},#{cretaedBy},
+      	#{ creationDate},#{lastUpdatedBy},#{lastUpdateDate}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.User">
+  		update tbluserinfo set  
+  		USERLOGINNAME=#{userLoginName}, USERBANKCODE=#{userBankCode},USERDEPT=#{userDept},USERNAME=#{userName},USERPWD=#{userPwd},USERLEVEL=#{userLevel},USERREMARK=#{userRemark},
+		USERSTATUS=#{userStatus},OPERATORCODE=#{operatorCode},TELEPHONE=#{telephone},CRETAEDBY=#{cretaedBy},
+        CREATIONDATE=#{ creationDate},LASTUPDATEDBY=#{lastUpdatedBy},LASTUPDATEDATE=#{lastUpdateDate} where WORKID=#{workId}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tbluserinfo where WORKID = #{workId}
+  	</delete>
+  	
+  	<select id="getUser" resultMap="UserResultMap" parameterType="String">
+  		select * from tbluserinfo  where WORKID = #{workId}
+  	</select>
+  	<!-- mysql -->
+  	<select id="getBranchInfo" resultMap="NewBranchInfoResultMap" parameterType="String">
+  		select  <include refid="NewBranchInfoColumnList" /> 
+		 from tblnewbranchinfo where BranchCode = #{userBankCode}
+		 	or UpCode = #{userBankCode} order by Grade 
+		 	limit 0,1
+  	</select>
+  		<!--  sql server 
+  	<select id="getBranchInfo" resultMap="NewBranchInfoResultMap" parameterType="String">
+  		select top 1 <include refid="NewBranchInfoColumnList" /> 
+		 from tblnewbranchinfo where BranchCode = #{userBankCode}
+		 	or UpCode = #{userBankCode} order by Grade 
+		 	
+  	</select>
+  	-->
+  	<!--  oracle
+  	<select id="getBranchInfo" resultMap="NewBranchInfoResultMap" parameterType="String">
+  		select  <include refid="NewBranchInfoColumnList" /> 
+		 from tblnewbranchinfo where rownum=1 and BranchCode = #{userBankCode}
+		 	or UpCode = #{userBankCode} order by Grade 
+		 	
+  	</select>
+  	-->
+  	<!--limit 0,1-->
+		 	<!-- top 1 -->
+</mapper>

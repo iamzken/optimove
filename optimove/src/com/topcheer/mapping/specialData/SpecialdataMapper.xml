@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.topcheer.dao.specialData.SpecialdataMapper" >
+	<resultMap id="SpecialdataResultMap" type="com.topcheer.model.specialData.Specialdata" >
+       		<result property="specialdataid"    column="specialdataid" jdbcType="VARCHAR" />
+       		<result property="specialdataname"    column="specialdataname" jdbcType="VARCHAR" />
+       		<result property="specialdatasource"    column="specialdatasource" jdbcType="VARCHAR" />
+       		<result property="specialdatatype"    column="specialdatatype" jdbcType="VARCHAR" />
+       		<result property="remarks"    column="remarks" jdbcType="VARCHAR" />
+       		<result property="specialdatafile"    column="specialdatafile" jdbcType="VARCHAR" />
+	</resultMap>
+    <sql id="SpecialdataColumnList" >
+    		specialdataid,
+    		specialdataname,
+    		specialdatasource,
+    		specialdatatype,
+    		remarks,
+    		specialdatafile
+    </sql>
+    <select id="searchSpecialdata" resultMap="SpecialdataResultMap" parameterType="HashMap">
+    	select  * from tblspecialdata
+		where 1=1
+    		<if test="specialdataid !=null and specialdataid != '' ">
+		    	and specialdataid like #{specialdataid,jdbcType=VARCHAR}
+			</if>
+    		<if test="specialdataname !=null and specialdataname != '' ">
+		    	and specialdataname like #{specialdataname,jdbcType=VARCHAR}
+			</if>
+    		<if test="specialdatasource !=null and specialdatasource != '' ">
+		    	and specialdatasource like #{specialdatasource,jdbcType=VARCHAR}
+			</if>
+    		<if test="specialdatatype !=null and specialdatatype != '' ">
+		    	and specialdatatype like #{specialdatatype,jdbcType=VARCHAR}
+			</if>
+    		<if test="remarks !=null and remarks != '' ">
+		    	and remarks like #{remarks,jdbcType=VARCHAR}
+			</if>
+    		<if test="specialdatafile !=null and specialdatafile != '' ">
+		    	and specialdatafile like #{specialdatafile,jdbcType=VARCHAR}
+			</if>
+  	</select> 
+  	
+  	<select id="searchAll" resultMap="SpecialdataResultMap" parameterType="HashMap">
+    	select * from tblspecialdata 
+  	</select> 
+  	
+  	<insert id="insert" parameterType="com.topcheer.model.specialData.Specialdata">
+  	<!--
+  		<selectKey resultType="String" keyProperty="specialdataid" order="BEFORE">  
+  	 		select  to_char(sysdate,'yyyymmdd' ) || SEQ_PARA.NEXTVAL as id from dual
+   		</selectKey>  
+   	-->
+  		INSERT INTO tblspecialdata (
+    			specialdataid,
+    			specialdataname,
+    			specialdatasource,
+    			specialdatatype,
+    			remarks,
+    			specialdatafile
+  		)VALUES (
+    		#{specialdataid,jdbcType=VARCHAR},
+    		#{specialdataname,jdbcType=VARCHAR},
+    		#{specialdatasource,jdbcType=VARCHAR},
+    		#{specialdatatype,jdbcType=VARCHAR},
+    		#{remarks,jdbcType=VARCHAR},
+    		#{specialdatafile,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<insert id="update" parameterType="com.topcheer.model.specialData.Specialdata">
+  		update tblspecialdata set  
+	      		specialdataname = #{specialdataname,jdbcType=VARCHAR}  ,
+	      		specialdatasource = #{specialdatasource,jdbcType=VARCHAR}  ,
+	      		specialdatatype = #{specialdatatype,jdbcType=VARCHAR}  ,
+	      		remarks = #{remarks,jdbcType=VARCHAR}  ,
+	      		specialdatafile = #{specialdatafile,jdbcType=VARCHAR}  
+  		where specialdataid = #{specialdataid,jdbcType=VARCHAR}
+  	</insert>
+  	
+  	<delete id="delete" parameterType="String">
+  		delete from tblspecialdata where specialdataid = #{specialdataid,jdbcType=VARCHAR}
+  	</delete>
+  	
+  	<select id="getSpecialdata" resultMap="SpecialdataResultMap" parameterType="String">
+  		select * from tblspecialdata  where specialdataid = #{specialdataid,jdbcType=VARCHAR}
+  	</select>
+</mapper>
